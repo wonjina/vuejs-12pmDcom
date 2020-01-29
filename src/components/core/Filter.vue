@@ -29,8 +29,8 @@
 
             <v-layout justify-center>
               <v-avatar
-                v-for="c in colors"
-                :key="c"
+                v-for="(c,index) in colors"
+                :key="index+c"
                 :class="[c === color ? 'color-active color-' + c: 'color-' + c]"
                 size="23"
 
@@ -45,8 +45,8 @@
             <div class="text-xs-center body-2 text-uppercase sidebar-filter">Images</div>
           </v-flex>
           <v-flex
-            v-for="img in images"
-            :key="img"
+            v-for="(img,index) in images"
+            :key="img+index"
             xs3
           >
             <v-img

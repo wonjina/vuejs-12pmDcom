@@ -30,10 +30,23 @@
       >
         <v-text-field
           class="mr-4 purple-input"
-          label="Search..."
+          label="Restaurant Search..."
           hide-details
           color="purple"
         />
+        <v-text-field
+          class="mr-4 purple-input"
+          label="Category Search..."
+          hide-details
+          color="purple"
+        />
+        <v-btn
+          slot="activator"
+          class="v-btn--simple"
+          color="success"
+        >
+          <v-icon color="primary">mdi-arrow-right</v-icon>
+        </v-btn>
         <router-link
           v-ripple
           class="toolbar-items"
@@ -45,7 +58,7 @@
         <router-link
           v-ripple
           class="toolbar-items"
-          to="/user-profile"
+          to="/login"
         >
           <v-icon color="tertiary">mdi-account</v-icon>
         </router-link>

@@ -6,8 +6,8 @@
   >
     <div class="footer-items">
       <span
-        v-for="link in links"
-        :key="link.name"
+        v-for="(link, index) in links"
+        :key="link.name+index"
       >
         <a
           :href="link.Link"

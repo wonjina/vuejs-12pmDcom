@@ -146,8 +146,8 @@
                   wrap
                 >
                   <v-tooltip
-                    v-for="icon in icons"
-                    :key="icon"
+                    v-for="(icon,index) in icons"
+                    :key="icon+index"
                     top
                     content-class="top">
                     <v-btn

@@ -11,7 +11,7 @@ export default [
   },
   {
     path: '/user-profile',
-    name: 'User Profile',
+    name: 'UserProfile',
     view: 'UserProfile'
   },
   {
@@ -39,5 +39,10 @@ export default [
     path: '/upgrade',
     name: 'Upgrade to PRO',
     view: 'Upgrade'
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    view: 'Login'
   }
 ]
