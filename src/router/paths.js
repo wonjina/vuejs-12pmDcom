@@ -7,12 +7,12 @@ export default [
   {
     path: '',
     // Relative to /src/views
-    view: 'Dashboard'
+    view: 'Main'
   },
   {
-    path: '/user-profile',
-    name: 'UserProfile',
-    view: 'UserProfile'
+    path: '/RestaurantInfo',
+    name: 'RestaurantInfo',
+    view: 'RestaurantInfo'
   },
   {
     path: '/table-list',
@@ -28,8 +28,8 @@ export default [
     view: 'Icons'
   },
   {
-    path: '/maps',
-    view: 'Maps'
+    path: '/search',
+    view: 'Search'
   },
   {
     path: '/notifications',

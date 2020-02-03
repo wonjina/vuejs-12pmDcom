@@ -2,14 +2,7 @@
   <div>
     <v-container fluid>
       <v-layout column>
-        <v-layout class="theme--light v-sheet container">
-          <v-flex>
-            <div class="display-2 text-xs-center">
-              <h2>Target : 12:00 PM</h2>
-              <h2>NOW : 11:00 AM</h2>
-            </div>
-          </v-flex>
-        </v-layout>
+        <main-banner-component/> <!--Add Main banner.vue  -->
         <v-flex>
           <v-layout
             column
@@ -24,7 +17,7 @@
                   lg4
                 >
                   <material-card
-                    color="green"
+                    :active-class="color"
                     flat
                     full-width
                     title="Top Review 5"
@@ -63,7 +56,7 @@
                   lg4
                 >
                   <material-card
-                    color="green"
+                    :active-class="color"
                     flat
                     full-width
                     title="Top Review 5"
@@ -102,7 +95,7 @@
                   lg4
                 >
                   <material-card
-                    color="green"
+                    :active-class="color"
                     flat
                     title="Top Review 5"
                   >
@@ -133,34 +126,7 @@
                   </material-card>
                 </v-flex>
               </v-layout>
-              <material-card color="green">
-                <div
-                  slot="header"
-                >
-                  <div class="title font-weight-light mb-2">카테고리 검색</div>
-                </div>
-
-                <v-layout
-                  align-center
-                  wrap
-                >
-                  <v-tooltip
-                    v-for="(icon,index) in icons"
-                    :key="icon+index"
-                    top
-                    content-class="top">
-                    <v-btn
-                      slot="activator"
-                    >
-                      <img
-                        src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
-                        style="height: 50px; width: 50px;"
-                      >
-                    </v-btn>
-                    <span>{{ icon }}</span>
-                  </v-tooltip>
-                </v-layout>
-              </material-card>
+              <categories-component/>   <!--Add BlockArrangeList.vue  -->
             </v-flex>
           </v-layout>
         </v-flex>
@@ -170,7 +136,18 @@
 </template>
 
 <script>
+
+import BlockArrangeList from '@/components/local/BlockArrangeList.vue'
+import MainBanner from '@/components/local/MainBanner.vue'
+import {
+  mapState
+} from 'vuex'
+
 export default {
+  components: {
+    'categories-component': BlockArrangeList,
+    'main-banner-component': MainBanner
+  },
   data () {
     return {
       dailySalesChart: {
@@ -293,40 +270,18 @@ export default {
           url: ''
         }
       ],
-      icons: [
-        '중국집',
-        '한식',
-        '돈까스',
-        '카페',
-        '기타',
-        '일식',
-        '베트남',
-        '프랑스',
-        'mdi-backup-restore',
-        'mdi-badminton',
-        'mdi-access-point-network',
-        'mdi-account',
-        'mdi-account-alert',
-        'mdi-account-box',
-        'mdi-account-box-multiple',
-        'mdi-backburger',
-        'mdi-backspace',
-        'mdi-backup-restore',
-        'mdi-access-point-network',
-        'mdi-account',
-        'mdi-account-alert',
-        'mdi-account-box',
-        'mdi-account-box-multiple',
-        'mdi-backburger',
-        'mdi-backspace',
-        'mdi-backup-restore'
-      ],
       tabs: 0,
       list: {
         0: false,
         1: false,
         2: false
       }
+    }
+  },
+  computed: {
+    ...mapState('app', ['image', 'color']),
+    color () {
+      return this.$store.state.app.color
     }
   },
   methods: {

@@ -59,12 +59,12 @@ export default {
       {
         to: '/',
         icon: 'mdi-view-dashboard',
-        text: 'Dashboard'
+        text: 'Main'
       },
       {
-        to: '/user-profile',
+        to: '/RestaurantInfo',
         icon: 'mdi-account',
-        text: 'User Profile'
+        text: 'RestaurantInfo'
       },
       {
         to: '/table-list',
@@ -82,7 +82,7 @@ export default {
         text: 'Icons'
       },
       {
-        to: '/maps',
+        to: '/search',
         icon: 'mdi-map-marker',
         text: 'Maps'
       },
