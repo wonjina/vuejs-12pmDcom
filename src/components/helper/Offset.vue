@@ -24,7 +24,6 @@ export default {
   computed: {
     classes () {
       return {
-        'v-offset--full-width': this.fullWidth
       }
     },
     styles () {

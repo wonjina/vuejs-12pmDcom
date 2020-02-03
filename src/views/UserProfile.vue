@@ -56,6 +56,7 @@
                   :headers="headers"
                   :items="items.slice(0, 7)"
                   hide-actions
+                  class="custom-grid-12"
                 >
                   <template
                     slot="headerCell"
@@ -171,7 +172,7 @@ export default {
 }
 </script>
 <style>
-.v-card-profile, span{
+.v-card-profile, .custom-grid-12{
   width: 100%;
 }
 .mapouter {

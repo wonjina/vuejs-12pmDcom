@@ -104,7 +104,6 @@
                   <material-card
                     color="green"
                     flat
-                    full-width
                     title="Top Review 5"
                   >
                     <v-data-table
