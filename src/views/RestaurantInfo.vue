@@ -95,7 +95,6 @@
 <script>
 import Map from '@/components/local/Map.vue'
 import ImgSlide from '@/components/local/ImagesSlide.vue'
-import '@/styles/local/slide.scss'
 
 // position: relative;
 export default {

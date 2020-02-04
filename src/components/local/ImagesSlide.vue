@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+import '@/styles/local/slide.scss'
 export default {
   name: 'Carousel',
   data () {
