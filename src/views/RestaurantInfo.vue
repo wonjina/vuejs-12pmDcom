@@ -6,6 +6,7 @@
         xs12
         md6
         lg3
+        class="scroll"
       >
         <v-layout
           column
@@ -41,6 +42,9 @@
                 </v-card-text>
               </material-card>
             </v-layout>
+            <v-flex xs12>
+              <img-slide/>
+            </v-flex>
             <material-card color="green">
               <div
                 slot="header"
@@ -90,11 +94,26 @@
 
 <script>
 import Map from '@/components/local/Map.vue'
+import ImgSlide from '@/components/local/ImagesSlide.vue'
+import '@/styles/local/slide.scss'
+
+// position: relative;
 export default {
   components: {
-    'map-component': Map
+    'map-component': Map,
+    'img-slide': ImgSlide
   },
   data: () => ({
+    settings: [
+      {
+        'centerMode': true,
+        'centerPadding': '20px',
+        'focusOnSelect': true,
+        'infinite': true,
+        'slidesToShow': 3,
+        'speed': 500
+      }
+    ],
     headers: [
       {
         sortable: false,
@@ -161,7 +180,7 @@ export default {
 }
 .mapouter {
   text-align:right;
-  height:100%;
+  height:95%;
   width:100%;
   position: absolute;
 }
@@ -173,5 +192,11 @@ export default {
 }
 .content_align {
   line-height:130px;
+}
+.slick-slider {
+  position: relative;
+}
+.scroll {
+  overflow:scroll;
 }
 </style>

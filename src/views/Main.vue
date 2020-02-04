@@ -291,9 +291,8 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .custom-padding{
-    padding: 10px;
-  }
+<style>
+#core-view {
+  padding-bottom: 100px;
+}
 </style>

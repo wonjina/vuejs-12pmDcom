@@ -100,7 +100,7 @@ export default {
 <style>
 .mapouter {
   text-align:right;
-  height:100%;
+  height:95%;
   width:100%;
   position: absolute;
 }

@@ -5,7 +5,7 @@
         <router-view />
       </v-fade-transition>
     </div>
-    <core-footer v-if="$route.name !== 'Maps' && $route.name !== 'UserProfile'" />
+    <core-footer v-if="$route.name !== 'Search' && $route.name !== 'RestaurantInfo'" />
   </v-content>
 </template>
 
@@ -18,9 +18,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#core-view {
-  padding-bottom: 100px;
-}
-</style>
