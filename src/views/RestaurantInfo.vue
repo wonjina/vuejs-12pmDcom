@@ -10,7 +10,7 @@
       >
         <v-layout
           column
-          class="container grid-list-xl layout flex">
+          class="browser-height container grid-list-xl layout flex">
           <v-flex xs8>
             <v-layout>
               <material-card class="v-card-profile">
@@ -33,6 +33,7 @@
                     color="success"
                     round
                     class="font-weight-light"
+                    @click="reviewModalOpen()"
                   >리뷰 쓰기</v-btn>
                   <v-btn
                     color="success"
@@ -84,6 +85,9 @@
               </v-layout>
             </material-card>
           </v-flex>
+          <v-flex xs8>
+            <review-modal/>       <!-- ADD review modal -->
+          </v-flex>
         </v-layout>
       </v-flex>
 
@@ -95,12 +99,14 @@
 <script>
 import Map from '@/components/local/Map.vue'
 import ImgSlide from '@/components/local/ImagesSlide.vue'
+import ReviewModal from '@/components/local/ReviewModal.vue'
 
 // position: relative;
 export default {
   components: {
     'map-component': Map,
-    'img-slide': ImgSlide
+    'img-slide': ImgSlide,
+    'review-modal': ReviewModal
   },
   data: () => ({
     settings: [
@@ -170,7 +176,12 @@ export default {
         salary: '$78,615'
       }
     ]
-  })
+  }),
+  methods: {
+    reviewModalOpen () {
+      this.$store.commit('TOGGLE_REVIEW_MODAL_FLAGE', true)
+    }
+  }
 }
 </script>
 <style>
@@ -197,5 +208,8 @@ export default {
 }
 .scroll {
   overflow:scroll;
+}
+.browser-height {
+  height: 90vh;
 }
 </style>

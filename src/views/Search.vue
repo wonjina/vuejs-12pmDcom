@@ -1,16 +1,16 @@
 <template>
   <v-container fluid>
-    <v-layout>
+    <v-layout class="browser-height">
       <v-flex
-        class=""
         sm6
         xs12
         md6
         lg3
+        class="scroll"
       >
         <v-data-table
           :headers="headers"
-          :items="items.slice(0, 7)"
+          :items="items.slice(0, 20)"
           hide-actions
         >
           <template
@@ -32,6 +32,13 @@
             </td>
           </template>
         </v-data-table>
+        <div class="text-center">
+          <v-pagination
+            v-model="page"
+            :length="15"
+            :total-visible="6"
+          />
+        </div>
       </v-flex>
       <map-component/>  <!-- Add Map.vue -->
     </v-layout>
@@ -40,12 +47,14 @@
 
 <script>
 import Map from '@/components/local/Map.vue'
+
 export default {
   components: {
     'map-component': Map
   },
   data () {
     return {
+      page: 1,
       headers: [
         {
           sortable: false,
@@ -90,6 +99,81 @@ export default {
           review: '344',
           star: '3.1',
           url: ''
+        }, {
+          name: 'Dakota Rice',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Rice',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric08e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric09e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric00e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric0e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric9e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric8e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric7e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric6e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric5e',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Rice4',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Rice3',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Rice2',
+          review: '344',
+          star: '3.1',
+          url: ''
+        }, {
+          name: 'Dakota Ric1e',
+          review: '344',
+          star: '3.1',
+          url: ''
         }
       ]
     }
@@ -109,5 +193,14 @@ export default {
   background:none!important;
   height:100%;
   width:100%;
+}
+.browser-height {
+  height: 90vh;
+}
+.scroll {
+  overflow:scroll;
+}
+.text-center {
+  text-align: center!important;
 }
 </style>
