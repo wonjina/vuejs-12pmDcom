@@ -36,7 +36,7 @@
           <v-pagination
             v-model="page"
             :length="15"
-            :total-visible="4"
+            :total-visible="6"
           />
         </div>
       </v-flex>
