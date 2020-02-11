@@ -1,39 +1,11 @@
 <template>
-  <v-file-input
-    v-model="files"
-    :show-size="1000"
-    color="deep-purple accent-4"
-    counter
-    label="File input"
-    multiple
-    placeholder="Select your files"
-    prepend-icon="mdi-paperclip"
-    outlined
-  >
-    <template v-slot:selection="{ index, text }">
-      <v-chip
-        v-if="index < 2"
-        color="deep-purple accent-4"
-        dark
-        label
-        small
-      >
-        {{ text }}
-      </v-chip>
-
-      <span
-        v-else-if="index === 2"
-        class="overline grey--text text--darken-3 mx-2"
-      >
-        +{{ files.length - 2 }} File(s)
-      </span>
-    </template>
-  </v-file-input>
+  <div class="v-card__text">
+    <v-file-input
+      accept="image/*"
+      label="File input"/>
+  </div>
 </template>
 <script>
 export default {
-  data: () => ({
-    files: []
-  })
 }
 </script>

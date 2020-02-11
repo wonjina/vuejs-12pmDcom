@@ -44,7 +44,7 @@
               </material-card>
             </v-layout>
             <v-flex xs12>
-              <img-slide/>
+              <img-slide/>            <!-- ADD Imag-slide vue  -->
             </v-flex>
             <material-card color="green">
               <div
@@ -82,6 +82,14 @@
                     <td class="text-xs-right">{{ item.salary }}</td>
                   </template>
                 </v-data-table>
+                <v-flex
+                  xs12
+                  class="text-xs-center">
+                  <v-btn
+                    class="ma-2 ghost-button"
+                    outlined
+                    color="white"><v-icon dark>mdi-plus</v-icon></v-btn>
+                </v-flex>
               </v-layout>
             </material-card>
           </v-flex>
