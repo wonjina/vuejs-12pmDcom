@@ -40,17 +40,19 @@
           />
         </div>
       </v-flex>
-      <map-component/>  <!-- Add Map.vue -->
+      <naver-map/>  <!-- Add Map.vue -->
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import Map from '@/components/local/Map.vue'
+import NaverMap from '@/components/local/NaverMap.vue'
 
 export default {
   components: {
-    'map-component': Map
+    'map-component': Map,
+    'naver-map': NaverMap
   },
   data () {
     return {

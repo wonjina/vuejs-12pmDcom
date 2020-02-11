@@ -10,7 +10,8 @@
       >
         <v-layout
           column
-          class="browser-height container grid-list-xl layout flex">
+          class="browser-height container grid-list-xl layout flex"
+        >
           <v-flex xs8>
             <v-layout>
               <material-card class="v-card-profile">
@@ -23,8 +24,12 @@
                   <span>가게 이름</span>
                 </v-avatar>
                 <v-card-text class="text-xs-center">
-                  <h6 class="category text-gray font-weight-thin mb-3">카테고리</h6>
-                  <h4 class="card-title font-weight-light">도로명 주소 쓸 공간~~</h4>
+                  <h6 class="category text-gray font-weight-thin mb-3">
+                    카테고리
+                  </h6>
+                  <h4 class="card-title font-weight-light">
+                    도로명 주소 쓸 공간~~
+                  </h4>
                   <p class="card-description font-weight-light">
                     <span>리뷰 21</span>
                     <span>평점 4.0</span>
@@ -34,23 +39,29 @@
                     round
                     class="font-weight-light"
                     @click="reviewModalOpen()"
-                  >리뷰 쓰기</v-btn>
+                  >
+                    리뷰 쓰기
+                  </v-btn>
                   <v-btn
                     color="success"
                     round
                     class="font-weight-light"
-                  >모집글 쓰기</v-btn>
+                  >
+                    모집글 쓰기
+                  </v-btn>
                 </v-card-text>
               </material-card>
             </v-layout>
             <v-flex xs12>
-              <img-slide/>            <!-- ADD Imag-slide vue  -->
+              <img-slide />            <!-- ADD Imag-slide vue  -->
             </v-flex>
             <material-card color="green">
               <div
                 slot="header"
               >
-                <div class="title font-weight-light mb-2">리뷰</div>
+                <div class="title font-weight-light mb-2">
+                  리뷰
+                </div>
               </div>
 
               <v-layout
@@ -79,40 +90,48 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.country }}</td>
                     <td>{{ item.city }}</td>
-                    <td class="text-xs-right">{{ item.salary }}</td>
+                    <td class="text-xs-right">
+                      {{ item.salary }}
+                    </td>
                   </template>
                 </v-data-table>
                 <v-flex
                   xs12
-                  class="text-xs-center">
+                  class="text-xs-center"
+                >
                   <v-btn
                     class="ma-2 ghost-button"
                     outlined
-                    color="white"><v-icon dark>mdi-plus</v-icon></v-btn>
+                    color="white"
+                  >
+                    <v-icon dark>
+                      mdi-plus
+                    </v-icon>
+                  </v-btn>
                 </v-flex>
               </v-layout>
             </material-card>
           </v-flex>
           <v-flex xs8>
-            <review-modal/>       <!-- ADD review modal -->
+            <review-modal />       <!-- ADD review modal -->
           </v-flex>
         </v-layout>
       </v-flex>
 
-      <map-component/>
+      <naver-map />          <!-- Add Naver-map vue -->
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import Map from '@/components/local/Map.vue'
+import NaverMap from '@/components/local/NaverMap.vue'
 import ImgSlide from '@/components/local/ImagesSlide.vue'
 import ReviewModal from '@/components/local/ReviewModal.vue'
 
 // position: relative;
 export default {
   components: {
-    'map-component': Map,
+    'naver-map': NaverMap,
     'img-slide': ImgSlide,
     'review-modal': ReviewModal
   },
@@ -198,7 +217,7 @@ export default {
 }
 .mapouter {
   text-align:right;
-  height:95%;
+  height:100%;
   width:100%;
   position: absolute;
 }

@@ -21,7 +21,12 @@
           v-if="!title && !text"
           name="header"
         />
-        <span v-else>
+        <span
+          v-else
+          class="horizon-arr">
+          <button>
+            <v-icon color="white">mdi-autorenew</v-icon>
+          </button>
           <h4
             class="title font-weight-light mb-2"
             v-text="title"
@@ -115,4 +120,7 @@ export default {
       }
     }
   }
+.horizon-arr{
+  display: flex;
+}
 </style>
