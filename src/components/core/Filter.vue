@@ -25,7 +25,9 @@
       <v-container grid-list-xl>
         <v-layout wrap>
           <v-flex xs12>
-            <div class="text-xs-center body-2 text-uppercase sidebar-filter">Sidebar Filters</div>
+            <div class="text-xs-center body-2 text-uppercase sidebar-filter">
+              Sidebar Filters
+            </div>
 
             <v-layout justify-center>
               <v-avatar
@@ -33,38 +35,10 @@
                 :key="index+c"
                 :class="[c === color ? 'color-active color-' + c: 'color-' + c]"
                 size="23"
-
                 @click="setColor(c)"
               />
             </v-layout>
-            <v-divider class="mt-3"/>
-          </v-flex>
-          <v-flex
-            xs12
-          >
-            <div class="text-xs-center body-2 text-uppercase sidebar-filter">Images</div>
-          </v-flex>
-          <v-flex
-            v-for="(img,index) in images"
-            :key="img+index"
-            xs3
-          >
-            <v-img
-              :class="[image === img ? 'image-active' : '']"
-              :src="img"
-              height="120"
-              @click.native="setImage(img)"
-            />
-          </v-flex>
-          <v-flex xs12>
-            <v-btn
-              href="https://www.creative-tim.com/product/vuetify-material-dashboard"
-              target="_blank"
-              color="success"
-              block
-            >
-              Free Download
-            </v-btn>
+            <v-divider class="mt-3" />
           </v-flex>
           <v-flex xs12>
             <div class="text-xs-center body-2 text-uppercase">
@@ -112,29 +86,23 @@ import {
 export default {
   data: () => ({
     colors: [
-      'primary',
+      'purple',
       'info',
       'success',
       'warning',
-      'danger'
-    ],
-    images: [
-      'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-1.23832d31.jpg',
-      'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg',
-      'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-3.3a54f533.jpg',
-      'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-4.3b7e38ed.jpg'
+      'red'
     ]
   }),
 
   computed: {
-    ...mapState('app', ['image', 'color']),
+    ...mapState('app', ['color']),
     color () {
       return this.$store.state.app.color
     }
   },
 
   methods: {
-    ...mapMutations('app', ['setImage']),
+    ...mapMutations('app', ['setColor']),
     setColor (color) {
       this.$store.state.app.color = color
     }

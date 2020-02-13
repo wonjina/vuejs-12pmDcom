@@ -12,7 +12,6 @@
         md12
       >
         <material-card
-          color="green"
           title="Simple Table"
           text="Here is a subtitle for this table"
         >
@@ -46,7 +45,6 @@
         md12
       >
         <material-card
-          color="green"
           flat
           full-width
           title="Table on Plain Background"

@@ -21,7 +21,13 @@
           v-if="!title && !text"
           name="header"
         />
-        <span v-else>
+        <span
+          v-else
+          class="horizon-arr"
+        >
+          <button>
+            <v-icon color="white">mdi-autorenew</v-icon>
+          </button>
           <h4
             class="title font-weight-light mb-2"
             v-text="title"
@@ -54,14 +60,14 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
+
 export default {
   inheritAttrs: false,
 
   props: {
-    color: {
-      type: String,
-      default: 'secondary'
-    },
     elevation: {
       type: [Number, String],
       default: 10
@@ -89,6 +95,10 @@ export default {
   },
 
   computed: {
+    ...mapState('app', ['color']),
+    color () {
+      return this.$store.state.app.color
+    },
     hasOffset () {
       return this.$slots.header ||
         this.$slots.offset ||
@@ -115,4 +125,7 @@ export default {
       }
     }
   }
+.horizon-arr{
+  display: flex;
+}
 </style>

@@ -26,11 +26,15 @@ import { sync } from 'vuex-router-sync'
 import App from './App'
 import router from '@/router'
 import store from '@/store'
+import naver from 'vue-naver-maps'
 
 // Sync store with router
 sync(store, router)
 
 Vue.config.productionTip = false
+Vue.use(naver, {
+  clientID: '6eql9t8spl'
+})
 
 /* eslint-disable no-new */
 new Vue({

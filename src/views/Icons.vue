@@ -4,7 +4,7 @@
     fluid
     style="flex-wrap: wrap;"
   >
-    <material-card color="green">
+    <material-card>
       <div
         slot="header"
       >

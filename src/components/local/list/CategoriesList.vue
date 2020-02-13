@@ -1,32 +1,23 @@
 <template>
-  <material-card color="green">
-    <div
-      slot="header"
+  <div>
+    <v-tooltip
+      v-for="(icon,index) in icons"
+      :key="icon+index"
+      top
+      content-class="top"
+      class="custom-padding"
     >
-      <div class="title font-weight-light mb-2">카테고리 검색</div>
-    </div>
-
-    <v-layout
-      align-center
-      wrap
-    >
-      <v-tooltip
-        v-for="(icon,index) in icons"
-        :key="icon+index"
-        top
-        content-class="top">
-        <v-btn
-          slot="activator"
+      <v-btn
+        slot="activator"
+      >
+        <img
+          src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
+          style="height: 50px; width: 50px;"
         >
-          <img
-            src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
-            style="height: 50px; width: 50px;"
-          >
-        </v-btn>
-        <span>{{ icon }}</span>
-      </v-tooltip>
-    </v-layout>
-  </material-card>
+      </v-btn>
+      <span>{{ icon }}</span>
+    </v-tooltip>
+  </div>
 </template>
 <script>
 export default {
@@ -64,6 +55,5 @@ export default {
   }
 }
 </script>
-
 <style>
 </style>
