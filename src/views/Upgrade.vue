@@ -7,7 +7,6 @@
         md8
       >
         <material-card
-          color="primary"
           title="Vuetify Material Dashboard PRO"
           text="Are you looking for more components? Please check our Premium Version of Vuetify Material Dashboard PRO."
         >

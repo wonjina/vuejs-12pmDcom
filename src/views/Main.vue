@@ -1,134 +1,17 @@
 <template>
   <div>
     <v-container fluid>
-      <v-layout column>
-        <main-banner-component/> <!--Add Main banner.vue  -->
-        <v-flex>
-          <v-layout
-            column
-            class="container grid-list-xl layout flex">
-            <v-flex xs8>
-              <v-layout>
-                <v-flex
-                  class="custom-padding"
-                  sm6
-                  xs12
-                  md6
-                  lg4
-                >
-                  <material-card
-                    :active-class="color"
-                    flat
-                    full-width
-                    title="Top Review 5"
-                  >
-                    <v-data-table
-                      :headers="headers"
-                      :items="items.slice(0, 7)"
-                      hide-actions
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="{ item }"
-                      >
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.review }}</td>
-                        <td>{{ item.star }}</td>
-                        <td class="text-xs-right">
-                          <v-btn
-                            slot="activator"
-                            class="v-btn--simple"
-                            color="success"
-                            icon
-                          >
-                            <v-icon color="primary">mdi-arrow-right-bold</v-icon>
-                          </v-btn>
-                        </td>
-                      </template>
-                    </v-data-table>
-                  </material-card>
-                </v-flex>
-                <v-flex
-                  class="custom-padding"
-                  sm6
-                  xs12
-                  md6
-                  lg4
-                >
-                  <material-card
-                    :active-class="color"
-                    flat
-                    full-width
-                    title="Top Review 5"
-                  >
-                    <v-data-table
-                      :headers="headers"
-                      :items="items.slice(0, 7)"
-                      hide-actions
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="{ item }"
-                      >
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.review }}</td>
-                        <td>{{ item.star }}</td>
-                        <td class="text-xs-right">
-                          <v-btn
-                            slot="activator"
-                            class="v-btn--simple"
-                            color="success"
-                            icon
-                          >
-                            <v-icon color="primary">mdi-arrow-right-bold</v-icon>
-                          </v-btn>
-                        </td>
-                      </template>
-                    </v-data-table>
-                  </material-card>
-                </v-flex>
-                <v-flex
-                  class="custom-padding"
-                  sm6
-                  xs12
-                  md6
-                  lg4
-                >
-                  <material-card
-                    :active-class="color"
-                    flat
-                    title="Top Review 5"
-                  >
-                    <v-data-table
-                      :headers="headers"
-                      :items="items.slice(0, 7)"
-                      hide-actions
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="{ item }"
-                      >
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.review }}</td>
-                        <td>{{ item.star }}</td>
-                        <td class="text-xs-right">
-                          <v-btn
-                            slot="activator"
-                            class="v-btn--simple"
-                            color="success"
-                            icon
-                          >
-                            <v-icon color="primary">mdi-arrow-right-bold</v-icon>
-                          </v-btn>
-                        </td>
-                      </template>
-                    </v-data-table>
-                  </material-card>
-                </v-flex>
-              </v-layout>
-              <categories-component/>   <!--Add BlockArrangeList.vue  -->
-            </v-flex>
-          </v-layout>
+      <v-layout
+        column
+        class="container grid-list-xl layout flex"
+      >
+        <main-banner-component /> <!--Add Main banner.vue  -->
+        <table-layout />          <!--Add table layout.vue  -->
+        <v-flex xs8>
+          <block-arrange-list>
+            <!--Add BlockArrangeList.vue  -->
+            <categories-list />      <!--Add categories List.vue  -->
+          </block-arrange-list>
         </v-flex>
       </v-layout>
     </v-container>
@@ -137,16 +20,21 @@
 
 <script>
 
-import BlockArrangeList from '@/components/local/BlockArrangeList.vue'
+import BlockArrangeList from '@/components/local/list/BlockArrangeList.vue'
 import MainBanner from '@/components/local/MainBanner.vue'
+import TableLayout from '@/components/local/layout/TableLayout.vue'
+import Categories from '@/components/local/list/CategoriesList.vue'
+
 import {
   mapState
 } from 'vuex'
 
 export default {
   components: {
-    'categories-component': BlockArrangeList,
-    'main-banner-component': MainBanner
+    'block-arrange-list': BlockArrangeList,
+    'main-banner-component': MainBanner,
+    'table-layout': TableLayout,
+    'categories-list': Categories
   },
   data () {
     return {
@@ -279,7 +167,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('app', ['image', 'color']),
+    ...mapState('app', ['color']),
     color () {
       return this.$store.state.app.color
     }

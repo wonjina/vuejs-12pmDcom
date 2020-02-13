@@ -23,7 +23,8 @@
         />
         <span
           v-else
-          class="horizon-arr">
+          class="horizon-arr"
+        >
           <button>
             <v-icon color="white">mdi-autorenew</v-icon>
           </button>
@@ -59,14 +60,14 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
+
 export default {
   inheritAttrs: false,
 
   props: {
-    color: {
-      type: String,
-      default: 'secondary'
-    },
     elevation: {
       type: [Number, String],
       default: 10
@@ -94,6 +95,10 @@ export default {
   },
 
   computed: {
+    ...mapState('app', ['color']),
+    color () {
+      return this.$store.state.app.color
+    },
     hasOffset () {
       return this.$slots.header ||
         this.$slots.offset ||

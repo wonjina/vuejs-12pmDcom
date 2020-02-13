@@ -8,8 +8,7 @@
       align-center
     >
       <v-flex xs12>
-        <material-card
-          color="green">
+        <material-card>
           <div
             slot="header"
           >

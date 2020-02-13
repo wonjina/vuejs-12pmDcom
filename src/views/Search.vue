@@ -5,33 +5,10 @@
         sm6
         xs12
         md6
-        lg3
+        lg5
         class="scroll"
       >
-        <v-data-table
-          :headers="headers"
-          :items="items.slice(0, 20)"
-          hide-actions
-        >
-          <template
-            slot="items"
-            slot-scope="{ item }"
-          >
-            <td>{{ item.name }}</td>
-            <td>{{ item.review }}</td>
-            <td>{{ item.star }}</td>
-            <td class="text-xs-right">
-              <v-btn
-                slot="activator"
-                class="v-btn--simple"
-                color="success"
-                icon
-              >
-                <v-icon color="primary">mdi-arrow-right-bold</v-icon>
-              </v-btn>
-            </td>
-          </template>
-        </v-data-table>
+        <restaurant-table />    <!-- Add restaurant table.vue -->
         <div class="text-center">
           <v-pagination
             v-model="page"
@@ -40,144 +17,25 @@
           />
         </div>
       </v-flex>
-      <naver-map/>  <!-- Add Map.vue -->
+      <div class="custom-width">
+        <naver-map />  <!-- Add Map.vue -->
+      </div>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import Map from '@/components/local/Map.vue'
 import NaverMap from '@/components/local/NaverMap.vue'
+import RestaurantTable from '@/components/local/list/RestaurantTable.vue'
 
 export default {
   components: {
-    'map-component': Map,
-    'naver-map': NaverMap
+    'naver-map': NaverMap,
+    'restaurant-table': RestaurantTable
   },
   data () {
     return {
-      page: 1,
-      headers: [
-        {
-          sortable: false,
-          text: '가게이름',
-          value: 'Name'
-        },
-        {
-          sortable: false,
-          text: '리뷰',
-          value: 'Review'
-        },
-        {
-          sortable: false,
-          text: '평점',
-          value: 'Star'
-        }
-      ],
-      items: [
-        {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        },
-        {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric08e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric09e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric00e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric0e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric9e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric8e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric7e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric6e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric5e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice4',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice3',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice2',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Ric1e',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }
-      ]
+      page: 1
     }
   }
 }
@@ -204,5 +62,8 @@ export default {
 }
 .text-center {
   text-align: center!important;
+}
+.custom-width {
+    width: 75%;
 }
 </style>

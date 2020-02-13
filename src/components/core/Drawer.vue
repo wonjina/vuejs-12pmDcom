@@ -94,7 +94,7 @@ export default {
     ]
   }),
   computed: {
-    ...mapState('app', ['image', 'color']),
+    ...mapState('app', ['color']),
     inputValue: {
       get () {
         return this.$store.state.app.drawer

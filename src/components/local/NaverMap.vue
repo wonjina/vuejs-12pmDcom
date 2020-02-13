@@ -1,30 +1,20 @@
 <template>
-  <div class="custom-width">
-    <naver-maps
-      :height="900"
-      :map-options="mapOptions"
+  <naver-maps
+    :height="900"
+    :map-options="mapOptions"
+  >
+    <naver-info-window
+      class="info-window"
+      :is-open="info"
+      @load="onWindowLoad"
     >
-      <naver-marker
-        id="maker"
-        :lat="37"
-        :lng="127"
-        @click="onMarkerClicked"
-        @load="onMarkerLoaded"
-      />
-      <naver-info-window
-        class="info-window"
-        :marker="marker"
-        :is-open="info"
-        @load="onWindowLoad"
-      >
-        <div class="info-window-container">
-          <h1>
-            Test
-          </h1>
-        </div>
-      </naver-info-window>
-    </naver-maps>
-  </div>
+      <div class="info-window-container">
+        <h1>
+          Test
+        </h1>
+      </div>
+    </naver-info-window>
+  </naver-maps>
 </template>
 
 <script>
@@ -62,9 +52,6 @@ export default {
 }
 </script>
 <style scoped>
-.custom-width {
-    width: 75%;
-}
 .info-window-container {
     padding: 10px;
     width: 300px;
