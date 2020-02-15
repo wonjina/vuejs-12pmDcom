@@ -3,16 +3,19 @@
     <div
       :disabled="atHeadOfList"
       class="card-carousel--nav__left"
-      @click="moveCarousel(-1)"/>
+      @click="moveCarousel(-1)"
+    />
     <div class="card-carousel">
       <div class="card-carousel--overflow-container">
         <div
           :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}"
-          class="card-carousel-cards">
+          class="card-carousel-cards"
+        >
           <div
             v-for="(item, index) in items"
             :key="index"
-            class="card-carousel--card">
+            class="card-carousel--card"
+          >
             <img src="https://placehold.it/200x200">
           </div>
         </div>
@@ -21,7 +24,8 @@
     <div
       :disabled="atEndOfList"
       class="card-carousel--nav__right"
-      @click="moveCarousel(1)"/>
+      @click="moveCarousel(1)"
+    />
   </div>
 </template>
 <script>

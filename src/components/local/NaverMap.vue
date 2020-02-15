@@ -1,6 +1,6 @@
 <template>
   <naver-maps
-    :height="900"
+    class="custom-width"
     :map-options="mapOptions"
   >
     <naver-info-window
@@ -56,5 +56,9 @@ export default {
     padding: 10px;
     width: 300px;
     height: 100px;
+}
+.custom-width {
+  height: 100%;
+  width: 100%;
 }
 </style>

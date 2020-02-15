@@ -17,4 +17,11 @@
 .v-datatable thead th.column.sortable i {
   vertical-align: unset;
 }
+.container.fluid {
+  height: 100%;
+}
+#core-view {
+  padding-bottom: 65px;
+  height: 90%;;
+}
 </style>

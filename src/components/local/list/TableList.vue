@@ -12,7 +12,10 @@
         <td>{{ item.name }}</td>
         <td>{{ item.review }}</td>
         <td>{{ item.star }}</td>
-        <td class="text-xs-right">
+        <td
+          v-if="linkBtn"
+          class="text-xs-right"
+        >
           <v-btn
             slot="activator"
             class="v-btn--simple"
@@ -30,6 +33,12 @@
 </template>
 <script>
 export default {
+  props: {
+    linkBtn: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       headers: [

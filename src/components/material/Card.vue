@@ -25,8 +25,10 @@
           v-else
           class="horizon-arr"
         >
-          <button>
-            <v-icon color="white">mdi-autorenew</v-icon>
+          <button v-if="refresh">
+            <v-icon color="white">
+              mdi-autorenew
+            </v-icon>
           </button>
           <h4
             class="title font-weight-light mb-2"
@@ -46,6 +48,31 @@
 
     <v-card-text>
       <slot />
+      <v-flex
+        v-if="sliceBtn"
+        xs12
+        class="text-xs-center"
+      >
+        <v-btn
+          class="ma-2 ghost-button"
+          outlined
+          color="white"
+        >
+          <v-icon dark>
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </v-flex>
+      <div
+        v-if="pagingBtn"
+        class="text-center"
+      >
+        <v-pagination
+          v-model="page"
+          :length="15"
+          :total-visible="6"
+        />
+      </div>
     </v-card-text>
 
     <v-divider
@@ -91,6 +118,18 @@ export default {
     text: {
       type: String,
       default: undefined
+    },
+    refresh: {
+      type: Boolean,
+      default: false
+    },
+    sliceBtn: {
+      type: Boolean,
+      default: false
+    },
+    pagingBtn: {
+      type: Boolean,
+      default: false
     }
   },
 

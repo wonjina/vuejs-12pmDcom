@@ -42,60 +42,11 @@
       <v-flex xs12>
         <img-slide />            <!-- ADD Imag-slide vue  -->
       </v-flex>
-      <material-card>
-        <div
-          slot="header"
-        >
-          <div class="title font-weight-light mb-2">
-            리뷰
-          </div>
-        </div>
-        <v-layout
-          align-center
-          wrap
-        >
-          <v-data-table
-            :headers="headers"
-            :items="items.slice(0, 7)"
-            hide-actions
-            class="custom-grid-12"
-          >
-            <template
-              slot="headerCell"
-              slot-scope="{ header }"
-            >
-              <span
-                class="subheading font-weight-light text--darken-3"
-                v-text="header.text"
-              />
-            </template>
-            <template
-              slot="items"
-              slot-scope="{ item }"
-            >
-              <td>{{ item.name }}</td>
-              <td>{{ item.country }}</td>
-              <td>{{ item.city }}</td>
-              <td class="text-xs-right">
-                {{ item.salary }}
-              </td>
-            </template>
-          </v-data-table>
-          <v-flex
-            xs12
-            class="text-xs-center"
-          >
-            <v-btn
-              class="ma-2 ghost-button"
-              outlined
-              color="white"
-            >
-              <v-icon dark>
-                mdi-plus
-              </v-icon>
-            </v-btn>
-          </v-flex>
-        </v-layout>
+      <material-card
+        title="리뷰"
+        slice-btn
+      >
+        <table-list />        <!-- ADD table list -->
       </material-card>
     </v-flex>
     <v-flex xs8>
@@ -106,11 +57,13 @@
 <script>
 import ImgSlide from '@/components/local/ImagesSlide.vue'
 import ReviewModal from '@/components/local/ReviewModal.vue'
+import TableList from '@/components/local/list/TableList.vue'
 
 export default {
   components: {
     'img-slide': ImgSlide,
-    'review-modal': ReviewModal
+    'review-modal': ReviewModal,
+    'table-list': TableList
   },
   data: () => ({
     headers: [

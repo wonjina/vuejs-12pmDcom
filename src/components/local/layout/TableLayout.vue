@@ -12,9 +12,10 @@
           :active-class="color"
           flat
           full-width
+          refresh
           title="Top Review 5"
         >
-          <restaurant-table />    <!-- Add restaurant table.vue -->
+          <table-list link-btn />    <!-- Add restaurant table.vue -->
         </material-card>
       </v-flex>
       <v-flex
@@ -28,9 +29,10 @@
           :active-class="color"
           flat
           full-width
+          refresh
           title="Top Review 5"
         >
-          <restaurant-table />    <!-- Add restaurant table.vue -->
+          <table-list link-btn />    <!-- Add restaurant table.vue -->
         </material-card>
       </v-flex>
       <v-flex
@@ -78,7 +80,7 @@
 </template>
 <script>
 
-import RestaurantTable from '@/components/local/list/RestaurantTable.vue'
+import TableList from '@/components/local/list/TableList.vue'
 
 import {
   mapState
@@ -86,7 +88,7 @@ import {
 
 export default {
   components: {
-    'restaurant-table': RestaurantTable
+    'table-list': TableList
   },
   data () {
     return {

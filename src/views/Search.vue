@@ -1,22 +1,13 @@
 <template>
   <v-container fluid>
     <v-layout class="browser-height">
-      <v-flex
-        sm6
-        xs12
-        md6
-        lg5
-        class="scroll"
+      <material-card
+        flat
+        full-width
+        paging-btn
       >
-        <restaurant-table />    <!-- Add restaurant table.vue -->
-        <div class="text-center">
-          <v-pagination
-            v-model="page"
-            :length="15"
-            :total-visible="6"
-          />
-        </div>
-      </v-flex>
+        <table-list />    <!-- Add restaurant table.vue  -->
+      </material-card>
       <div class="custom-width">
         <naver-map />  <!-- Add Map.vue -->
       </div>
@@ -26,12 +17,12 @@
 
 <script>
 import NaverMap from '@/components/local/NaverMap.vue'
-import RestaurantTable from '@/components/local/list/RestaurantTable.vue'
+import TableList from '@/components/local/list/TableList.vue'
 
 export default {
   components: {
     'naver-map': NaverMap,
-    'restaurant-table': RestaurantTable
+    'table-list': TableList
   },
   data () {
     return {

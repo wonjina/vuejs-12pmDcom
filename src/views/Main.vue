@@ -7,12 +7,11 @@
       >
         <main-banner-component /> <!--Add Main banner.vue  -->
         <table-layout />          <!--Add table layout.vue  -->
-        <v-flex xs8>
-          <block-arrange-list>
-            <!--Add BlockArrangeList.vue  -->
-            <categories-list />      <!--Add categories List.vue  -->
-          </block-arrange-list>
-        </v-flex>
+        <material-card
+          title="카테고리 검색"
+        >
+          <categories-list /> <!--Add categories List.vue  -->
+        </material-card>
       </v-layout>
     </v-container>
   </div>
@@ -20,7 +19,6 @@
 
 <script>
 
-import BlockArrangeList from '@/components/local/list/BlockArrangeList.vue'
 import MainBanner from '@/components/local/MainBanner.vue'
 import TableLayout from '@/components/local/layout/TableLayout.vue'
 import Categories from '@/components/local/list/CategoriesList.vue'
@@ -31,7 +29,6 @@ import {
 
 export default {
   components: {
-    'block-arrange-list': BlockArrangeList,
     'main-banner-component': MainBanner,
     'table-layout': TableLayout,
     'categories-list': Categories
@@ -180,7 +177,4 @@ export default {
 }
 </script>
 <style>
-#core-view {
-  padding-bottom: 100px;
-}
 </style>

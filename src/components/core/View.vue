@@ -5,7 +5,7 @@
         <router-view />
       </v-fade-transition>
     </div>
-    <core-footer v-if="$route.name !== 'Search' && $route.name !== 'RestaurantInfo'" />
+    <core-footer />
   </v-content>
 </template>
 

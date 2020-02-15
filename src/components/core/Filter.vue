@@ -16,7 +16,7 @@
       dark
       fab
       fixed
-      style="top: 96px;"
+      style="top: 150px;"
       top
     >
       <v-icon>mdi-settings</v-icon>
