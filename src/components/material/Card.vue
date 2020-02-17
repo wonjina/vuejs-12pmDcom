@@ -21,7 +21,15 @@
           v-if="!title && !text"
           name="header"
         />
-        <span v-else>
+        <span
+          v-else
+          class="horizon-arr"
+        >
+          <button v-if="refresh">
+            <v-icon color="white">
+              mdi-autorenew
+            </v-icon>
+          </button>
           <h4
             class="title font-weight-light mb-2"
             v-text="title"
@@ -40,6 +48,31 @@
 
     <v-card-text>
       <slot />
+      <v-flex
+        v-if="sliceBtn"
+        xs12
+        class="text-xs-center"
+      >
+        <v-btn
+          class="ma-2 ghost-button"
+          outlined
+          color="white"
+        >
+          <v-icon dark>
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </v-flex>
+      <div
+        v-if="pagingBtn"
+        class="text-center"
+      >
+        <v-pagination
+          v-model="page"
+          :length="15"
+          :total-visible="6"
+        />
+      </div>
     </v-card-text>
 
     <v-divider
@@ -54,14 +87,12 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
 export default {
   inheritAttrs: false,
-
   props: {
-    color: {
-      type: String,
-      default: 'secondary'
-    },
     elevation: {
       type: [Number, String],
       default: 10
@@ -85,10 +116,30 @@ export default {
     text: {
       type: String,
       default: undefined
+    },
+    refresh: {
+      type: Boolean,
+      default: false
+    },
+    sliceBtn: {
+      type: Boolean,
+      default: false
+    },
+    pagingBtn: {
+      type: Boolean,
+      default: false
     }
   },
-
+  data () {
+    return {
+      page: 1
+    }
+  },
   computed: {
+    ...mapState('app', ['color']),
+    color () {
+      return this.$store.state.app.color
+    },
     hasOffset () {
       return this.$slots.header ||
         this.$slots.offset ||
@@ -97,7 +148,6 @@ export default {
     },
     styles () {
       if (!this.hasOffset) return null
-
       return {
         marginBottom: `${this.offset}px`,
         marginTop: `${this.offset * 2}px`
@@ -115,4 +165,7 @@ export default {
       }
     }
   }
+.horizon-arr{
+  display: flex;
+}
 </style>

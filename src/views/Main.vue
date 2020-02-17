@@ -1,152 +1,34 @@
 <template>
   <div>
     <v-container fluid>
-      <v-layout column>
-        <main-banner-component/> <!--Add Main banner.vue  -->
-        <v-flex>
-          <v-layout
-            column
-            class="container grid-list-xl layout flex">
-            <v-flex xs8>
-              <v-layout>
-                <v-flex
-                  class="custom-padding"
-                  sm6
-                  xs12
-                  md6
-                  lg4
-                >
-                  <material-card
-                    :active-class="color"
-                    flat
-                    full-width
-                    title="Top Review 5"
-                  >
-                    <v-data-table
-                      :headers="headers"
-                      :items="items.slice(0, 7)"
-                      hide-actions
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="{ item }"
-                      >
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.review }}</td>
-                        <td>{{ item.star }}</td>
-                        <td class="text-xs-right">
-                          <v-btn
-                            slot="activator"
-                            class="v-btn--simple"
-                            color="success"
-                            icon
-                          >
-                            <v-icon color="primary">mdi-arrow-right-bold</v-icon>
-                          </v-btn>
-                        </td>
-                      </template>
-                    </v-data-table>
-                  </material-card>
-                </v-flex>
-                <v-flex
-                  class="custom-padding"
-                  sm6
-                  xs12
-                  md6
-                  lg4
-                >
-                  <material-card
-                    :active-class="color"
-                    flat
-                    full-width
-                    title="Top Review 5"
-                  >
-                    <v-data-table
-                      :headers="headers"
-                      :items="items.slice(0, 7)"
-                      hide-actions
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="{ item }"
-                      >
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.review }}</td>
-                        <td>{{ item.star }}</td>
-                        <td class="text-xs-right">
-                          <v-btn
-                            slot="activator"
-                            class="v-btn--simple"
-                            color="success"
-                            icon
-                          >
-                            <v-icon color="primary">mdi-arrow-right-bold</v-icon>
-                          </v-btn>
-                        </td>
-                      </template>
-                    </v-data-table>
-                  </material-card>
-                </v-flex>
-                <v-flex
-                  class="custom-padding"
-                  sm6
-                  xs12
-                  md6
-                  lg4
-                >
-                  <material-card
-                    :active-class="color"
-                    flat
-                    title="Top Review 5"
-                  >
-                    <v-data-table
-                      :headers="headers"
-                      :items="items.slice(0, 7)"
-                      hide-actions
-                    >
-                      <template
-                        slot="items"
-                        slot-scope="{ item }"
-                      >
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.review }}</td>
-                        <td>{{ item.star }}</td>
-                        <td class="text-xs-right">
-                          <v-btn
-                            slot="activator"
-                            class="v-btn--simple"
-                            color="success"
-                            icon
-                          >
-                            <v-icon color="primary">mdi-arrow-right-bold</v-icon>
-                          </v-btn>
-                        </td>
-                      </template>
-                    </v-data-table>
-                  </material-card>
-                </v-flex>
-              </v-layout>
-              <categories-component/>   <!--Add BlockArrangeList.vue  -->
-            </v-flex>
-          </v-layout>
-        </v-flex>
+      <v-layout
+        column
+        class="container grid-list-xl layout flex"
+      >
+        <main-banner-component /> <!--Add Main banner.vue  -->
+        <table-layout />          <!--Add table layout.vue  -->
+        <material-card
+          title="카테고리 검색"
+        >
+          <categories-list /> <!--Add categories List.vue  -->
+        </material-card>
       </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
-
-import BlockArrangeList from '@/components/local/BlockArrangeList.vue'
 import MainBanner from '@/components/local/MainBanner.vue'
+import TableLayout from '@/components/local/layout/TableLayout.vue'
+import Categories from '@/components/local/list/CategoriesList.vue'
 import {
   mapState
 } from 'vuex'
-
 export default {
   components: {
-    'categories-component': BlockArrangeList,
-    'main-banner-component': MainBanner
+    'main-banner-component': MainBanner,
+    'table-layout': TableLayout,
+    'categories-list': Categories
   },
   data () {
     return {
@@ -197,7 +79,6 @@ export default {
           labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
           series: [
             [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
           ]
         },
         options: {
@@ -279,7 +160,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('app', ['image', 'color']),
+    ...mapState('app', ['color']),
     color () {
       return this.$store.state.app.color
     }
@@ -292,7 +173,4 @@ export default {
 }
 </script>
 <style>
-#core-view {
-  padding-bottom: 100px;
-}
 </style>

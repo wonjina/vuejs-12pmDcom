@@ -10,7 +10,7 @@ export default [
     view: 'Main'
   },
   {
-    path: '/RestaurantInfo',
+    path: '/restaurantInfo',
     name: 'RestaurantInfo',
     view: 'RestaurantInfo'
   },
