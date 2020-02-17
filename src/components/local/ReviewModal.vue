@@ -3,7 +3,8 @@
     <v-dialog
       v-model="reviewModalFlage"
       persistent
-      width="35%">
+      width="35%"
+    >
       <v-card
         class="elevation-16 mx-auto"
       >
@@ -16,7 +17,8 @@
         <v-card-text>
           <v-col
             cols="12"
-            md="6">
+            md="6"
+          >
             <v-textarea
               solo
               name="input-7-4"
@@ -24,16 +26,19 @@
             />
           </v-col>
         </v-card-text>
-        <v-divider/>
+        <v-divider />
         <div class="text-xs-center">
-          <v-rating v-model="rating"/>
+          <v-rating v-model="rating" />
         </div>
-        <file-upload/>
+        <file-upload />
         <v-card-actions class="justify-space-between">
           <v-btn
             color="black"
             flat
-            @click.prevent="TOGGLE_REVIEW_MODAL_FLAGE(false)">No Thanks</v-btn>
+            @click.prevent="TOGGLE_REVIEW_MODAL_FLAGE(false)"
+          >
+            No Thanks
+          </v-btn>
           <v-btn
             color="primary"
             flat
