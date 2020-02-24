@@ -14,6 +14,14 @@
         </h1>
       </div>
     </naver-info-window>
+    <naver-marker
+      v-for="(link, index) in links"
+      :key="link.name+index"
+      :lat="link.lat"
+      :lng="link.lng"
+      @click="onMarkerClicked"
+      @load="onMarkerLoaded"
+    />
   </naver-maps>
 </template>
 
@@ -21,6 +29,20 @@
 export default {
   data () {
     return {
+      links: [
+        {
+          lat: 37.001,
+          lng: 127
+        },
+        {
+          lat: 37.05,
+          lng: 127
+        },
+        {
+          lat: 37.1,
+          lng: 127
+        }
+      ],
       info: true,
       mapOptions: {
         lat: 37,
@@ -39,7 +61,7 @@ export default {
   },
   methods: {
     onMarkerLoaded (vue) {
-      vue.marker.setDraggable(true).setCursor('').setClickable(true)
+      vue.marker.setDraggable(false).setCursor('aa').setClickable(true).setAnimation('BOUNCE')
     },
     onMarkerClicked (event) {
       console.log(event)

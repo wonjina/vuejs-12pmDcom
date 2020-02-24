@@ -1,56 +1,52 @@
 <template>
   <div>
     <v-tooltip
-      v-for="(icon,index) in icons"
-      :key="icon+index"
+      v-for="(category,index) in categories"
+      :key="category+index"
       top
       content-class="top"
       class="custom-padding"
     >
       <v-btn
         slot="activator"
+        outline
       >
-        <img
-          src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
-          style="height: 50px; width: 50px;"
-        >
+        <v-icon dark>
+          {{ category.categoryName }}
+        </v-icon>
       </v-btn>
-      <span>{{ icon }}</span>
     </v-tooltip>
   </div>
 </template>
 <script>
+import { restful } from '../../../api'
+import { urls } from '../../../api/requestUrl.js'
+
 export default {
   data () {
     return {
-      icons: [
+      categories: [
         '중국집',
         '한식',
-        '돈까스',
-        '카페',
-        '기타',
         '일식',
         '베트남',
-        '프랑스',
-        'mdi-backup-restore',
-        'mdi-badminton',
-        'mdi-access-point-network',
-        'mdi-account',
-        'mdi-account-alert',
-        'mdi-account-box',
-        'mdi-account-box-multiple',
-        'mdi-backburger',
-        'mdi-backspace',
-        'mdi-backup-restore',
-        'mdi-access-point-network',
-        'mdi-account',
-        'mdi-account-alert',
-        'mdi-account-box',
-        'mdi-account-box-multiple',
-        'mdi-backburger',
-        'mdi-backspace',
-        'mdi-backup-restore'
+        '프랑스'
       ]
+    }
+  },
+  created () {
+    this.fetchData()
+  },
+  methods: {
+    fetchData () {
+      restful
+        .fetch(urls.categories.method, urls.categories.path)
+        .then(data => {
+          this.categories = data.categories
+        })
+        .finally(() => {
+
+        })
     }
   }
 }
