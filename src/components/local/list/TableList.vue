@@ -11,7 +11,7 @@
       >
         <td>{{ item.name }}</td>
         <td>{{ item.review }}</td>
-        <td>{{ item.star }}</td>
+        <td>{{ item.star }} {{ testStr }}</td>
         <td
           v-if="linkBtn"
           class="text-xs-right"
@@ -37,6 +37,10 @@ export default {
     linkBtn: {
       type: Boolean,
       default: false
+    },
+    testStr: {
+      type: String,
+      default: '-=-=-='
     }
   },
   data () {

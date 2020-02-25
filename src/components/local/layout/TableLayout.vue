@@ -15,7 +15,10 @@
           refresh
           title="Top Review 5"
         >
-          <table-list link-btn />    <!-- Add restaurant table.vue -->
+          <table-list
+            link-btn
+            test-str="firstTest value"
+          />    <!-- Add restaurant table.vue -->
         </material-card>
       </v-flex>
       <v-flex
@@ -32,7 +35,10 @@
           refresh
           title="Top Review 5"
         >
-          <table-list link-btn />    <!-- Add restaurant table.vue -->
+          <table-list
+            link-btn
+            test-str="SecondTest value"
+          />    <!-- Add restaurant table.vue -->
         </material-card>
       </v-flex>
       <v-flex
