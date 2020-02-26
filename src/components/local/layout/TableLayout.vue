@@ -14,11 +14,20 @@
           full-width
           refresh
           title="Top Review 5"
+          @fetchData="fetchData"
         >
-          <table-list
-            link-btn
-            test-str="firstTest value"
-          />    <!-- Add restaurant table.vue -->
+          <div
+            v-if="loading"
+            class="loading"
+          >
+            Loading...
+          </div>
+          <div v-if="status">
+            <table-list
+              link-btn
+              :items="restaurants"
+            />    <!-- Add restaurant table.vue -->
+          </div>
         </material-card>
       </v-flex>
       <v-flex
@@ -34,11 +43,20 @@
           full-width
           refresh
           title="Top Review 5"
+          @fetchData="fetchData"
         >
-          <table-list
-            link-btn
-            test-str="SecondTest value"
-          />    <!-- Add restaurant table.vue -->
+          <div
+            v-if="loading"
+            class="loading"
+          >
+            Loading...
+          </div>
+          <div v-if="status">
+            <table-list
+              link-btn
+              :items="restaurants"
+            />    <!-- Add restaurant table.vue -->
+          </div>
         </material-card>
       </v-flex>
       <v-flex
@@ -86,6 +104,8 @@
 </template>
 <script>
 import TableList from '@/components/local/list/TableList.vue'
+import { restful } from '../../../api'
+import { urls } from '../../../api/requestUrl.js'
 import {
   mapState
 } from 'vuex'
@@ -95,6 +115,12 @@ export default {
   },
   data () {
     return {
+      restaurants: {
+        type: Array,
+        default: null
+      },
+      loading: false,
+      status: false,
       headers: [
         {
           sortable: false,
@@ -147,6 +173,23 @@ export default {
     ...mapState('app', ['color']),
     color () {
       return this.$store.state.app.color
+    }
+  },
+  created () {
+    this.loading = true
+    this.fetchData()
+    this.loading = false
+    this.status = true
+  },
+  methods: {
+    fetchData () {
+      console.log('fetchData start...')
+      restful
+        .fetch(urls.restaurantList.method, urls.restaurantList.path)
+        .then(data => {
+          this.restaurants = data
+        })
+        .finally(() => { })
     }
   }
 }

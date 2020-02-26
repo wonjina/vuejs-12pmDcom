@@ -10,8 +10,8 @@
         slot-scope="{ item }"
       >
         <td>{{ item.name }}</td>
-        <td>{{ item.review }}</td>
-        <td>{{ item.star }} {{ testStr }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.rating }}</td>
         <td
           v-if="linkBtn"
           class="text-xs-right"
@@ -21,6 +21,7 @@
             class="v-btn--simple"
             color="success"
             icon
+            @click="moveRestaurantInfo(item)"
           >
             <v-icon color="primary">
               mdi-arrow-right-bold
@@ -34,13 +35,13 @@
 <script>
 export default {
   props: {
+    items: {
+      type: Array,
+      default: null
+    },
     linkBtn: {
       type: Boolean,
       default: false
-    },
-    testStr: {
-      type: String,
-      default: '-=-=-='
     }
   },
   data () {
@@ -61,38 +62,13 @@ export default {
           text: '평점',
           value: 'Star'
         }
-      ],
-      items: [
-        {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        },
-        {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        },
-        {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        },
-        {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }, {
-          name: 'Dakota Rice',
-          review: '344',
-          star: '3.1',
-          url: ''
-        }
       ]
+    }
+  },
+  created () { },
+  methods: {
+    moveRestaurantInfo (restaurant) {
+      this.$router.push({ name: 'RestaurantInfo', params: { restaurantInfo: restaurant } })
     }
   }
 }

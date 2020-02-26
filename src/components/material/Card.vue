@@ -25,7 +25,10 @@
           v-else
           class="horizon-arr"
         >
-          <button v-if="refresh">
+          <button
+            v-if="refresh"
+            @click="clickRefresh"
+          >
             <v-icon color="white">
               mdi-autorenew
             </v-icon>
@@ -152,6 +155,11 @@ export default {
         marginBottom: `${this.offset}px`,
         marginTop: `${this.offset * 2}px`
       }
+    }
+  },
+  methods: {
+    clickRefresh () {
+      this.$emit('fetchData')
     }
   }
 }

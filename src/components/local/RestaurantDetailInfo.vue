@@ -7,18 +7,18 @@
       <v-layout class="text-xs-center">
         <material-card class="v-card-profile">
           <v-flex>
-            <h2>가게 이름 들어갑니다!</h2>
+            <h2>{{ restaurantInfo.name }}</h2>
           </v-flex>
           <v-card-text>
             <h6 class="category text-gray font-weight-thin mb-3">
-              카테고리
+              {{ restaurantInfo.category }}
             </h6>
             <h4 class="card-title font-weight-light">
-              도로명 주소 쓸 공간~~
+              {{ restaurantInfo.load_address }}
             </h4>
             <p class="card-description font-weight-light">
-              <span>리뷰 21</span>
-              <span>평점 4.0</span>
+              <span>{{ restaurantInfo.review_amount }}</span>
+              <span>{{ restaurantInfo.rating }}</span>
             </p>
             <v-btn
               outlined
@@ -46,7 +46,17 @@
         title="리뷰"
         slice-btn
       >
-        <table-list />        <!-- ADD table list -->
+        <div
+          v-if="loading"
+          class="loading"
+        >
+          Loading...
+        </div>
+        <div v-if="status">
+          <review-list
+            :items="reviews"
+          />        <!-- ADD review list -->
+        </div>
       </material-card>
     </v-flex>
     <v-flex xs8>
@@ -57,75 +67,78 @@
 <script>
 import ImgSlide from '@/components/local/ImagesSlide.vue'
 import ReviewModal from '@/components/local/ReviewModal.vue'
-import TableList from '@/components/local/list/TableList.vue'
+import ReviewList from '@/components/local/list/ReviewList.vue'
+import { restful } from '../../api'
+import { urls } from '../../api/requestUrl.js'
+
 export default {
   components: {
     'img-slide': ImgSlide,
     'review-modal': ReviewModal,
-    'table-list': TableList
+    'review-list': ReviewList
   },
-  data: () => ({
-    headers: [
-      {
-        sortable: false,
-        text: 'Name',
-        value: 'name'
+  props: {
+    restaurantInfo: {
+      type: Object,
+      default: null
+    }
+  },
+  data () {
+    return {
+      reviews: {
+        type: Array,
+        default: null
       },
-      {
-        sortable: false,
-        text: 'Country',
-        value: 'country'
-      },
-      {
-        sortable: false,
-        text: 'City',
-        value: 'city'
-      },
-      {
-        sortable: false,
-        text: 'Salary',
-        value: 'salary',
-        align: 'right'
-      }
-    ],
-    items: [
-      {
-        name: 'Dakota Rice',
-        country: 'Niger',
-        city: 'Oud-Tunrhout',
-        salary: '$35,738'
-      },
-      {
-        name: 'Minerva Hooper',
-        country: 'Curaçao',
-        city: 'Sinaai-Waas',
-        salary: '$23,738'
-      }, {
-        name: 'Sage Rodriguez',
-        country: 'Netherlands',
-        city: 'Overland Park',
-        salary: '$56,142'
-      }, {
-        name: 'Philip Chanley',
-        country: 'Korea, South',
-        city: 'Gloucester',
-        salary: '$38,735'
-      }, {
-        name: 'Doris Greene',
-        country: 'Malawi',
-        city: 'Feldkirchen in Kārnten',
-        salary: '$63,542'
-      }, {
-        name: 'Mason Porter',
-        country: 'Chile',
-        city: 'Gloucester',
-        salary: '$78,615'
-      }
-    ]
-  }),
+      loading: false,
+      status: false,
+      headers: [
+        {
+          sortable: false,
+          text: 'Name',
+          value: 'name'
+        },
+        {
+          sortable: false,
+          text: 'Country',
+          value: 'country'
+        },
+        {
+          sortable: false,
+          text: 'City',
+          value: 'city'
+        },
+        {
+          sortable: false,
+          text: 'Salary',
+          value: 'salary',
+          align: 'right'
+        }
+      ]
+    }
+  },
+  created () {
+    console.log('detail page->' + this.status + this.loading + this.restaurantInfo.restaurant_id)
+    this.loading = true
+    console.log('detail page->' + this.status + this.loading)
+    this.fetchData()
+    this.loading = false
+    this.status = true
+    console.log('detail page->' + this.status + this.loading)
+  },
   methods: {
     reviewModalOpen () {
       this.$store.commit('TOGGLE_REVIEW_MODAL_FLAGE', true)
+    },
+    fetchData () {
+      console.log('fetch data start')
+      urls.reviews.data = this.restaurantInfo.restaurant_id
+      restful
+        .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
+        .then(data => {
+          console.log(data)
+          this.reviews = data
+        })
+        .finally(() => { })
     }
   }
 }

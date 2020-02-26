@@ -23,7 +23,7 @@ const request = (method, url, data) => {
 }
 
 export const restful = {
-  fetch (method, url) {
-    return request(method, url)
+  fetch (method, url, data) {
+    return request(method, url, data)
   }
 }

@@ -8,10 +8,14 @@
         lg5
         class="scroll"
       >
-        <restaurant-detail-info />  <!-- Add restaurant detail info vue -->
+        <restaurant-detail-info
+          :restaurant-info="restaurant"
+        />  <!-- Add restaurant detail info vue -->
       </v-flex>
       <div class="custom-width">
-        <naver-map />          <!-- Add Naver-map vue -->
+        <naver-map
+          :restaurant-info="restaurant"
+        />          <!-- Add Naver-map vue -->
       </div>
     </v-layout>
   </v-container>
@@ -20,7 +24,7 @@
 <script>
 import NaverMap from '@/components/local/NaverMap.vue'
 import RestaurantDetailInfo from '@/components/local/RestaurantDetailInfo.vue'
-// position: relative;
+
 export default {
   components: {
     'naver-map': NaverMap,
@@ -36,8 +40,18 @@ export default {
         'slidesToShow': 3,
         'speed': 500
       }
-    ]
-  })
+    ],
+    restaurant: {
+      type: Object,
+      default: null
+    }
+  }),
+  created () {
+    this.restaurant = this.$route.params.restaurantInfo
+    console.log('res Info page->')
+    console.log(this.restaurant)
+  },
+  methods: { }
 }
 </script>
 <style>

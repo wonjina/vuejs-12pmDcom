@@ -12,7 +12,8 @@ export default [
   {
     path: '/restaurantInfo',
     name: 'RestaurantInfo',
-    view: 'RestaurantInfo'
+    view: 'RestaurantInfo',
+    props: true
   },
   {
     path: '/table-list',
@@ -29,7 +30,9 @@ export default [
   },
   {
     path: '/search',
-    view: 'Search'
+    name: 'SearchRestaurant',
+    view: 'Search',
+    props: true
   },
   {
     path: '/notifications',

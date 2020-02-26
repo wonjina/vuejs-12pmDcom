@@ -10,9 +10,10 @@
       <v-btn
         slot="activator"
         outline
+        @click="moveSearchPage(category)"
       >
         <v-icon dark>
-          {{ category.categoryName }}
+          {{ category }}
         </v-icon>
       </v-btn>
     </v-tooltip>
@@ -31,7 +32,11 @@ export default {
         '일식',
         '베트남',
         '프랑스'
-      ]
+      ],
+      keyword: {
+        type: Object,
+        default: null
+      }
     }
   },
   created () {
@@ -44,9 +49,13 @@ export default {
         .then(data => {
           this.categories = data.categories
         })
-        .finally(() => {
-
-        })
+        .finally(() => { })
+    },
+    moveSearchPage (category) {
+      console.log('category=' + category)
+      this.keyword.categoryFilter = category
+      console.log('category.keyword=' + this.keyword)
+      this.$router.push({ name: 'SearchRestaurant', params: { keyword: this.keyword } })
     }
   }
 }
