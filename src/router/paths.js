@@ -16,11 +16,6 @@ export default [
     props: true
   },
   {
-    path: '/table-list',
-    name: 'Table List',
-    view: 'TableList'
-  },
-  {
     path: '/typography',
     view: 'Typography'
   },

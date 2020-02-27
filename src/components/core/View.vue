@@ -2,7 +2,7 @@
   <v-content>
     <div id="core-view">
       <v-fade-transition mode="out-in">
-        <router-view />
+        <router-view :key="this.$route.fullPath + this.$route.query" />
       </v-fade-transition>
     </div>
     <core-footer />

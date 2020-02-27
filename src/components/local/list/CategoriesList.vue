@@ -53,9 +53,7 @@ export default {
     },
     moveSearchPage (category) {
       console.log('category=' + category)
-      this.keyword.categoryFilter = category
-      console.log('category.keyword=' + this.keyword)
-      this.$router.push({ name: 'SearchRestaurant', params: { keyword: this.keyword } })
+      this.$router.push({ name: 'SearchRestaurant', query: { category: category } })
     }
   }
 }

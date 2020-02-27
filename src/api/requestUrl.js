@@ -4,8 +4,9 @@ export const urls = {
     path: '/api/restaurants',
     method: 'get',
     data: {
-      type: Object,
-      default: null
+      category: null,
+      name: null,
+      restaurant_id: null
     },
     description: ''
   },
@@ -17,6 +18,13 @@ export const urls = {
   'reviews': {
     path: '/api/reviews/restaurant',
     method: 'get',
+    data: {
+      restaurantId: null,
+      date: null,
+      memberId: null,
+      rating: null,
+      id: null
+    },
     description: 'Get review List'
   }
 }

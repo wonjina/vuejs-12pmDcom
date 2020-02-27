@@ -29,7 +29,7 @@
         py-2
       >
         <v-text-field
-          v-model="keyword.restaurantFilter"
+          v-model="restaurantName"
           class="mr-4 purple-input"
           label="Restaurant Search..."
           hide-details
@@ -37,7 +37,7 @@
           @keypress.enter="moveSearchPage"
         />
         <v-text-field
-          v-model="keyword.categoryFilter"
+          v-model="restaurantCategory"
           class="mr-4 purple-input"
           label="Category Search..."
           hide-details
@@ -94,10 +94,8 @@ export default {
     ],
     title: null,
     responsive: false,
-    keyword: {
-      restaurantFilter: '',
-      categoryFilter: ''
-    }
+    restaurantName: '',
+    restaurantCategory: ''
   }),
 
   watch: {
@@ -130,7 +128,12 @@ export default {
       }
     },
     moveSearchPage () {
-      this.$router.push({ name: 'SearchRestaurant', params: { keyword: this.keyword } })
+      console.log('toobar page->')
+      console.log(this.keyword)
+      console.log(this.$route)
+      console.log(this.$route.fullPath)
+      console.log(this.restaurantName + this.restaurantCategory)
+      this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName, restaurantCategory: this.restaurantCategory } })
     }
   }
 }

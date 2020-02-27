@@ -3,22 +3,11 @@
     class="custom-width"
     :map-options="mapOptions"
   >
-    <naver-info-window
-      class="info-window"
-      :is-open="info"
-      @load="onWindowLoad"
-    >
-      <div class="info-window-container">
-        <h1>
-          Test
-        </h1>
-      </div>
-    </naver-info-window>
     <naver-marker
-      v-for="(link, index) in links"
-      :key="link.name+index"
-      :lat="link.lat"
-      :lng="link.lng"
+      v-for="(restaurant, index) in restaurantInfo"
+      :key="restaurant.name+index"
+      :lat="restaurant.location_x"
+      :lng="restaurant.location_y"
       @click="onMarkerClicked"
       @load="onMarkerLoaded"
     />
@@ -27,28 +16,19 @@
 
 <script>
 export default {
+  props: {
+    restaurantInfo: {
+      type: Array,
+      default: () => [0]
+    }
+  },
   data () {
     return {
-      links: [
-        {
-          lat: 37.001,
-          lng: 127
-        },
-        {
-          lat: 37.05,
-          lng: 127
-        },
-        {
-          lat: 37.1,
-          lng: 127
-        }
-      ],
       info: true,
       mapOptions: {
         lat: 37,
         lng: 127,
         zoom: 12,
-        zoomControl: true,
         zoomControlOptions: { position: 'TOP_RIGHT' },
         mapTypeControl: true
       }
@@ -56,15 +36,14 @@ export default {
   },
   computed: {
   },
-  mounted () {
-    setInterval(() => this.count++, 1000)
+  created () {
+    console.log('naver map::' + typeof this.restaurantInfo)
+    console.log(this.restaurantInfo)
   },
   methods: {
     onMarkerLoaded (vue) {
-      vue.marker.setDraggable(false).setCursor('aa').setClickable(true).setAnimation('BOUNCE')
     },
     onMarkerClicked (event) {
-      console.log(event)
     },
     onLoad (vue) {
     },

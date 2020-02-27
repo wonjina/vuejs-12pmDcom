@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       reviews: {
-        type: Array,
+        type: Object,
         default: null
       },
       loading: false,
@@ -123,7 +123,6 @@ export default {
     this.fetchData()
     this.loading = false
     this.status = true
-    console.log('detail page->' + this.status + this.loading)
   },
   methods: {
     reviewModalOpen () {
@@ -131,10 +130,11 @@ export default {
     },
     fetchData () {
       console.log('fetch data start')
-      urls.reviews.data = this.restaurantInfo.restaurant_id
+      urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
       restful
         .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
         .then(data => {
+          console.log('detail page->')
           console.log(data)
           this.reviews = data
         })

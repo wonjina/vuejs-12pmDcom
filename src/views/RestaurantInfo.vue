@@ -14,7 +14,7 @@
       </v-flex>
       <div class="custom-width">
         <naver-map
-          :restaurant-info="restaurant"
+          :restaurant-info="[ restaurant ]"
         />          <!-- Add Naver-map vue -->
       </div>
     </v-layout>
@@ -30,28 +30,19 @@ export default {
     'naver-map': NaverMap,
     'restaurant-detail-info': RestaurantDetailInfo
   },
-  data: () => ({
-    settings: [
-      {
-        'centerMode': true,
-        'centerPadding': '20px',
-        'focusOnSelect': true,
-        'infinite': true,
-        'slidesToShow': 3,
-        'speed': 500
+  data () {
+    return {
+      restaurant: {
+        type: Array,
+        default: []
       }
-    ],
-    restaurant: {
-      type: Object,
-      default: null
     }
-  }),
+  },
   created () {
     this.restaurant = this.$route.params.restaurantInfo
-    console.log('res Info page->')
+    console.log('res Info page->' + typeof this.restaurant)
     console.log(this.restaurant)
-  },
-  methods: { }
+  }
 }
 </script>
 <style>

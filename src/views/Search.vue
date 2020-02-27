@@ -13,14 +13,16 @@
           Loading...
         </div>
         <div v-if="status">
-          <table-list
+          <Restaurant-list
             link-btn
             :items="restaurantList"
           />    <!-- Add restaurant table.vue  -->
         </div>
       </material-card>
       <div class="custom-width">
-        <naver-map />  <!-- Add Map.vue -->
+        <naver-map
+          :restaurant-info="restaurantList"
+        />  <!-- Add Map.vue -->
       </div>
     </v-layout>
   </v-container>
@@ -28,35 +30,37 @@
 
 <script>
 import NaverMap from '@/components/local/NaverMap.vue'
-import TableList from '@/components/local/list/TableList.vue'
+import RestaurantList from '@/components/local/list/RestaurantList.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
 export default {
   components: {
     'naver-map': NaverMap,
-    'table-list': TableList
+    'Restaurant-list': RestaurantList
   },
   props: {
     keyword: {
-      type: Object,
-      default: () => ([])
+      type: Array,
+      default: () => []
     }
   },
   data () {
     return {
       restaurantList: {
         type: Array,
-        default: null
+        default: []
       },
       loading: false,
       status: false
     }
   },
   created () {
-    this.keyword = this.$route.params.keyword
-    console.log('search=')
-    console.log(this.keyword)
-    this.error = this.post = null
+    if (this.$route.query.restaurantName !== '' && this.$route.query.restaurantName !== undefined) {
+      urls.restaurantList.data.name = this.$route.query.restaurantName
+    }
+    if (this.$route.query.restaurantCategory !== '' && this.$route.query.restaurantCategory !== undefined) {
+      urls.restaurantList.data.category = this.$route.query.restaurantCategory
+    }
     this.loading = true
     this.fetchData()
     this.loading = false
@@ -65,11 +69,14 @@ export default {
   methods: {
     fetchData () {
       restful
-        .fetch(urls.restaurantList.method, urls.restaurantList.path, this.keyword)
+        .fetch(urls.restaurantList.method, urls.restaurantList.path, urls.restaurantList.data)
         .then(data => {
           this.restaurantList = data
         })
-        .finally(() => { })
+        .finally(() => {
+          urls.restaurantList.data.category = null
+          urls.restaurantList.data.name = null
+        })
     }
   }
 }

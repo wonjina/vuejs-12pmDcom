@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="items.slice(0, 20)"
+      :items="items"
       hide-actions
     >
       <template
@@ -34,10 +34,15 @@
 </template>
 <script>
 export default {
+  constructor (props) {
+    var self = this
+    console.log('초기화 - ' + typeof this.items)
+    self.items = []
+  },
   props: {
     items: {
       type: Array,
-      default: null
+      default: () => []
     },
     linkBtn: {
       type: Boolean,
@@ -65,7 +70,10 @@ export default {
       ]
     }
   },
-  created () { },
+  created () {
+    console.log('res list ->' + typeof this.items)
+    console.log(this.items)
+  },
   methods: {
     moveRestaurantInfo (restaurant) {
       this.$router.push({ name: 'RestaurantInfo', params: { restaurantInfo: restaurant } })

@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="items.slice(0, 20)"
+      :items="items"
       hide-actions
     >
       <template
@@ -22,7 +22,7 @@
 export default {
   props: {
     items: {
-      type: Array,
+      type: Object,
       default: null
     },
     linkBtn: {

@@ -8,14 +8,17 @@ const onUnauthrorized = () => {
 }
 
 const request = (method, url, data) => {
+  console.log('axios->')
+  console.log(data)
   return axios({
     method,
     url: DOMAIN + url,
-    data
+    params: data
   }).then(result => result.data.response)
     .catch(result => {
+      console.log('axios result = ')
       console.log(result)
-      const { status } = result.response
+      const status = result.response
       if (status === UNAUTHORIZED) {
         return onUnauthrorized()
       }
