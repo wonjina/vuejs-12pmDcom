@@ -29,30 +29,39 @@
         py-2
       >
         <v-text-field
+          v-model="restaurantName"
           class="mr-4 purple-input"
           label="Restaurant Search..."
           hide-details
           color="purple"
+          @keypress.enter="moveSearchPage"
         />
         <v-text-field
+          v-model="restaurantCategory"
           class="mr-4 purple-input"
           label="Category Search..."
           hide-details
           color="purple"
+          @keypress.enter="moveSearchPage"
         />
         <v-btn
           slot="activator"
           class="v-btn--simple"
           color="success"
+          @click="moveSearchPage"
         >
-          <v-icon color="primary">mdi-arrow-right</v-icon>
+          <v-icon color="primary">
+            mdi-arrow-right
+          </v-icon>
         </v-btn>
         <router-link
           v-ripple
           class="toolbar-items"
           to="/"
         >
-          <v-icon color="tertiary">mdi-view-dashboard</v-icon>
+          <v-icon color="tertiary">
+            mdi-view-dashboard
+          </v-icon>
         </router-link>
 
         <router-link
@@ -60,7 +69,9 @@
           class="toolbar-items"
           to="/login"
         >
-          <v-icon color="tertiary">mdi-account</v-icon>
+          <v-icon color="tertiary">
+            mdi-account
+          </v-icon>
         </router-link>
       </v-flex>
     </v-toolbar-items>
@@ -68,7 +79,6 @@
 </template>
 
 <script>
-
 import {
   mapMutations
 } from 'vuex'
@@ -83,7 +93,9 @@ export default {
       'Another One'
     ],
     title: null,
-    responsive: false
+    responsive: false,
+    restaurantName: '',
+    restaurantCategory: ''
   }),
 
   watch: {
@@ -114,6 +126,14 @@ export default {
       } else {
         this.responsive = false
       }
+    },
+    moveSearchPage () {
+      console.log('toobar page->')
+      console.log(this.keyword)
+      console.log(this.$route)
+      console.log(this.$route.fullPath)
+      console.log(this.restaurantName + this.restaurantCategory)
+      this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName, restaurantCategory: this.restaurantCategory } })
     }
   }
 }

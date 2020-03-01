@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-layout>
+    <v-layout class="browser-height">
       <v-flex
         sm6
         xs12
@@ -8,10 +8,14 @@
         lg5
         class="scroll"
       >
-        <restaurant-detail-info />  <!-- Add restaurant detail info vue -->
+        <restaurant-detail-info
+          :restaurant-info="restaurant"
+        />  <!-- Add restaurant detail info vue -->
       </v-flex>
       <div class="custom-width">
-        <naver-map />          <!-- Add Naver-map vue -->
+        <naver-map
+          :restaurant-info="[ restaurant ]"
+        />          <!-- Add Naver-map vue -->
       </div>
     </v-layout>
   </v-container>
@@ -21,24 +25,24 @@
 import NaverMap from '@/components/local/NaverMap.vue'
 import RestaurantDetailInfo from '@/components/local/RestaurantDetailInfo.vue'
 
-// position: relative;
 export default {
   components: {
     'naver-map': NaverMap,
     'restaurant-detail-info': RestaurantDetailInfo
   },
-  data: () => ({
-    settings: [
-      {
-        'centerMode': true,
-        'centerPadding': '20px',
-        'focusOnSelect': true,
-        'infinite': true,
-        'slidesToShow': 3,
-        'speed': 500
+  data () {
+    return {
+      restaurant: {
+        type: Array,
+        default: []
       }
-    ]
-  })
+    }
+  },
+  created () {
+    this.restaurant = this.$route.params.restaurantInfo
+    console.log('res Info page->' + typeof this.restaurant)
+    console.log(this.restaurant)
+  }
 }
 </script>
 <style>
@@ -70,6 +74,6 @@ export default {
   height: 90vh;
 }
 .custom-width {
-    width: 75%;
+    width: 100%;
 }
 </style>

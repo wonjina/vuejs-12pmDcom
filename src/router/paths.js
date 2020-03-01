@@ -3,7 +3,6 @@
  * for more information on routes, see the
  * official documentation https://router.vuejs.org/en/
  */
-
 export default [
   {
     path: '',
@@ -13,12 +12,8 @@ export default [
   {
     path: '/restaurantInfo',
     name: 'RestaurantInfo',
-    view: 'RestaurantInfo'
-  },
-  {
-    path: '/table-list',
-    name: 'Table List',
-    view: 'TableList'
+    view: 'RestaurantInfo',
+    props: true
   },
   {
     path: '/typography',
@@ -30,7 +25,9 @@ export default [
   },
   {
     path: '/search',
-    view: 'Search'
+    name: 'SearchRestaurant',
+    view: 'Search',
+    props: true
   },
   {
     path: '/notifications',

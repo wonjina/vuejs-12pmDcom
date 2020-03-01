@@ -42,32 +42,15 @@
           </v-flex>
           <v-flex xs12>
             <div class="text-xs-center body-2 text-uppercase">
-              <div class=" sidebar-filter">
-                Thank You for Sharing!
-              </div>
-
-              <div>
-                <v-btn
-                  color="indigo"
-                  class="mr-2 v-btn-facebook"
-                  fab
-                  icon
-                  small
-                  round
-                >
-                  <v-icon>mdi-facebook</v-icon>
-                </v-btn>
-                <v-btn
-                  color="cyan"
-                  class="v-btn-twitter"
-                  fab
-                  icon
-                  small
-                  round
-                >
-                  <v-icon>mdi-twitter</v-icon>
-                </v-btn>
-              </div>
+              <v-row justify="center">
+                <v-time-picker
+                  v-model="picker"
+                  header-color="grey"
+                  readonly
+                  ampm-in-title
+                  width="250px"
+                />
+              </v-row>
             </div>
           </v-flex>
         </v-layout>
@@ -91,16 +74,24 @@ export default {
       'success',
       'warning',
       'red'
-    ]
+    ],
+    picker: '14:00'
   }),
-
   computed: {
     ...mapState('app', ['color']),
     color () {
       return this.$store.state.app.color
     }
   },
-
+  created () {
+    var self = this
+    setInterval(function () {
+      let today = new Date()
+      let hours = today.getHours()
+      let minutes = today.getMinutes()
+      self.picker = hours + ':' + minutes
+    }, 60000)
+  },
   methods: {
     ...mapMutations('app', ['setColor']),
     setColor (color) {

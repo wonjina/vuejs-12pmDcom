@@ -30,9 +30,9 @@ Vue.use(Router)
 // Create a new router
 const router = new Router({
   mode: 'history',
-  routes: paths.map(path => route(path.path, path.view, path.name)).concat([
-    { path: '*', redirect: '/' }
-  ]),
+  routes: paths
+    .map(path => route(path.path, path.view, path.name))
+    .concat([{ path: '*', redirect: '/' }]),
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
@@ -42,6 +42,18 @@ const router = new Router({
     }
     return { x: 0, y: 0 }
   }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/restaurantInfo') {
+    if (to.params.restaurantInfo === undefined || to.params.restaurantInfo === {}) {
+      router.push('/')
+    }
+  } else { next() }
+  console.log('navigation-guard---')
+  console.log(to)
+  console.log(from)
+  console.log(next)
 })
 
 Vue.use(Meta)

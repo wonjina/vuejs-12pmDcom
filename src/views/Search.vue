@@ -6,10 +6,23 @@
         full-width
         paging-btn
       >
-        <table-list />    <!-- Add restaurant table.vue  -->
+        <div
+          v-if="loading"
+          class="loading"
+        >
+          Loading...
+        </div>
+        <div v-if="status">
+          <Restaurant-list
+            link-btn
+            :items="restaurantList"
+          />    <!-- Add restaurant table.vue  -->
+        </div>
       </material-card>
       <div class="custom-width">
-        <naver-map />  <!-- Add Map.vue -->
+        <naver-map
+          :restaurant-info="restaurantList"
+        />  <!-- Add Map.vue -->
       </div>
     </v-layout>
   </v-container>
@@ -17,16 +30,53 @@
 
 <script>
 import NaverMap from '@/components/local/NaverMap.vue'
-import TableList from '@/components/local/list/TableList.vue'
-
+import RestaurantList from '@/components/local/list/RestaurantList.vue'
+import { restful } from '../api'
+import { urls } from '../api/requestUrl.js'
 export default {
   components: {
     'naver-map': NaverMap,
-    'table-list': TableList
+    'Restaurant-list': RestaurantList
+  },
+  props: {
+    keyword: {
+      type: Array,
+      default: () => []
+    }
   },
   data () {
     return {
-      page: 1
+      restaurantList: {
+        type: Array,
+        default: []
+      },
+      loading: false,
+      status: false
+    }
+  },
+  created () {
+    if (this.$route.query.restaurantName !== '' && this.$route.query.restaurantName !== undefined) {
+      urls.restaurantList.data.name = this.$route.query.restaurantName
+    }
+    if (this.$route.query.restaurantCategory !== '' && this.$route.query.restaurantCategory !== undefined) {
+      urls.restaurantList.data.category = this.$route.query.restaurantCategory
+    }
+    this.loading = true
+    this.fetchData()
+    this.loading = false
+    this.status = true
+  },
+  methods: {
+    fetchData () {
+      restful
+        .fetch(urls.restaurantList.method, urls.restaurantList.path, urls.restaurantList.data)
+        .then(data => {
+          this.restaurantList = data
+        })
+        .finally(() => {
+          urls.restaurantList.data.category = null
+          urls.restaurantList.data.name = null
+        })
     }
   }
 }
@@ -55,6 +105,6 @@ export default {
   text-align: center!important;
 }
 .custom-width {
-    width: 75%;
+    width: 100%;
 }
 </style>

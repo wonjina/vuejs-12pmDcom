@@ -3,22 +3,25 @@
     class="custom-width"
     :map-options="mapOptions"
   >
-    <naver-info-window
-      class="info-window"
-      :is-open="info"
-      @load="onWindowLoad"
-    >
-      <div class="info-window-container">
-        <h1>
-          Test
-        </h1>
-      </div>
-    </naver-info-window>
+    <naver-marker
+      v-for="(restaurant, index) in restaurantInfo"
+      :key="restaurant.name+index"
+      :lat="restaurant.location_x"
+      :lng="restaurant.location_y"
+      @click="onMarkerClicked"
+      @load="onMarkerLoaded"
+    />
   </naver-maps>
 </template>
 
 <script>
 export default {
+  props: {
+    restaurantInfo: {
+      type: Array,
+      default: () => [0]
+    }
+  },
   data () {
     return {
       info: true,
@@ -26,7 +29,6 @@ export default {
         lat: 37,
         lng: 127,
         zoom: 12,
-        zoomControl: true,
         zoomControlOptions: { position: 'TOP_RIGHT' },
         mapTypeControl: true
       }
@@ -34,15 +36,14 @@ export default {
   },
   computed: {
   },
-  mounted () {
-    setInterval(() => this.count++, 1000)
+  created () {
+    console.log('naver map::' + typeof this.restaurantInfo)
+    console.log(this.restaurantInfo)
   },
   methods: {
     onMarkerLoaded (vue) {
-      vue.marker.setDraggable(true).setCursor('').setClickable(true)
     },
     onMarkerClicked (event) {
-      console.log(event)
     },
     onLoad (vue) {
     },
@@ -51,7 +52,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 .info-window-container {
     padding: 10px;
     width: 300px;

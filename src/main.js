@@ -26,14 +26,17 @@ import { sync } from 'vuex-router-sync'
 import App from './App'
 import router from '@/router'
 import store from '@/store'
-import naver from 'vue-naver-maps'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 // Sync store with router
 sync(store, router)
 
 Vue.config.productionTip = false
-Vue.use(naver, {
-  clientID: '6eql9t8spl'
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyAziq58SB1mhcBh6mffiuChyXWjKTcegWU',
+    libraries: 'places'
+  }
 })
 
 /* eslint-disable no-new */

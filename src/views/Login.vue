@@ -53,9 +53,29 @@
   </v-app>
 </template>
 <script>
+import { restful } from '../api'
 export default {
   data () {
-    return { source: '/' }
+    return {
+      source: '/',
+      auto_code: ''
+    }
+  },
+  created () {
+    this.loginOuth()
+  },
+  methods: {
+    loginOuth () {
+      restful
+        .fetch('get', 'https://api.hiwors.com/open/auth/authform?client_id=ymyevwpjp6xuza6cptlamb17w6u3j0f15e327689372af8.44470726.open.apps&access_type=offline', null)
+        .then(data => {
+          console.log('login ->')
+          this.auto_code = data
+          console.log(typeof this.auto_code)
+          console.log(this.auto_code)
+        })
+        .finally(() => { })
+    }
   }
 }
 </script>

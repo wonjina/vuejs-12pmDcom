@@ -25,7 +25,10 @@
           v-else
           class="horizon-arr"
         >
-          <button v-if="refresh">
+          <button
+            v-if="refresh"
+            @click="clickRefresh"
+          >
             <v-icon color="white">
               mdi-autorenew
             </v-icon>
@@ -90,10 +93,8 @@
 import {
   mapState
 } from 'vuex'
-
 export default {
   inheritAttrs: false,
-
   props: {
     elevation: {
       type: [Number, String],
@@ -132,7 +133,11 @@ export default {
       default: false
     }
   },
-
+  data () {
+    return {
+      page: 1
+    }
+  },
   computed: {
     ...mapState('app', ['color']),
     color () {
@@ -146,11 +151,15 @@ export default {
     },
     styles () {
       if (!this.hasOffset) return null
-
       return {
         marginBottom: `${this.offset}px`,
         marginTop: `${this.offset * 2}px`
       }
+    }
+  },
+  methods: {
+    clickRefresh () {
+      this.$emit('fetchData')
     }
   }
 }
