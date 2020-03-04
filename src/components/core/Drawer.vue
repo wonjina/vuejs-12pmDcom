@@ -62,34 +62,9 @@ export default {
         text: 'Main'
       },
       {
-        to: '/restaurantInfo',
-        icon: 'mdi-account',
-        text: 'RestaurantInfo'
-      },
-      {
-        to: '/table-list',
-        icon: 'mdi-clipboard-outline',
-        text: 'Table List'
-      },
-      {
-        to: '/typography',
-        icon: 'mdi-format-font',
-        text: 'Typography'
-      },
-      {
-        to: '/icons',
-        icon: 'mdi-chart-bubble',
-        text: 'Icons'
-      },
-      {
         to: '/search',
         icon: 'mdi-map-marker',
         text: 'Maps'
-      },
-      {
-        to: '/notifications',
-        icon: 'mdi-bell',
-        text: 'Notifications'
       }
     ]
   }),

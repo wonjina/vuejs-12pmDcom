@@ -27,6 +27,7 @@ import App from './App'
 import router from '@/router'
 import store from '@/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import Storage from 'vue-web-storage'
 
 // Sync store with router
 sync(store, router)
@@ -37,6 +38,10 @@ Vue.use(VueGoogleMaps, {
     key: 'AIzaSyAziq58SB1mhcBh6mffiuChyXWjKTcegWU',
     libraries: 'places'
   }
+})
+
+Vue.use(Storage, {
+  drivers: 'session'
 })
 
 /* eslint-disable no-new */

@@ -64,15 +64,16 @@
           </v-icon>
         </router-link>
 
-        <router-link
-          v-ripple
-          class="toolbar-items"
-          to="/login"
+        <v-btn
+          slot="activator"
+          class="v-btn--simple"
+          color="success"
+          @click="moveLoginPage"
         >
           <v-icon color="tertiary">
             mdi-account
           </v-icon>
-        </router-link>
+        </v-btn>
       </v-flex>
     </v-toolbar-items>
   </v-toolbar>
@@ -82,16 +83,11 @@
 import {
   mapMutations
 } from 'vuex'
+import { urls } from '../../api/requestUrl.js'
+import { restful } from '../../api'
 
 export default {
   data: () => ({
-    notifications: [
-      'Mike, John responded to your email',
-      'You have 5 new tasks',
-      'You\'re now a friend with Andrew',
-      'Another Notification',
-      'Another One'
-    ],
     title: null,
     responsive: false,
     restaurantName: '',
@@ -111,7 +107,8 @@ export default {
   beforeDestroy () {
     window.removeEventListener('resize', this.onResponsiveInverted)
   },
-
+  created () {
+  },
   methods: {
     ...mapMutations('app', ['setDrawer', 'toggleDrawer']),
     onClickBtn () {
@@ -134,6 +131,18 @@ export default {
       console.log(this.$route.fullPath)
       console.log(this.restaurantName + this.restaurantCategory)
       this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName, restaurantCategory: this.restaurantCategory } })
+    },
+    moveLoginPage () {
+      restful
+        .fetch(urls.hiworksLogin.method, urls.hiworksLogin.path)
+        .then(data => {
+          console.log('hiworksLogin->')
+          console.log(data)
+          this.$router.push({ name: 'main' })
+        })
+        .finally(() => {
+          urls.reviews.data.restaurantId = null
+        })
     }
   }
 }

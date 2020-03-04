@@ -1,26 +1,35 @@
 import axios from 'axios'
 import router from '../router'
 
-const DOMAIN = 'http://localhost:8080'
+const DOMAIN = 'http://localhost:9194'
 const UNAUTHORIZED = 401
+const FOUND = 302
 const onUnauthrorized = () => {
-  router.push('/')
+  router.push({ name: 'main' })
+}
+const onRedirect = (redirectUri) => {
+  window.location.href = redirectUri
 }
 
 const request = (method, url, data) => {
   console.log('axios->')
-  console.log(data)
+  console.log(url)
   return axios({
     method,
     url: DOMAIN + url,
     params: data
   }).then(result => result.data.response)
     .catch(result => {
-      console.log('axios result = ')
+      console.log('axios catch = ')
       console.log(result)
-      const status = result.response
+      console.log(result.response)
+      const status = result.response.data.code
       if (status === UNAUTHORIZED) {
         return onUnauthrorized()
+      } else if (status === FOUND) {
+        return onRedirect(result.response.data.message)
+      } else {
+        console.log('error->' + status)
       }
     })
 }

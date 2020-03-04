@@ -6,7 +6,7 @@
 export default [
   {
     path: '',
-    // Relative to /src/views
+    name: 'main',
     view: 'Main'
   },
   {

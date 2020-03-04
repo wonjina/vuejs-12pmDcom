@@ -138,7 +138,9 @@ export default {
           console.log(data)
           this.reviews = data
         })
-        .finally(() => { })
+        .finally(() => {
+          urls.reviews.data.restaurantId = null
+        })
     }
   }
 }

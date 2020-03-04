@@ -56,6 +56,13 @@
 export default {
   data () {
     return { source: '/' }
+  },
+  created () {
+    this.access_token = this.$route.query.token
+    console.log('login page ->')
+    console.log(this.$route.params)
+    console.log(this.$route)
+    this.$router.push('/')
   }
 }
 </script>
