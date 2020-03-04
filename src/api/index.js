@@ -13,7 +13,7 @@ const onRedirect = (redirectUri) => {
 
 const request = (method, url, data) => {
   console.log('axios->')
-  console.log(url)
+  console.log(data)
   return axios({
     method,
     url: DOMAIN + url,

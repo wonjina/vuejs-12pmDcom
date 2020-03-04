@@ -27,6 +27,19 @@ export const urls = {
     },
     description: 'Get review List'
   },
+  'recruitBoard': {
+    path: '/api/boards/recruitment',
+    method: 'get',
+    data: {
+      localDateTime: null
+    },
+    description: 'Get recruitment List'
+  },
+  'newRecruitment': {
+    path: '/api/boards/recruitment',
+    method: 'post',
+    description: 'Post new recruitment'
+  },
   'hiworksLogin': {
     path: '/hiworks/login',
     method: 'get'
