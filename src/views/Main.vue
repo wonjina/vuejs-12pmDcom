@@ -11,6 +11,9 @@
           title="카테고리 검색"
         >
           <categories-list /> <!--Add categories List.vue  -->
+          <recruit-board-list
+            :items="recruitBoard"
+          />
         </material-card>
       </v-layout>
     </v-container>
@@ -31,6 +34,10 @@ export default {
     'main-banner-component': MainBanner,
     'table-layout': TableLayout,
     'categories-list': Categories
+  },
+  data () {
+    return {
+    }
   },
   computed: {
     ...mapState('app', ['color']),

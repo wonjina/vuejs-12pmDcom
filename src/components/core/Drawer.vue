@@ -62,6 +62,11 @@ export default {
         text: 'Main'
       },
       {
+        to: '/recruitBoard',
+        icon: 'mdi-clipboard-outline',
+        text: '모집 게시판'
+      },
+      {
         to: '/search',
         icon: 'mdi-map-marker',
         text: 'Maps'

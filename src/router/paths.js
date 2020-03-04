@@ -16,27 +16,20 @@ export default [
     props: true
   },
   {
-    path: '/typography',
-    view: 'Typography'
+    path: '/recruitBoard',
+    name: 'RecruitBoard',
+    view: 'RecruitBoard'
   },
   {
-    path: '/icons',
-    view: 'Icons'
+    path: '/recruitBoardInfo',
+    name: 'RecruitBoardInfo',
+    view: 'RecruitBoardInfo'
   },
   {
     path: '/search',
     name: 'SearchRestaurant',
     view: 'Search',
     props: true
-  },
-  {
-    path: '/notifications',
-    view: 'Notifications'
-  },
-  {
-    path: '/upgrade',
-    name: 'Upgrade to PRO',
-    view: 'Upgrade'
   },
   {
     path: '/login',
