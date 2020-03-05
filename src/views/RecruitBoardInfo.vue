@@ -53,17 +53,6 @@
           >
             참여하기
           </v-btn>
-          <v-btn
-            outlined
-            color="red"
-            dark
-            round
-            class="font-weight-light"
-            type="submit"
-            @click="deleteMember()"
-          >
-            취소하기
-          </v-btn>
         </material-card>
       </v-flex>
     </v-layout>
@@ -72,7 +61,6 @@
 
 <script>
 import { restful } from '../api'
-// import { urls } from '../api/requestUrl.js'
 import swal from 'sweetalert'
 
 export default {
@@ -96,29 +84,15 @@ export default {
     addMember () {
       console.log('addMember')
       var boardId = this.recruitBoard.boardId
-      console.log(this.recruitBoard.boardId)
       var memberId = 7
       restful
         .fetch('post', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {
           console.log(data)
+          swal('참여되었습니다.', this.recruitBoard.restaurantName, 'success')
+          history.back()
         })
         .finally(() => { })
-      swal('참여되었습니다.', this.recruitBoard.restaurantName, 'success')
-      history.back()
-    },
-    deleteMember () {
-      console.log('deleteMember')
-      var boardId = this.recruitBoard.boardId
-      var memberId = 7
-      restful
-        .fetch('delete', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
-        .then(data => {
-          console.log(data)
-        })
-        .finally(() => { })
-      swal('취소되었습니다.', this.recruitBoard.restaurantName, 'success')
-      history.back()
     }
   }
 }

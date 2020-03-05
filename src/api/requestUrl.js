@@ -27,6 +27,13 @@ export const urls = {
     },
     description: 'Get review List'
   },
+  'userRecord': {
+    method: 'get',
+    data : {
+      localDateTime: null
+    },
+    description: 'Get user record List'
+  },
   'recruitBoard': {
     path: '/api/boards/recruitment',
     method: 'get',
