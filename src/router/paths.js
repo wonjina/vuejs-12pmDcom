@@ -26,6 +26,11 @@ export default [
     view: 'RecruitBoardInfo'
   },
   {
+    path: '/userRecord',
+    name: 'UserRecord',
+    view: 'UserRecord'
+  },
+  {
     path: '/search',
     name: 'SearchRestaurant',
     view: 'Search',

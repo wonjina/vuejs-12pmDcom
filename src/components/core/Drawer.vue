@@ -62,6 +62,11 @@ export default {
         text: 'Main'
       },
       {
+        to: '/userRecord',
+        icon: 'mdi-account',
+        text: '사용자 페이지'
+      },
+      {
         to: '/recruitBoard',
         icon: 'mdi-clipboard-outline',
         text: '모집 게시판'
