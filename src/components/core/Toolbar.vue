@@ -84,7 +84,6 @@ import {
   mapMutations
 } from 'vuex'
 import { urls } from '../../api/requestUrl.js'
-import { restful } from '../../api'
 
 export default {
   data: () => ({
@@ -133,16 +132,7 @@ export default {
       this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName, restaurantCategory: this.restaurantCategory } })
     },
     moveLoginPage () {
-      restful
-        .fetch(urls.hiworksLogin.method, urls.hiworksLogin.path)
-        .then(data => {
-          console.log('hiworksLogin->')
-          console.log(data)
-          this.$router.push({ name: 'main' })
-        })
-        .finally(() => {
-          urls.reviews.data.restaurantId = null
-        })
+      window.location.href = urls.hiworksLogin.path
     }
   }
 }

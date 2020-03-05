@@ -18,7 +18,11 @@ const request = (method, url, data) => {
     method,
     url: DOMAIN + url,
     params: data
-  }).then(result => result.data.response)
+  }).then(result => {
+    console.log('Get header : ')
+    console.log(result)
+    return result.data.response
+  })
     .catch(result => {
       console.log('axios catch = ')
       console.log(result)

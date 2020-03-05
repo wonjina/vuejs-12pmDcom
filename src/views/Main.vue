@@ -24,7 +24,6 @@ import Categories from '@/components/local/list/CategoriesList.vue'
 import {
   mapState
 } from 'vuex'
-import Storage from 'vue-web-storage'
 
 export default {
   components: {
@@ -40,7 +39,7 @@ export default {
   },
   created () {
     console.log('main--------')
-    console.log(Storage.get('hiowrksJwtToken'))
+    console.log(this.$sessionStorage.get('hiowrksJwtToken'))
     console.log(this.$route)
   },
   methods: {

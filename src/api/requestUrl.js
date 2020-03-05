@@ -28,11 +28,7 @@ export const urls = {
     description: 'Get review List'
   },
   'hiworksLogin': {
-    path: '/hiworks/login',
-    method: 'get'
-  },
-  'hiworksOauth': {
     path: 'https://api.hiworks.com/open/auth/authform?client_id=ymyevwpjp6xuza6cptlamb17w6u3j0f15e327689372af8.44470726.open.apps&access_type=offline',
-    method: 'get'
+    method: ''
   }
 }

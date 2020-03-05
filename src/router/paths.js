@@ -16,31 +16,9 @@ export default [
     props: true
   },
   {
-    path: '/typography',
-    view: 'Typography'
-  },
-  {
-    path: '/icons',
-    view: 'Icons'
-  },
-  {
     path: '/search',
     name: 'SearchRestaurant',
     view: 'Search',
     props: true
-  },
-  {
-    path: '/notifications',
-    view: 'Notifications'
-  },
-  {
-    path: '/upgrade',
-    name: 'Upgrade to PRO',
-    view: 'Upgrade'
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    view: 'Login'
   }
 ]
