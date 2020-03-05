@@ -3,7 +3,9 @@
     <div
       slot="header"
     >
-      <div class="title font-weight-light mb-2">카테고리 검색</div>
+      <div class="title font-weight-light mb-2">
+        카테고리 검색
+      </div>
     </div>
 
     <v-layout
@@ -14,7 +16,8 @@
         v-for="(icon,index) in icons"
         :key="icon+index"
         top
-        content-class="top">
+        content-class="top"
+      >
         <v-btn
           slot="activator"
         >

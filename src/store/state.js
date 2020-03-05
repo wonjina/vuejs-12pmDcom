@@ -1,5 +1,6 @@
 // https://vuex.vuejs.org/en/state.html
 
 export default {
-  reviewModalFlage: false
+  reviewModalFlage: false,
+  newRecruitmentModalFlage: false
 }

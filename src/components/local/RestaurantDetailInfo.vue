@@ -33,6 +33,7 @@
               color="success"
               round
               class="font-weight-light"
+              @click="newRecruitmentModalOpen(restaurantInfo)"
             >
               모집글 쓰기
             </v-btn>
@@ -61,12 +62,14 @@
     </v-flex>
     <v-flex xs8>
       <review-modal />       <!-- ADD review modal -->
+      <new-recruitment-modal />       <!-- ADD new recruitment modal -->
     </v-flex>
   </v-layout>
 </template>
 <script>
 import ImgSlide from '@/components/local/ImagesSlide.vue'
 import ReviewModal from '@/components/local/ReviewModal.vue'
+import NewRecruitmentModal from '@/components/local/NewRecruitmentModal.vue'
 import ReviewList from '@/components/local/list/ReviewList.vue'
 import { restful } from '../../api'
 import { urls } from '../../api/requestUrl.js'
@@ -75,6 +78,7 @@ export default {
   components: {
     'img-slide': ImgSlide,
     'review-modal': ReviewModal,
+    'new-recruitment-modal': NewRecruitmentModal,
     'review-list': ReviewList
   },
   props: {
@@ -127,6 +131,10 @@ export default {
   methods: {
     reviewModalOpen () {
       this.$store.commit('TOGGLE_REVIEW_MODAL_FLAGE', true)
+    },
+    newRecruitmentModalOpen (restaurantInfo) {
+      this.$router.push({ name: 'RestaurantInfo', params: { RestaurantInfo: restaurantInfo } })
+      this.$store.commit('TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE', true)
     },
     fetchData () {
       console.log('fetch data start')
