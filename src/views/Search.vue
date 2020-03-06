@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import NaverMap from '@/components/local/NaverMap.vue'
+import NaverMap from '@/components/local/GoogleMap.vue'
 import RestaurantList from '@/components/local/list/RestaurantList.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
@@ -56,10 +56,10 @@ export default {
   },
   created () {
     if (this.$route.query.restaurantName !== '' && this.$route.query.restaurantName !== undefined) {
-      urls.restaurantList.data.name = this.$route.query.restaurantName
+      urls.restaurants.data.name = this.$route.query.restaurantName
     }
     if (this.$route.query.restaurantCategory !== '' && this.$route.query.restaurantCategory !== undefined) {
-      urls.restaurantList.data.category = this.$route.query.restaurantCategory
+      urls.restaurants.data.category = this.$route.query.restaurantCategory
     }
     this.loading = true
     this.fetchData()
@@ -69,13 +69,13 @@ export default {
   methods: {
     fetchData () {
       restful
-        .fetch(urls.restaurantList.method, urls.restaurantList.path, urls.restaurantList.data)
+        .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
         .then(data => {
           this.restaurantList = data
         })
         .finally(() => {
-          urls.restaurantList.data.category = null
-          urls.restaurantList.data.name = null
+          urls.restaurants.data.category = null
+          urls.restaurants.data.name = null
         })
     }
   }

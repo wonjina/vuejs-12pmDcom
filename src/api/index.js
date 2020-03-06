@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '../router'
 
-const DOMAIN = 'http://localhost:9194'
+const DOMAIN = 'http://api.12pm.com:9194'
 const UNAUTHORIZED = 401
 const FOUND = 302
 const onUnauthrorized = () => {
@@ -12,21 +12,20 @@ const onRedirect = (redirectUri) => {
 }
 
 const request = (method, url, data) => {
-  console.log('axios->')
-  console.log(data)
+  console.log('axios->' + url)
   return axios({
     method,
     url: DOMAIN + url,
-    params: data
+    params: data,
+    withCredentials: true
   }).then(result => {
-    console.log('Get header : ')
+    console.log(method + url + ' axios result : ')
     console.log(result)
     return result.data.response
   })
     .catch(result => {
-      console.log('axios catch = ')
+      console.log(method + url + ' axios catch = ')
       console.log(result)
-      console.log(result.response)
       const status = result.response.data.code
       if (status === UNAUTHORIZED) {
         return onUnauthrorized()

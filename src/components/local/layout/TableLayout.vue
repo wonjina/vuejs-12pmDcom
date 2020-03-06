@@ -134,25 +134,22 @@ export default {
   },
   methods: {
     restaurantFetchData () {
-      console.log('fetchData start...')
       restful
-        .fetch(urls.restaurantList.method, urls.restaurantList.path, null)
+        .fetch(urls.restaurants.method, urls.restaurants.path, null)
         .then(data => {
-          console.log('mainpage ->')
+          console.log('tableLayout : restaurantFetach data ->')
           console.log(data)
           this.restaurants = data
-          console.log(typeof this.restaurants)
-          console.log(this.restaurants)
         })
         .finally(() => { })
     },
     recruitBoardFetchData () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.recruitBoard.data.localDateTime = localDateTime
-      console.log(urls.recruitBoard.data.localDateTime)
       restful
         .fetch(urls.recruitBoard.method, urls.recruitBoard.path, urls.recruitBoard.data)
         .then(data => {
+          console.log('tableLayout : recruitBoardFetch data ->')
           console.log(data)
           this.recruitBoard = data.content
         })

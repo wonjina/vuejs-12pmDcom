@@ -90,7 +90,7 @@ export default {
   data () {
     return {
       reviews: {
-        type: Object,
+        type: Array,
         default: null
       },
       loading: false,
@@ -121,9 +121,7 @@ export default {
     }
   },
   created () {
-    console.log('detail page->' + this.status + this.loading + this.restaurantInfo.restaurant_id)
     this.loading = true
-    console.log('detail page->' + this.status + this.loading)
     this.fetchData()
     this.loading = false
     this.status = true
@@ -137,12 +135,11 @@ export default {
       this.$store.commit('TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE', true)
     },
     fetchData () {
-      console.log('fetch data start')
       urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
       restful
         .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
         .then(data => {
-          console.log('detail page->')
+          console.log('RestaurantDetailInfo page->')
           console.log(data)
           this.reviews = data
         })

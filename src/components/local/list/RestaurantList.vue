@@ -34,15 +34,10 @@
 </template>
 <script>
 export default {
-  constructor (props) {
-    var self = this
-    console.log('초기화 - ' + typeof this.items)
-    self.items = []
-  },
   props: {
     items: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: null
     },
     linkBtn: {
       type: Boolean,

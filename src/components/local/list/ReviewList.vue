@@ -11,7 +11,7 @@
       >
         <td>{{ item.comment }}</td>
         <td>{{ item.rating }}</td>
-        <td>{{ item.date }}</td>
+        <td>{{ item.dateTime }}</td>
         <td>{{ item.department }}</td>
         <td>{{ item.writer }}</td>
       </template>

@@ -53,16 +53,25 @@
   </v-app>
 </template>
 <script>
+import { restful } from '../api'
 export default {
   data () {
     return { source: '/' }
   },
   created () {
-    this.access_token = this.$route.query.token
     console.log('login page ->')
-    console.log(this.$route.params)
-    console.log(this.$route)
-    this.$router.push('/')
+    this.fetchData()
+  },
+  methods: {
+    fetchData () {
+      restful
+        .fetch('get', '/test/oauth/callback')
+        .then(data => {
+          console.log('test login page get cookies!!!')
+          console.log(data)
+        })
+        .finally(() => { })
+    }
   }
 }
 </script>

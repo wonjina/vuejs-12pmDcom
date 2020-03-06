@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import NaverMap from '@/components/local/NaverMap.vue'
+import NaverMap from '@/components/local/GoogleMap.vue'
 import RestaurantDetailInfo from '@/components/local/RestaurantDetailInfo.vue'
 
 export default {

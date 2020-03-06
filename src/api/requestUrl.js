@@ -1,6 +1,6 @@
 
 export const urls = {
-  'restaurantList': {
+  'restaurants': {
     path: '/api/restaurants',
     method: 'get',
     data: {
@@ -19,17 +19,13 @@ export const urls = {
     path: '/api/reviews/restaurant',
     method: 'get',
     data: {
-      restaurantId: null,
-      date: null,
-      memberId: null,
-      rating: null,
-      id: null
+      restaurantId: null
     },
     description: 'Get review List'
   },
   'userRecord': {
     method: 'get',
-    data : {
+    data: {
       localDateTime: null
     },
     description: 'Get user record List'
@@ -50,5 +46,9 @@ export const urls = {
   'hiworksLogin': {
     path: 'https://api.hiworks.com/open/auth/authform?client_id=ymyevwpjp6xuza6cptlamb17w6u3j0f15e327689372af8.44470726.open.apps&access_type=offline',
     method: ''
+  },
+  'hiworksUser': {
+    path: '/hiworks/user',
+    method: 'get'
   }
 }

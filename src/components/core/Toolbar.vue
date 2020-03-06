@@ -125,10 +125,6 @@ export default {
     },
     moveSearchPage () {
       console.log('toobar page->')
-      console.log(this.keyword)
-      console.log(this.$route)
-      console.log(this.$route.fullPath)
-      console.log(this.restaurantName + this.restaurantCategory)
       this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName, restaurantCategory: this.restaurantCategory } })
     },
     moveLoginPage () {

@@ -26,13 +26,7 @@ import { urls } from '../../../api/requestUrl.js'
 export default {
   data () {
     return {
-      categories: [
-        '중국집',
-        '한식',
-        '일식',
-        '베트남',
-        '프랑스'
-      ],
+      categories: [],
       keyword: {
         type: Object,
         default: null
@@ -53,7 +47,7 @@ export default {
     },
     moveSearchPage (category) {
       console.log('category=' + category)
-      this.$router.push({ name: 'SearchRestaurant', query: { category: category } })
+      this.$router.push({ name: 'SearchRestaurant', query: { restaurantCategory: category } })
     }
   }
 }

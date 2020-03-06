@@ -28,6 +28,7 @@ import router from '@/router'
 import store from '@/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Storage from 'vue-web-storage'
+import VueCookies from 'vue-cookies'
 
 // Sync store with router
 sync(store, router)
@@ -39,7 +40,7 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places'
   }
 })
-
+Vue.use(VueCookies)
 Vue.use(Storage, {
   drivers: 'session'
 })

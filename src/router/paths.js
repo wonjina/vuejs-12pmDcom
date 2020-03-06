@@ -10,6 +10,11 @@ export default [
     view: 'Main'
   },
   {
+    path: '/login',
+    name: 'login',
+    view: 'Login'
+  },
+  {
     path: '/restaurantInfo',
     name: 'RestaurantInfo',
     view: 'RestaurantInfo',
