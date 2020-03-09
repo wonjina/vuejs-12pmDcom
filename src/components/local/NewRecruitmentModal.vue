@@ -94,7 +94,6 @@ export default {
           maxNumber: this.maxNum
         })
         .then(function (data) {
-          console.log(data)
           // close
         })
         .finally(() => { })

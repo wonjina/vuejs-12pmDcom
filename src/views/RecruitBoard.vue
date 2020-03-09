@@ -60,11 +60,9 @@ export default {
   },
   methods: {
     fetchData () {
-      console.log('fetch data start')
       restful
         .fetch(urls.recruitBoard.method, urls.recruitBoard.path)
         .then(data => {
-          console.log(data)
           this.recruitBoard = data.content
         })
         .finally(() => { })

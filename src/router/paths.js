@@ -15,7 +15,7 @@ export default [
     view: 'Login'
   },
   {
-    path: '/restaurantInfo',
+    path: '/restaurantInfo/:id',
     name: 'RestaurantInfo',
     view: 'RestaurantInfo',
     props: true

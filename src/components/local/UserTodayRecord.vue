@@ -80,14 +80,10 @@ export default {
   },
   methods: {
     deleteMember (boardId, restaurantName) {
-      console.log('deleteMember')
-      // var boardId = this.item.boardId
-      console.log(boardId)
       var memberId = 7
       restful
         .fetch('delete', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {
-          console.log(data)
           swal('취소되었습니다.', restaurantName, 'success')
           history.go(0)
         })

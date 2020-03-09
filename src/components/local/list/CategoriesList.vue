@@ -46,7 +46,6 @@ export default {
         .finally(() => { })
     },
     moveSearchPage (category) {
-      console.log('category=' + category)
       this.$router.push({ name: 'SearchRestaurant', query: { restaurantCategory: category } })
     }
   }

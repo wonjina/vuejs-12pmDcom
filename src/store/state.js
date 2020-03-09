@@ -3,14 +3,5 @@
 export default {
   reviewModalFlage: false,
   newRecruitmentModalFlage: false,
-  user: {
-    name: {
-      type: String,
-      default: null
-    },
-    officeNumber: {
-      type: String,
-      default: null
-    }
-  }
+  userInfo: null
 }

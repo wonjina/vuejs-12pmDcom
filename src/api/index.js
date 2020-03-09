@@ -3,16 +3,19 @@ import router from '../router'
 
 const DOMAIN = 'http://api.12pm.com:9194'
 const UNAUTHORIZED = 401
+const NOT_FOUND = 404
 const FOUND = 302
-const onUnauthrorized = () => {
+const onUnauthrorized = ({ state }) => {
+  // delete localStorage.userInfo
+  state.userInfo = null
   router.push({ name: 'main' })
 }
 const onRedirect = (redirectUri) => {
   window.location.href = redirectUri
 }
+const onNotFound = () => { router.push({ name: 'main' }) }
 
 const request = (method, url, data) => {
-  console.log('axios->' + url)
   return axios({
     method,
     url: DOMAIN + url,
@@ -31,8 +34,11 @@ const request = (method, url, data) => {
         return onUnauthrorized()
       } else if (status === FOUND) {
         return onRedirect(result.response.data.message)
+      } else if (status === NOT_FOUND) {
+        return onNotFound()
       } else {
         console.log('error->' + status)
+        return onNotFound()
       }
     })
 }

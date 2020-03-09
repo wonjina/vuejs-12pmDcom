@@ -82,13 +82,11 @@ export default {
       else return 'green'
     },
     addMember () {
-      console.log('addMember')
       var boardId = this.recruitBoard.boardId
       var memberId = 7
       restful
         .fetch('post', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {
-          console.log(data)
           swal('참여되었습니다.', this.recruitBoard.restaurantName, 'success')
           history.back()
         })

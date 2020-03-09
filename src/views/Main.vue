@@ -22,8 +22,6 @@
 import MainBanner from '@/components/local/MainBanner.vue'
 import TableLayout from '@/components/local/layout/TableLayout.vue'
 import Categories from '@/components/local/list/CategoriesList.vue'
-import { restful } from '../api'
-import { urls } from '../api/requestUrl.js'
 import {
   mapState
 } from 'vuex'
@@ -45,20 +43,10 @@ export default {
     }
   },
   created () {
-    this.fetchData()
   },
   methods: {
     complete (index) {
       this.list[index] = !this.list[index]
-    },
-    fetchData () {
-      restful
-        .fetch(urls.hiworksUser.method, urls.hiworksUser.path)
-        .then(data => {
-          console.log('main page -> login & user info get')
-          console.log(data)
-        })
-        .finally(() => { })
     }
   }
 }

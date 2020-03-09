@@ -87,23 +87,19 @@ export default {
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      console.log(urls.userRecord.data.localDateTime)
       var memberId = 7
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(data => {
-          console.log(data)
           this.userRecord = data
         })
         .finally(() => { })
     },
     userFetch () {
-      console.log('fetch data start')
       var memberId = 7
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment')
         .then(data => {
-          console.log(data)
           this.userRecordList = data
         })
         .finally(() => { })

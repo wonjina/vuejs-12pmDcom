@@ -10,6 +10,11 @@ export const urls = {
     },
     description: ''
   },
+  'restaurantInfo': {
+    path: '/api/restaurants',
+    method: 'get',
+    description: ''
+  },
   'categories': {
     path: '/api/restaurants/categories',
     method: 'get',
@@ -49,6 +54,10 @@ export const urls = {
   },
   'hiworksUser': {
     path: '/hiworks/user',
+    method: 'get'
+  },
+  'logout': {
+    path: '/logout',
     method: 'get'
   }
 }

@@ -137,8 +137,6 @@ export default {
       restful
         .fetch(urls.restaurants.method, urls.restaurants.path, null)
         .then(data => {
-          console.log('tableLayout : restaurantFetach data ->')
-          console.log(data)
           this.restaurants = data
         })
         .finally(() => { })
@@ -149,8 +147,6 @@ export default {
       restful
         .fetch(urls.recruitBoard.method, urls.recruitBoard.path, urls.recruitBoard.data)
         .then(data => {
-          console.log('tableLayout : recruitBoardFetch data ->')
-          console.log(data)
           this.recruitBoard = data.content
         })
         .finally(() => { })

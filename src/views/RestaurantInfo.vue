@@ -13,7 +13,7 @@
         />  <!-- Add restaurant detail info vue -->
       </v-flex>
       <div class="custom-width">
-        <naver-map
+        <google-map
           :restaurant-info="[ restaurant ]"
         />          <!-- Add Naver-map vue -->
       </div>
@@ -22,26 +22,44 @@
 </template>
 
 <script>
-import NaverMap from '@/components/local/GoogleMap.vue'
+import GoogleMap from '@/components/local/NaverMap.vue'
 import RestaurantDetailInfo from '@/components/local/RestaurantDetailInfo.vue'
+import { restful } from '../api'
+import { urls } from '../api/requestUrl.js'
 
 export default {
   components: {
-    'naver-map': NaverMap,
+    'google-map': GoogleMap,
     'restaurant-detail-info': RestaurantDetailInfo
   },
   data () {
     return {
       restaurant: {
-        type: Array,
+        type: Object,
         default: []
       }
     }
   },
   created () {
-    this.restaurant = this.$route.params.restaurantInfo
-    console.log('res Info page->' + typeof this.restaurant)
-    console.log(this.restaurant)
+    if (this.$route.params.restaurantInfo !== null && this.$route.params.restaurantInfo !== undefined) {
+      this.restaurant = this.$route.params.restaurantInfo
+    } else if (this.$route.params.id === undefined || this.$route.params.id === null) {
+      this.$router.go(-1)
+    } else {
+      this.fetchData()
+    }
+  },
+  methods: {
+    fetchData () {
+      restful
+        .fetch(urls.restaurantInfo.method, urls.restaurantInfo.path + '/' + this.$route.params.id)
+        .then(data => {
+          console.log('res info->' + this.$route.params.id)
+          console.log(data)
+          this.restaurant = data
+        })
+        .finally(() => { })
+    }
   }
 }
 </script>

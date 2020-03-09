@@ -139,8 +139,6 @@ export default {
       restful
         .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
         .then(data => {
-          console.log('RestaurantDetailInfo page->')
-          console.log(data)
           this.reviews = data
         })
         .finally(() => {

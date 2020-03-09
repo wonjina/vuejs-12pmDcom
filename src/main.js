@@ -27,7 +27,6 @@ import App from './App'
 import router from '@/router'
 import store from '@/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import Storage from 'vue-web-storage'
 import VueCookies from 'vue-cookies'
 
 // Sync store with router
@@ -41,13 +40,13 @@ Vue.use(VueGoogleMaps, {
   }
 })
 Vue.use(VueCookies)
-Vue.use(Storage, {
-  drivers: 'session'
-})
 
 /* eslint-disable no-new */
 new Vue({
   router,
   store,
+  beforeCreate () {
+    this.$store.dispatch('GET_USER_INFO')
+  },
   render: h => h(App)
 }).$mount('#app')

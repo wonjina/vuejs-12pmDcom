@@ -66,12 +66,10 @@ export default {
     }
   },
   created () {
-    console.log('res list ->' + typeof this.items)
-    console.log(this.items)
   },
   methods: {
     moveRestaurantInfo (restaurant) {
-      this.$router.push({ name: 'RestaurantInfo', params: { restaurantInfo: restaurant } })
+      this.$router.push({ name: 'RestaurantInfo', params: { id: restaurant.restaurant_id, restaurantInfo: restaurant } })
     }
   }
 }

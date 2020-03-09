@@ -63,16 +63,23 @@
             mdi-view-dashboard
           </v-icon>
         </router-link>
-
         <v-btn
+          v-if="!userInfo"
           slot="activator"
           class="v-btn--simple"
           color="success"
           @click="moveLoginPage"
         >
-          <v-icon color="tertiary">
-            mdi-account
-          </v-icon>
+          로그인
+        </v-btn>
+        <v-btn
+          v-else
+          slot="activator"
+          class="v-btn--simple"
+          color="success"
+          @click.prevent="logoutAction"
+        >
+          로그아웃
         </v-btn>
       </v-flex>
     </v-toolbar-items>
@@ -81,7 +88,8 @@
 
 <script>
 import {
-  mapMutations
+  mapMutations,
+  mapState
 } from 'vuex'
 import { urls } from '../../api/requestUrl.js'
 
@@ -90,15 +98,24 @@ export default {
     title: null,
     responsive: false,
     restaurantName: '',
-    restaurantCategory: ''
+    restaurantCategory: '',
+    items: [
+      { title: 'Click Me' },
+      { title: 'Click Me' },
+      { title: 'Click Me' },
+      { title: 'Click Me 2' }
+    ]
   }),
-
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   watch: {
     '$route' (val) {
       this.title = val.name
     }
   },
-
   mounted () {
     this.onResponsiveInverted()
     window.addEventListener('resize', this.onResponsiveInverted)
@@ -124,11 +141,13 @@ export default {
       }
     },
     moveSearchPage () {
-      console.log('toobar page->')
       this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName, restaurantCategory: this.restaurantCategory } })
     },
     moveLoginPage () {
       window.location.href = urls.hiworksLogin.path
+    },
+    logoutAction () {
+      this.$store.commit('LOGOUT')
     }
   }
 }

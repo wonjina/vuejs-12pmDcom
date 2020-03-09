@@ -44,6 +44,19 @@ const router = new Router({
   }
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.path === '/restaurantInfo') {
+    if (to.params.restaurantInfo === undefined || to.params.restaurantInfo === null) {
+      router.push('/')
+    }
+  }
+  next()
+  console.log('navigation-guard---')
+  console.log(to)
+  console.log(from)
+  console.log(next)
+})
+
 Vue.use(Meta)
 
 // Bootstrap Analytics

@@ -59,7 +59,6 @@ export default {
     return { source: '/' }
   },
   created () {
-    console.log('login page ->')
     this.fetchData()
   },
   methods: {
@@ -67,8 +66,6 @@ export default {
       restful
         .fetch('get', '/test/oauth/callback')
         .then(data => {
-          console.log('test login page get cookies!!!')
-          console.log(data)
         })
         .finally(() => { })
     }

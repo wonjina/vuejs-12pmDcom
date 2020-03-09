@@ -28,4 +28,7 @@ const store = new Vuex.Store({
   state
 })
 
+// const { userInfo } = localStorage
+// store.commit('getUserInfo', userInfo)
+
 export default store

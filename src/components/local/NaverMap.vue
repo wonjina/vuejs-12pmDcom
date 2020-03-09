@@ -37,8 +37,6 @@ export default {
   computed: {
   },
   created () {
-    console.log('naver map::' + typeof this.restaurantInfo)
-    console.log(this.restaurantInfo)
   },
   methods: {
     onMarkerLoaded (vue) {

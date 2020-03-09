@@ -20,7 +20,7 @@
         </div>
       </material-card>
       <div class="custom-width">
-        <naver-map
+        <google-map
           :restaurant-info="restaurantList"
         />  <!-- Add Map.vue -->
       </div>
@@ -29,13 +29,13 @@
 </template>
 
 <script>
-import NaverMap from '@/components/local/GoogleMap.vue'
+import GoogleMap from '@/components/local/NaverMap.vue'
 import RestaurantList from '@/components/local/list/RestaurantList.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
 export default {
   components: {
-    'naver-map': NaverMap,
+    'google-map': GoogleMap,
     'Restaurant-list': RestaurantList
   },
   props: {
