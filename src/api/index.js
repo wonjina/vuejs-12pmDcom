@@ -43,8 +43,34 @@ const request = (method, url, data) => {
     })
 }
 
+const requestData = (method, url, data) => {
+  console.log('axios->')
+  console.log(data)
+  return axios({
+    method,
+    url: DOMAIN + url,
+    data: data
+  }).then(result => result.data.response)
+    .catch(result => {
+      console.log('axios catch = ')
+      console.log(result)
+      console.log(result.response)
+      const status = result.response.data.code
+      if (status === UNAUTHORIZED) {
+        return onUnauthrorized()
+      } else if (status === FOUND) {
+        return onRedirect(result.response.data.message)
+      } else {
+        console.log('error->' + status)
+      }
+    })
+}
+
 export const restful = {
   fetch (method, url, data) {
     return request(method, url, data)
+  },
+  dataFetch (method, url, data) {
+    return requestData(method, url, data)
   }
 }

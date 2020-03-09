@@ -12,12 +12,21 @@
         md12
       >
         <v-card
-          class="mx-auto"
+          class="mx-5 mb-5"
           center
         >
           <v-card-text>
             <div />
-            <h3>({{ moment().format('MM월 DD일') }}) 참여 예정 모집글</h3>
+            <h4 class="font-weight-medium">
+              <v-chip
+                color="green darken-3"
+                label
+                dark
+              >
+                {{ moment().format('MM월 DD일') }}
+              </v-chip>
+              참여 예정 모집글
+            </h4>
             <div />
             <div class="text--primary">
               <user-today-record
@@ -27,7 +36,8 @@
           </v-card-text>
         </v-card>
         <material-card
-          title="나의 기록"
+          class="mx-5 mb-5"
+          title="나의 참여 기록"
         >
           <div
             v-if="loading"

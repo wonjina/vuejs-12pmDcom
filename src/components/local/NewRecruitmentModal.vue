@@ -3,10 +3,12 @@
     <v-dialog
       v-model="newRecruitmentModalFlage"
       persistent
-      width="35%"
+      width="30%"
     >
       <v-card
         class="elevation-16 mx-auto"
+        cols="12"
+        md="3"
       >
         <v-card-title
           class="headline"
@@ -14,42 +16,46 @@
         >
           새 모집글
         </v-card-title>
-        <v-card-text>
-          <v-col
-            cols="12"
-            md="3"
-          >
-            <v-textarea
-              v-model="post"
-              label="TEXT"
-              rows="1"
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
+          <v-card-text>
+            <v-text-field
+              v-model="subjectText"
+              :counter="30"
+              :rules="subjectRules"
+              label="제목"
+              required
             />
-          </v-col>
-        </v-card-text>
-        <div class="text-xs-center">
-          <v-overflow-btn
-            v-model="maxNum"
-            :items="dropdown_num"
-            label="참여 인원 수"
-          />
-        </div>
-        <file-upload />
-        <v-card-actions class="justify-space-between">
-          <v-btn
-            color="black"
-            flat
-            @click.prevent="TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE(false)"
-          >
-            취소
-          </v-btn>
-          <v-btn
-            color="primary"
-            flat
-            @click="addNewRecruitment()"
-          >
-            등록
-          </v-btn>
-        </v-card-actions>
+            <v-select
+              v-model="maxNum"
+              :items="dropdownNum"
+              :rules="[v => !!v || '최대 인원 수를 선택하세요.']"
+              label="최대 인원 수"
+              required
+            />
+          </v-card-text>
+          <v-card-actions class="justify-space-between">
+            <v-btn
+              color="black"
+              flat
+              @click.prevent="TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE(false)"
+            >
+              취소
+            </v-btn>
+            <v-btn
+              :disabled="disable(subjectText, maxNum)"
+              color="primary"
+              flat
+              class="mr-4"
+              @click="addNewRecruitment"
+            >
+              등록
+            </v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-row>
@@ -59,11 +65,19 @@ import { mapState,
   mapMutations } from 'vuex'
 import { restful } from '../../api'
 import { urls } from '../../api/requestUrl.js'
+import swal from 'sweetalert'
 
 export default {
   data () {
     return {
-      dropdown_num: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+      valid: true,
+      subjectText: '',
+      subjectRules: [
+        v => !!v || '제목을 작성해 주세요.',
+        v => (v && v.length >= 5) || '5글자 이상 입력하세요.'
+      ],
+      maxNum: null,
+      dropdownNum: [2, 3, 4, 5, 6, 7, 8, 9, 10],
       restaurantInfo: {
         type: Object,
         default: null
@@ -85,16 +99,28 @@ export default {
     ...mapMutations([
       'TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE'
     ]),
+    disable (subjectText, maxNum) {
+      if (subjectText === '' || subjectText.length < 5) return true
+      else if (maxNum === null) return true
+      else return false
+    },
     addNewRecruitment () {
       restful
-        .fetch(urls.newRecruitment.method, urls.newRecruitment.path, {
+        .dataFetch(urls.newRecruitment.method, urls.newRecruitment.path, {
           memberId: 7,
           restaurantId: this.restaurantInfo.restaurant_id,
-          subject: this.post,
+          subject: this.subjectText,
           maxNumber: this.maxNum
         })
         .then(function (data) {
-          // close
+          console.log(data)
+          swal({
+            title: '등록되었습니다.',
+            icon: 'success'
+          })
+            .then(() => {
+              location.href = '/recruitBoard'
+            })
         })
         .finally(() => { })
     }

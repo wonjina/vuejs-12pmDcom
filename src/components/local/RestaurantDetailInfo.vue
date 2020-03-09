@@ -33,6 +33,7 @@
               color="success"
               round
               class="font-weight-light"
+              :disabled="disableBtn(userData)"
               @click="newRecruitmentModalOpen(restaurantInfo)"
             >
               모집글 쓰기
@@ -62,6 +63,8 @@
     </v-flex>
     <v-flex xs8>
       <review-modal />       <!-- ADD review modal -->
+    </v-flex>
+    <v-flex xs8>
       <new-recruitment-modal />       <!-- ADD new recruitment modal -->
     </v-flex>
   </v-layout>
@@ -73,6 +76,7 @@ import NewRecruitmentModal from '@/components/local/NewRecruitmentModal.vue'
 import ReviewList from '@/components/local/list/ReviewList.vue'
 import { restful } from '../../api'
 import { urls } from '../../api/requestUrl.js'
+import moment from 'moment'
 
 export default {
   components: {
@@ -89,44 +93,42 @@ export default {
   },
   data () {
     return {
+      userData: {
+        type: Array,
+        default: null
+      },
       reviews: {
         type: Array,
         default: null
       },
       loading: false,
-      status: false,
-      headers: [
-        {
-          sortable: false,
-          text: 'Name',
-          value: 'name'
-        },
-        {
-          sortable: false,
-          text: 'Country',
-          value: 'country'
-        },
-        {
-          sortable: false,
-          text: 'City',
-          value: 'city'
-        },
-        {
-          sortable: false,
-          text: 'Salary',
-          value: 'salary',
-          align: 'right'
-        }
-      ]
+      status: false
     }
   },
   created () {
     this.loading = true
+    this.todayUserFetch()
     this.fetchData()
     this.loading = false
     this.status = true
   },
   methods: {
+    todayUserFetch () {
+      var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
+      urls.userRecord.data.localDateTime = localDateTime
+      var memberId = 7
+      restful
+        .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
+        .then(data => {
+          console.log(data)
+          this.userData = data
+        })
+        .finally(() => { })
+    },
+    disableBtn (userData) {
+      if (userData.length >= 1) return true
+      else return false
+    },
     reviewModalOpen () {
       this.$store.commit('TOGGLE_REVIEW_MODAL_FLAGE', true)
     },
