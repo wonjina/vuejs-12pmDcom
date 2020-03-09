@@ -10,7 +10,6 @@
         slot="items"
         slot-scope="{ item }"
       >
-        <td>{{ item.boardDate }}</td>
         <td>{{ item.restaurantName }}</td>
         <td>{{ item.boardSubject }}</td>
         <td>
@@ -38,12 +37,14 @@
           </v-btn>
         </td>
       </template>
+      <template slot="no-data">
+        오늘 작성된 모집글이 없습니다.
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
-import moment from 'moment'
 
 export default {
   props: {
@@ -59,16 +60,11 @@ export default {
   data () {
     return {
       pagination: {
-        sortBy: 'boardDate',
-        descending: true,
-        rowsPerPage: 25
+        sortBy: 'countMember',
+        ascending: true,
+        rowsPerPage: 5
       },
       headers: [
-        {
-          sortable: true,
-          text: '날짜',
-          value: 'boardDate'
-        },
         {
           sortable: false,
           text: '음식점',
@@ -80,7 +76,7 @@ export default {
           value: 'boardSubject'
         },
         {
-          sortable: false,
+          sortable: true,
           text: '인원',
           value: 'countMember'
         }
@@ -90,9 +86,7 @@ export default {
   created () { },
   methods: {
     getColor (item) {
-      var today = moment().format('YYYY-MM-DDT00:00:01')
-      if (today > item.boardDate) return 'gray'
-      else if (item.maxNumber - item.countMember === 0) return 'red'
+      if (item.maxNumber - item.countMember === 0) return 'red'
       else if (item.maxNumber - item.countMember === 1) return 'orange'
       else return 'green'
     },

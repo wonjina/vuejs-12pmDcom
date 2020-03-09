@@ -84,7 +84,7 @@
             <recruit-board-list
               link-btn
               :items="recruitBoard"
-            />    <!-- Add restaurant table.vue -->
+            />
           </div>
         </material-card>
       </v-flex>
@@ -92,7 +92,7 @@
   </v-flex>
 </template>
 <script>
-import RecruitBoard from '@/components/local/list/RecruitBoardList.vue'
+import TodayRecruitBoard from '@/components/local/list/TodayRecruitBoardList.vue'
 import RestaurantList from '@/components/local/list/RestaurantList.vue'
 import { restful } from '../../../api'
 import { urls } from '../../../api/requestUrl.js'
@@ -102,7 +102,7 @@ import {
 } from 'vuex'
 export default {
   components: {
-    'recruit-board-list': RecruitBoard,
+    'recruit-board-list': TodayRecruitBoard,
     'restaurant-list': RestaurantList
   },
   data () {

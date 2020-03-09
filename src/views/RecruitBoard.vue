@@ -13,7 +13,7 @@
       >
         <material-card
           title="모집 게시판"
-          text="Here is a subtitle for this table"
+          class="mx-5 mb-5"
         >
           <div
             v-if="loading"

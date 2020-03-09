@@ -38,6 +38,9 @@
           </v-btn>
         </td>
       </template>
+      <template slot="no-data">
+        현재 참여 중인 모집글이 없습니다.
+      </template>
     </v-data-table>
   </div>
 </template>
@@ -84,8 +87,14 @@ export default {
       restful
         .fetch('delete', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {
-          swal('취소되었습니다.', restaurantName, 'success')
-          history.go(0)
+          console.log(data)
+          swal({
+            title: '취소되었습니다.',
+            icon: 'success'
+          })
+            .then(() => {
+              location.href = '/userRecord'
+            })
         })
         .finally(() => { })
     }
