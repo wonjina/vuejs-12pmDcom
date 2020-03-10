@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import GoogleMap from '@/components/local/NaverMap.vue'
+import GoogleMap from '@/components/local/GoogleMap.vue'
 import RestaurantList from '@/components/local/list/RestaurantList.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
