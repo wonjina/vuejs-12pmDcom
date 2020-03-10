@@ -11,7 +11,7 @@
           title="카테고리 검색"
         >
           <categories-list /> <!--Add categories List.vue  -->
-          <recruit-board-list/>
+          <recruit-board-list />
         </material-card>
       </v-layout>
     </v-container>

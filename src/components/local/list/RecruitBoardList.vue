@@ -97,7 +97,7 @@ export default {
       else return 'green'
     },
     moveRecruitBoardInfo (recruitBoard) {
-      this.$router.push({ name: 'RecruitBoardInfo', params: { recruitBoardInfo: recruitBoard } })
+      this.$router.push({ name: 'RecruitBoardInfo', params: { recruitBoardInfo: recruitBoard.boardId } })
     }
   }
 }
