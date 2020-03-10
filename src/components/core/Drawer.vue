@@ -20,21 +20,40 @@
         </v-list-tile-title>
       </v-list-tile>
       <v-divider />
-      <v-list-tile
-        v-for="(link, i) in links"
-        :key="i"
-        :to="link.to"
-        :active-class="color"
-        avatar
-        class="v-list-item"
-      >
-        <v-list-tile-action>
-          <v-icon>{{ link.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title
-          v-text="link.text"
-        />
-      </v-list-tile>
+      <div v-if= "userInfo === null">
+        <v-list-tile
+          v-for="(link, i) in noUserPage"
+          :key="i"
+          :to="link.to"
+          :active-class="color"
+          avatar
+          class="v-list-item"
+        >
+          <v-list-tile-action>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title
+            v-text="link.text"
+          />
+        </v-list-tile>
+      </div>
+      <div v-else>
+        <v-list-tile
+          v-for="(link, i) in links"
+          :key="i"
+          :to="link.to"
+          :active-class="color"
+          avatar
+          class="v-list-item"
+        >
+          <v-list-tile-action>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-title
+            v-text="link.text"
+          />
+        </v-list-tile>
+      </div>
     </v-layout>
   </v-navigation-drawer>
 </template>
@@ -76,9 +95,27 @@ export default {
         icon: 'mdi-map-marker',
         text: 'Maps'
       }
+    ],
+    noUserPage: [
+      {
+        to: '/',
+        icon: 'mdi-view-dashboard',
+        text: 'Main'
+      },
+      {
+        to: '/recruitBoard',
+        icon: 'mdi-clipboard-outline',
+        text: '모집 게시판'
+      },
+      {
+        to: '/search',
+        icon: 'mdi-map-marker',
+        text: 'Maps'
+      }
     ]
   }),
   computed: {
+    ...mapState(['userInfo']),
     ...mapState('app', ['color']),
     inputValue: {
       get () {

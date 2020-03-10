@@ -61,7 +61,9 @@ import UserRecordList from '@/components/local/list/UserRecordList.vue'
 import UserTodayRecord from '@/components/local/UserTodayRecord.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
+import { mapState } from 'vuex'
 import moment from 'moment'
+import swal from 'sweetalert'
 
 export default {
   components: {
@@ -82,9 +84,14 @@ export default {
       status: false
     }
   },
-
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   created () {
     this.loading = true
+    this.loginCheck()
     this.todayUserFetch()
     this.userFetch()
     this.loading = false
@@ -94,10 +101,21 @@ export default {
     moment: function () {
       return moment()
     },
+    loginCheck () {
+      if (this.userInfo === null) {
+        swal({
+          title: '로그인 후 이용 가능합니다.',
+          icon: 'error'
+        })
+          .then(() => {
+            history.back()
+          })
+      }
+    },
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(data => {
@@ -106,7 +124,7 @@ export default {
         .finally(() => { })
     },
     userFetch () {
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment')
         .then(data => {
