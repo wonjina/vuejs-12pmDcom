@@ -41,7 +41,7 @@
               <v-avatar left>
                 <v-icon>mdi-account-circle</v-icon>
               </v-avatar>
-              {{ joinMember.name }} ({{ joinMember.department }})
+              {{ joinMember.name }}
             </v-chip>
           </p>
           <v-btn
@@ -66,6 +66,7 @@ import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
 import swal from 'sweetalert'
 import moment from 'moment'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -80,25 +81,46 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   created () {
-    this.recruitBoard = this.$route.params.recruitBoardInfo
+    this.boardId = this.$route.params.recruitBoardInfo
+    this.loginCheck()
     this.todayUserFetch()
+    this.detailBoardFetch()
   },
   methods: {
-    getColor (countMember, maxNumber) {
-      if (maxNumber - countMember === 0) return 'red'
-      else if (maxNumber - countMember === 1) return 'orange'
-      else return 'green'
+    loginCheck () {
+      if (this.userInfo === null) {
+        swal({
+          title: '로그인 후 이용가능합니다.',
+          icon: 'error'
+        })
+          .then(() => {
+            history.back()
+          })
+      }
     },
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(data => {
           console.log(data)
           this.userData = data
+        })
+        .finally(() => { })
+    },
+    detailBoardFetch () {
+      restful
+        .fetch(urls.recruitBoard.method, urls.recruitBoard.path + '/' + this.boardId)
+        .then(data => {
+          this.recruitBoard = data
         })
         .finally(() => { })
     },
@@ -111,7 +133,7 @@ export default {
     },
     addMember () {
       var boardId = this.recruitBoard.boardId
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch('post', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {
@@ -119,6 +141,11 @@ export default {
           history.back()
         })
         .finally(() => { })
+    },
+    getColor (countMember, maxNumber) {
+      if (maxNumber - countMember === 0) return 'red'
+      else if (maxNumber - countMember === 1) return 'orange'
+      else return 'green'
     }
   }
 }

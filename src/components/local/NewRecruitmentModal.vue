@@ -61,8 +61,7 @@
   </v-row>
 </template>
 <script>
-import { mapState,
-  mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import { restful } from '../../api'
 import { urls } from '../../api/requestUrl.js'
 import swal from 'sweetalert'
@@ -86,7 +85,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'newRecruitmentModalFlage'
+      'newRecruitmentModalFlage',
+      'userInfo'
     ]),
     items () {
       return this.$t('Layout.View.items')
@@ -107,7 +107,7 @@ export default {
     addNewRecruitment () {
       restful
         .dataFetch(urls.newRecruitment.method, urls.newRecruitment.path, {
-          memberId: 7,
+          memberId: this.userInfo.user.member_id,
           restaurantId: this.restaurantInfo.restaurant_id,
           subject: this.subjectText,
           maxNumber: this.maxNum

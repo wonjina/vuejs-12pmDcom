@@ -77,6 +77,7 @@ import ReviewList from '@/components/local/list/ReviewList.vue'
 import { restful } from '../../api'
 import { urls } from '../../api/requestUrl.js'
 import moment from 'moment'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -105,6 +106,11 @@ export default {
       status: false
     }
   },
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   created () {
     this.loading = true
     this.todayUserFetch()
@@ -116,7 +122,7 @@ export default {
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(data => {
@@ -126,7 +132,8 @@ export default {
         .finally(() => { })
     },
     disableBtn (userData) {
-      if (userData.length >= 1) return true
+      if (this.userInfo === null) return true
+      else if (userData.length >= 1) return true
       else return false
     },
     reviewModalOpen () {
