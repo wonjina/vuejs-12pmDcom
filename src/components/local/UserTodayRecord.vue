@@ -48,6 +48,7 @@
 <script>
 import { restful } from '../../api'
 import swal from 'sweetalert'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -81,9 +82,14 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   methods: {
     deleteMember (boardId, restaurantName) {
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch('delete', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {

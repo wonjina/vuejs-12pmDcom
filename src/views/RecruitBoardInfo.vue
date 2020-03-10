@@ -41,7 +41,7 @@
               <v-avatar left>
                 <v-icon>mdi-account-circle</v-icon>
               </v-avatar>
-              {{ joinMember.name }} 
+              {{ joinMember.name }}
             </v-chip>
           </p>
           <v-btn
@@ -66,6 +66,7 @@ import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
 import swal from 'sweetalert'
 import moment from 'moment'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -80,16 +81,33 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   created () {
     this.boardId = this.$route.params.recruitBoardInfo
+    this.loginCheck()
     this.todayUserFetch()
     this.detailBoardFetch()
   },
   methods: {
+    loginCheck () {
+      if (this.userInfo === null) {
+        swal({
+          title: '로그인 후 이용가능합니다.',
+          icon: 'error'
+        })
+          .then(() => {
+            history.back()
+          })
+      }
+    },
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(data => {
@@ -115,7 +133,7 @@ export default {
     },
     addMember () {
       var boardId = this.recruitBoard.boardId
-      var memberId = 7
+      var memberId = this.userInfo.user.member_id
       restful
         .fetch('post', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {
