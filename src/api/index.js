@@ -49,7 +49,8 @@ const requestData = (method, url, data) => {
   return axios({
     method,
     url: DOMAIN + url,
-    data: data
+    data: data,
+    withCredentials: true
   }).then(result => result.data.response)
     .catch(result => {
       console.log('axios catch = ')
