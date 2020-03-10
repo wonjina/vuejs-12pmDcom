@@ -41,7 +41,7 @@
               <v-avatar left>
                 <v-icon>mdi-account-circle</v-icon>
               </v-avatar>
-              {{ joinMember.name }} ({{ joinMember.department }})
+              {{ joinMember.name }} 
             </v-chip>
           </p>
           <v-btn
@@ -81,15 +81,11 @@ export default {
     }
   },
   created () {
-    this.recruitBoard = this.$route.params.recruitBoardInfo
+    this.boardId = this.$route.params.recruitBoardInfo
     this.todayUserFetch()
+    this.detailBoardFetch()
   },
   methods: {
-    getColor (countMember, maxNumber) {
-      if (maxNumber - countMember === 0) return 'red'
-      else if (maxNumber - countMember === 1) return 'orange'
-      else return 'green'
-    },
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
@@ -99,6 +95,14 @@ export default {
         .then(data => {
           console.log(data)
           this.userData = data
+        })
+        .finally(() => { })
+    },
+    detailBoardFetch () {
+      restful
+        .fetch(urls.recruitBoard.method, urls.recruitBoard.path + '/' + this.boardId)
+        .then(data => {
+          this.recruitBoard = data
         })
         .finally(() => { })
     },
@@ -119,6 +123,11 @@ export default {
           history.back()
         })
         .finally(() => { })
+    },
+    getColor (countMember, maxNumber) {
+      if (maxNumber - countMember === 0) return 'red'
+      else if (maxNumber - countMember === 1) return 'orange'
+      else return 'green'
     }
   }
 }
