@@ -10,7 +10,6 @@
         slot-scope="{ item }"
       >
         <td>{{ item.name }}</td>
-        <td>{{ item.category }}</td>
         <td>{{ item.rating }}</td>
         <td
           v-if="linkBtn"

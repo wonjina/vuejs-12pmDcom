@@ -4,7 +4,6 @@ export const urls = {
     path: '/api/restaurants',
     method: 'get',
     data: {
-      category: null,
       name: null,
       restaurant_id: null
     },
@@ -14,11 +13,6 @@ export const urls = {
     path: '/api/restaurants',
     method: 'get',
     description: ''
-  },
-  'categories': {
-    path: '/api/restaurants/categories',
-    method: 'get',
-    description: 'Get catogories List'
   },
   'reviews': {
     path: '/api/reviews/restaurant',

@@ -36,14 +36,6 @@
           color="purple"
           @keypress.enter="moveSearchPage"
         />
-        <v-text-field
-          v-model="restaurantCategory"
-          class="mr-4 purple-input"
-          label="Category Search..."
-          hide-details
-          color="purple"
-          @keypress.enter="moveSearchPage"
-        />
         <v-btn
           slot="activator"
           class="v-btn--simple"
@@ -98,7 +90,6 @@ export default {
     title: null,
     responsive: false,
     restaurantName: '',
-    restaurantCategory: '',
     items: [
       { title: 'Click Me' },
       { title: 'Click Me' },
@@ -141,7 +132,7 @@ export default {
       }
     },
     moveSearchPage () {
-      this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName, restaurantCategory: this.restaurantCategory } })
+      this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName } })
     },
     moveLoginPage () {
       window.location.href = urls.hiworksLogin.path

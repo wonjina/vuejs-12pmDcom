@@ -58,9 +58,6 @@ export default {
     if (this.$route.query.restaurantName !== '' && this.$route.query.restaurantName !== undefined) {
       urls.restaurants.data.name = this.$route.query.restaurantName
     }
-    if (this.$route.query.restaurantCategory !== '' && this.$route.query.restaurantCategory !== undefined) {
-      urls.restaurants.data.category = this.$route.query.restaurantCategory
-    }
     this.loading = true
     this.fetchData()
     this.loading = false
@@ -74,7 +71,6 @@ export default {
           this.restaurantList = data
         })
         .finally(() => {
-          urls.restaurants.data.category = null
           urls.restaurants.data.name = null
         })
     }

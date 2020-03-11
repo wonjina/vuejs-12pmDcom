@@ -11,7 +11,7 @@
           </v-flex>
           <v-card-text>
             <h6 class="category text-gray font-weight-thin mb-3">
-              {{ restaurantInfo.category }}
+              BLANK SPACE
             </h6>
             <h4 class="card-title font-weight-light">
               {{ restaurantInfo.load_address }}
