@@ -45,16 +45,11 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/restaurantInfo') {
-    if (to.params.restaurantInfo === undefined || to.params.restaurantInfo === null) {
-      router.push('/')
-    }
-  }
-  next()
-  console.log('navigation-guard---')
+  console.log('navigation-guard---next !')
   console.log(to)
   console.log(from)
   console.log(next)
+  next()
 })
 
 Vue.use(Meta)

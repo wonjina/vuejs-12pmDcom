@@ -20,7 +20,7 @@
         </v-list-tile-title>
       </v-list-tile>
       <v-divider />
-      <div v-if= "userInfo === null">
+      <div v-if="userInfo === null">
         <v-list-tile
           v-for="(link, i) in noUserPage"
           :key="i"

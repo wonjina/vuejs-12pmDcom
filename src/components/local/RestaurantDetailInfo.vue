@@ -112,8 +112,11 @@ export default {
     ])
   },
   created () {
+    console.log('detail page->')
     this.loading = true
-    this.todayUserFetch()
+    if (this.userInfo !== null && this.userInfo !== undefined) {
+      this.todayUserFetch()
+    }
     this.fetchData()
     this.loading = false
     this.status = true
@@ -122,9 +125,8 @@ export default {
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      var memberId = this.userInfo.user.member_id
       restful
-        .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
+        .fetch(urls.userRecord.method, '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
         .then(data => {
           console.log(data)
           this.userData = data
@@ -145,9 +147,13 @@ export default {
     },
     fetchData () {
       urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
+      console.log('before get review data :')
+      console.log(urls.reviews.data.restaurantId)
       restful
         .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
         .then(data => {
+          console.log('after get review data :')
+          console.log(data)
           this.reviews = data
         })
         .finally(() => {

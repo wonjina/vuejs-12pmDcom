@@ -1,14 +1,14 @@
 import axios from 'axios'
 import router from '../router'
+import store from '@/store'
 
 const DOMAIN = 'http://api.12pm.com:9194'
 const UNAUTHORIZED = 401
 const NOT_FOUND = 404
 const FOUND = 302
-const onUnauthrorized = ({ state }) => {
-  // delete localStorage.userInfo
-  state.userInfo = null
-  router.push({ name: 'main' })
+const onUnauthrorized = () => {
+  store.state.userInfo = null
+  console.log('catch 401!' + store.state.userInfo)
 }
 const onRedirect = (redirectUri) => {
   window.location.href = redirectUri
