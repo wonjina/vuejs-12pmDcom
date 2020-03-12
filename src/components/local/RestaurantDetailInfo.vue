@@ -25,7 +25,7 @@
               color="white"
               round
               class="font-weight-light"
-              :disabled="disableBtn(userData)"
+              :disabled="isLogined"
               @click="reviewModalOpen()"
             >
               리뷰 쓰기
@@ -141,6 +141,9 @@ export default {
       if (this.userInfo === null) return true
       else if (userData.length >= 1) return true
       else return false
+    },
+    isLogined () {
+      return (this.userInfo === null || this.userInfo === undefined)
     },
     reviewModalOpen () {
       if (this.userInfo !== null && this.userInfo !== undefined) {
