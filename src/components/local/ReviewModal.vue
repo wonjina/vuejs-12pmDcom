@@ -71,8 +71,6 @@ export default {
     }
   },
   created () {
-    console.log('review modal :')
-    console.log(this.restaurantInfo)
   },
   methods: {
     ...mapMutations([
@@ -87,8 +85,6 @@ export default {
       restful
         .dataFetch(urls.newReviews.method, urls.newReviews.path, urls.newReviews.data)
         .then(data => {
-          console.log('post review data :')
-          console.log(data)
           swal({
             icon: 'success'
           })

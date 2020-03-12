@@ -3,7 +3,7 @@ import router from '../router'
 import store from '@/store'
 import swal from 'sweetalert'
 
-const DOMAIN = 'http://api.12pm.com:9194'
+const DOMAIN = 'http://localhost:9194'
 const UNAUTHORIZED = 401
 const NOT_FOUND = 404
 const FOUND = 302
@@ -37,12 +37,19 @@ const request = (method, url, data) => {
     withCredentials: true
   }).then(result => {
     console.log(method + url + ' axios result : ')
-    console.log(data)
+    console.log(result)
+    console.log(typeof result)
+    console.log(result.data)
+    console.log(typeof result.data)
+    console.log(result.data.response)
+    console.log(typeof result.data.response)
+    console.log(result.data.response.content)
+    console.log(typeof result.data.response.content)
+    console.log(result.data.response.content[0])
+    console.log(typeof result.data.response.content[0])
     return result.data.response
   })
     .catch(result => {
-      console.log(method + url + ' axios catch = ')
-      console.log(result)
       const status = result.response.data.code
 
       if (status === UNAUTHORIZED) {
@@ -62,8 +69,6 @@ const request = (method, url, data) => {
 
 /** Post Request */
 const requestData = (method, url, data) => {
-  console.log('axios->')
-  console.log(data)
   return axios({
     method,
     url: DOMAIN + url,
@@ -71,8 +76,6 @@ const requestData = (method, url, data) => {
     withCredentials: true
   }).then(result => result.data.response)
     .catch(result => {
-      console.log('axios catch = ')
-      console.log(result)
       const status = result.response.data.code
       if (status === UNAUTHORIZED) {
         return onUnauthrorized()
@@ -92,12 +95,9 @@ const requestNoData = (method, url, data) => {
     data: data,
     withCredentials: true
   }).then(result => {
-    console.log(method + url + ' axios result : ')
     return result.data.response
   })
     .catch(result => {
-      console.log(method + url + ' axios catch = ')
-      console.log(result)
       const status = result.response.data.code
 
       if (status === UNAUTHORIZED) {
@@ -107,7 +107,6 @@ const requestNoData = (method, url, data) => {
       } else if (status === NOT_FOUND) {
         return onNotFound()
       } else {
-        console.log('error->' + status)
         return onNotFound()
       }
     })

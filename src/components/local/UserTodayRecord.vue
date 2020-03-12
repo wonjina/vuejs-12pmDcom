@@ -93,7 +93,6 @@ export default {
       restful
         .fetch('delete', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
         .then(data => {
-          console.log(data)
           swal({
             title: '취소되었습니다.',
             icon: 'success'

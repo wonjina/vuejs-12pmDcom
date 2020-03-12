@@ -118,7 +118,6 @@ export default {
     ])
   },
   created () {
-    console.log('detail page->')
     this.loading = true
     if (this.userInfo !== null && this.userInfo !== undefined) {
       this.todayUserFetch()
@@ -134,7 +133,6 @@ export default {
       restful
         .fetch(urls.userRecord.method, '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
         .then(data => {
-          console.log(data)
           this.userData = data
         })
         .finally(() => { })
@@ -172,16 +170,11 @@ export default {
         })
     },
     updateData (link) {
-      console.log('prev event 전이!' + link)
-      console.log(this.reviewListLinks)
       for (let i = 0; i < this.reviewListLinks.length; ++i) {
-        console.log(this.reviewListLinks[i].rel)
         if (this.reviewListLinks[i].rel === link) {
           restful
             .fetchWithoutData(urls.reviews.method, this.reviewListLinks[i].href, '')
             .then(data => {
-              console.log('전이 page :')
-              console.log(data)
               this.reviews = data.content
               this.reviewListLinks = data.links
             })

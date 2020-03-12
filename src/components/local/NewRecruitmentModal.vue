@@ -113,7 +113,6 @@ export default {
           maxNumber: this.maxNum
         })
         .then(function (data) {
-          console.log(data)
           swal({
             title: '등록되었습니다.',
             icon: 'success'

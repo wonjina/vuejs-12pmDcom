@@ -181,19 +181,15 @@ export default {
       this.$emit('fetchData')
     },
     prevSearchList () {
-      console.log('prev')
       this.$emit('update', 'prev')
     },
     nextSearchList () {
-      console.log('next')
       this.$emit('update', 'next')
     },
     fetchData (data) {
       restful
         .fetch(urls.restaurants.method, urls.restaurants.path, data)
         .then(data => {
-          console.log('search page :')
-          console.log(data)
           this.restaurantList = data.content
           this.resListLinks = data.links
         })

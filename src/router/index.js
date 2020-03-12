@@ -45,10 +45,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('navigation-guard---next !')
-  console.log(to)
-  console.log(from)
-  console.log(next)
   next()
 })
 

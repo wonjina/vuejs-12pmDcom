@@ -50,18 +50,18 @@ export default {
   props: {
     keyword: {
       type: Array,
-      default: () => []
+      default: () => {}
     }
   },
   data () {
     return {
       restaurantList: {
         type: Array,
-        default: []
+        default: null
       },
       resListLinks: {
         type: Array,
-        default: []
+        default: null
       },
       loading: false,
       status: false
@@ -81,8 +81,6 @@ export default {
       restful
         .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
         .then(data => {
-          console.log('search page :')
-          console.log(data)
           this.restaurantList = data.content
           this.resListLinks = data.links
         })
@@ -91,16 +89,11 @@ export default {
         })
     },
     updateData (link) {
-      console.log('prev event 전이!' + link)
-      console.log(this.resListLinks)
       for (let i = 0; i < this.resListLinks.length; ++i) {
-        console.log(this.resListLinks[i].rel)
         if (this.resListLinks[i].rel === link) {
           restful
             .fetchWithoutData(urls.restaurants.method, this.resListLinks[i].href, '')
             .then(data => {
-              console.log('전이 page :')
-              console.log(data)
               this.restaurantList = data.content
               this.resListLinks = data.links
             })

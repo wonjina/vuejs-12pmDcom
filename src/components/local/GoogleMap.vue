@@ -43,7 +43,7 @@ export default {
   props: {
     restaurantInfo: {
       type: Array,
-      default: () => [0]
+      default: null
     }
   },
   data () {

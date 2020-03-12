@@ -111,7 +111,6 @@ export default {
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(data => {
-          console.log(data)
           this.userData = data
         })
         .finally(() => { })

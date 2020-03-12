@@ -41,16 +41,11 @@ export default {
     }
   },
   created () {
-    console.log('res info : ')
     if (this.$route.params.restaurantInfo !== null && this.$route.params.restaurantInfo !== undefined) {
-      console.log('res info : ')
-      console.log(this.$route.params.restaurantInfo)
       this.restaurant = this.$route.params.restaurantInfo
     } else if (this.$route.params.id === undefined || this.$route.params.id === null) {
-      console.log('back page')
       this.$router.go(-1)
     } else {
-      console.log('fetch call!')
       this.fetchData()
     }
   },
@@ -59,8 +54,6 @@ export default {
       restful
         .fetch(urls.restaurantInfo.method, urls.restaurantInfo.path + '/' + this.$route.params.id)
         .then(data => {
-          console.log('res info->' + this.$route.params.id)
-          console.log(data)
           this.restaurant = data
         })
         .finally(() => { })

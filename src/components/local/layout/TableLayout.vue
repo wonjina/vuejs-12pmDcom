@@ -139,8 +139,6 @@ export default {
       restful
         .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
         .then(data => {
-          console.log('now test!')
-          console.log(data)
           this.restaurants = data.content
         })
         .finally(() => {
