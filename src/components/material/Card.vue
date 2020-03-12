@@ -70,11 +70,28 @@
         v-if="pagingBtn"
         class="text-center"
       >
-        <v-pagination
-          v-model="page"
-          :length="15"
-          :total-visible="6"
-        />
+        <v-flex
+          align-center
+          layout
+          py-2
+        >
+          <v-btn
+            slot="activator"
+            class="v-btn--simple"
+            color="success"
+            @click="prevSearchList"
+          >
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+          <v-btn
+            slot="activator"
+            class="v-btn--simple"
+            color="success"
+            @click="nextSearchList"
+          >
+            <v-icon>mdi-arrow-right</v-icon>
+          </v-btn>
+        </v-flex>
       </div>
     </v-card-text>
 
@@ -90,6 +107,8 @@
 </template>
 
 <script>
+import { restful } from '../../api'
+import { urls } from '../../api/requestUrl.js'
 import {
   mapState
 } from 'vuex'
@@ -160,6 +179,24 @@ export default {
   methods: {
     clickRefresh () {
       this.$emit('fetchData')
+    },
+    prevSearchList () {
+      console.log('prev')
+      this.$emit('update', 'prev')
+    },
+    nextSearchList () {
+      console.log('next')
+      this.$emit('update', 'next')
+    },
+    fetchData (data) {
+      restful
+        .fetch(urls.restaurants.method, urls.restaurants.path, data)
+        .then(data => {
+          console.log('search page :')
+          console.log(data)
+          this.restaurantList = data.content
+          this.resListLinks = data.links
+        })
     }
   }
 }

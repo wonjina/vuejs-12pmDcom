@@ -5,7 +5,8 @@ export const urls = {
     method: 'get',
     data: {
       name: null,
-      restaurant_id: null
+      page: 0,
+      size: 7
     },
     description: ''
   },
@@ -18,6 +19,19 @@ export const urls = {
     path: '/api/reviews/restaurant',
     method: 'get',
     data: {
+      restaurantId: null,
+      page: 0,
+      size: 5
+    },
+    description: 'Get review List'
+  },
+  'newReviews': {
+    path: '/api/reviews/restaurant',
+    method: 'post',
+    data: {
+      comment: null,
+      rating: null,
+      memberId: null,
       restaurantId: null
     },
     description: 'Get review List'

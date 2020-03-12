@@ -1,9 +1,9 @@
 <template>
   <GmapMap
     :options="mapOptions"
-    :center="{lat:37, lng:127}"
-    :zoom="14"
-    map-type-id="terrain"
+    :center="center"
+    :zoom="15"
+    map-type-id="roadmap"
     class="custom-width"
   >
     <GmapMarker
@@ -12,7 +12,8 @@
       :position="{lat:restaurant.location_x, lng:restaurant.location_y}"
       :clickable="true"
       :draggable="true"
-      @click="toggleInfoWindow(restaurant,index)"
+      @mouseover="toggleInfoWindow(restaurant,index)"
+      @mouseout="infoWinOpen=false"
     />
     <GmapInfoWindow
       :options="infoOptions"
@@ -49,7 +50,7 @@ export default {
     return {
       mapOptions: {
         zoomControl: true,
-        mapTypeControl: false,
+        mapTypeControl: true,
         scaleControl: false,
         streetViewControl: false,
         rotateControl: false,
@@ -67,6 +68,10 @@ export default {
           width: 0,
           height: -35
         }
+      },
+      center: {
+        lat: 37.394955,
+        lng: 127.111196
       }
     }
   },

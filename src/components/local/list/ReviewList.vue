@@ -11,8 +11,7 @@
       >
         <td>{{ item.comment }}</td>
         <td>{{ item.rating }}</td>
-        <td>{{ item.dateTime }}</td>
-        <td>{{ item.department }}</td>
+        <td>{{ item.date }}</td>
         <td>{{ item.writer }}</td>
       </template>
     </v-data-table>
@@ -47,11 +46,6 @@ export default {
           sortable: false,
           text: '작성일',
           value: 'date'
-        },
-        {
-          sortable: false,
-          text: '부서',
-          value: 'department'
         },
         {
           sortable: false,

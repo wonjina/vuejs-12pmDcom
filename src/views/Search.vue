@@ -1,24 +1,33 @@
 <template>
   <v-container fluid>
     <v-layout class="browser-height">
-      <material-card
-        flat
-        full-width
-        paging-btn
+      <v-flex
+        sm6
+        xs12
+        md6
+        lg5
+        class="scroll"
       >
-        <div
-          v-if="loading"
-          class="loading"
+        <material-card
+          flat
+          full-width
+          paging-btn
+          @update="updateData"
         >
-          Loading...
-        </div>
-        <div v-if="status">
-          <Restaurant-list
-            link-btn
-            :items="restaurantList"
-          />    <!-- Add restaurant table.vue  -->
-        </div>
-      </material-card>
+          <div
+            v-if="loading"
+            class="loading"
+          >
+            Loading...
+          </div>
+          <div v-if="status">
+            <Restaurant-list
+              link-btn
+              :items="restaurantList"
+            />    <!-- Add restaurant table.vue  -->
+          </div>
+        </material-card>
+      </v-flex>
       <div class="custom-width">
         <google-map
           :restaurant-info="restaurantList"
@@ -50,6 +59,10 @@ export default {
         type: Array,
         default: []
       },
+      resListLinks: {
+        type: Array,
+        default: []
+      },
       loading: false,
       status: false
     }
@@ -68,11 +81,32 @@ export default {
       restful
         .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
         .then(data => {
-          this.restaurantList = data
+          console.log('search page :')
+          console.log(data)
+          this.restaurantList = data.content
+          this.resListLinks = data.links
         })
         .finally(() => {
           urls.restaurants.data.name = null
         })
+    },
+    updateData (link) {
+      console.log('prev event 전이!' + link)
+      console.log(this.resListLinks)
+      for (let i = 0; i < this.resListLinks.length; ++i) {
+        console.log(this.resListLinks[i].rel)
+        if (this.resListLinks[i].rel === link) {
+          restful
+            .fetchWithoutData(urls.restaurants.method, this.resListLinks[i].href, '')
+            .then(data => {
+              console.log('전이 page :')
+              console.log(data)
+              this.restaurantList = data.content
+              this.resListLinks = data.links
+            })
+          break
+        }
+      }
     }
   }
 }

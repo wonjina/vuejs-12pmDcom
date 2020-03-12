@@ -134,12 +134,19 @@ export default {
   },
   methods: {
     restaurantFetchData () {
+      urls.restaurants.data.page = 0
+      urls.restaurants.data.size = 5
       restful
-        .fetch(urls.restaurants.method, urls.restaurants.path, null)
+        .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
         .then(data => {
-          this.restaurants = data
+          console.log('now test!')
+          console.log(data)
+          this.restaurants = data.content
         })
-        .finally(() => { })
+        .finally(() => {
+          urls.restaurants.data.page = 0
+          urls.restaurants.data.size = 7
+        })
     },
     recruitBoardFetchData () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')

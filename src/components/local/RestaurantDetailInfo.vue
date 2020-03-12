@@ -25,6 +25,7 @@
               color="white"
               round
               class="font-weight-light"
+              :disabled="disableBtn(userData)"
               @click="reviewModalOpen()"
             >
               리뷰 쓰기
@@ -46,7 +47,8 @@
       </v-flex>
       <material-card
         title="리뷰"
-        slice-btn
+        paging-btn
+        @update="updateData"
       >
         <div
           v-if="loading"
@@ -62,7 +64,7 @@
       </material-card>
     </v-flex>
     <v-flex xs8>
-      <review-modal />       <!-- ADD review modal -->
+      <review-modal :restaurant-id="restaurantInfo.restaurant_id" />       <!-- ADD review modal -->
     </v-flex>
     <v-flex xs8>
       <new-recruitment-modal />       <!-- ADD new recruitment modal -->
@@ -103,7 +105,11 @@ export default {
         default: null
       },
       loading: false,
-      status: false
+      status: false,
+      reviewListLinks: {
+        type: Array,
+        default: []
+      }
     }
   },
   computed: {
@@ -139,26 +145,49 @@ export default {
       else return false
     },
     reviewModalOpen () {
-      this.$store.commit('TOGGLE_REVIEW_MODAL_FLAGE', true)
+      if (this.userInfo !== null && this.userInfo !== undefined) {
+        this.$store.commit('TOGGLE_REVIEW_MODAL_FLAGE', true)
+      }
     },
     newRecruitmentModalOpen (restaurantInfo) {
-      this.$router.push({ name: 'RestaurantInfo', params: { RestaurantInfo: restaurantInfo } })
-      this.$store.commit('TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE', true)
+      if (this.userInfo !== null && this.userInfo !== undefined) {
+        this.$router.push({ name: 'RestaurantInfo', params: { RestaurantInfo: restaurantInfo } })
+        this.$store.commit('TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE', true)
+      }
     },
     fetchData () {
       urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
-      console.log('before get review data :')
-      console.log(urls.reviews.data.restaurantId)
+      urls.reviews.data.page = 0
+      urls.reviews.data.size = 7
       restful
         .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
         .then(data => {
-          console.log('after get review data :')
-          console.log(data)
-          this.reviews = data
+          this.reviews = data.content
+          this.reviewListLinks = data.links
         })
         .finally(() => {
           urls.reviews.data.restaurantId = null
+          urls.reviews.data.page = 0
+          urls.reviews.data.size = 5
         })
+    },
+    updateData (link) {
+      console.log('prev event 전이!' + link)
+      console.log(this.reviewListLinks)
+      for (let i = 0; i < this.reviewListLinks.length; ++i) {
+        console.log(this.reviewListLinks[i].rel)
+        if (this.reviewListLinks[i].rel === link) {
+          restful
+            .fetchWithoutData(urls.reviews.method, this.reviewListLinks[i].href, '')
+            .then(data => {
+              console.log('전이 page :')
+              console.log(data)
+              this.reviews = data.content
+              this.reviewListLinks = data.links
+            })
+          break
+        }
+      }
     }
   }
 }

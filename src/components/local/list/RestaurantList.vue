@@ -35,8 +35,8 @@
 export default {
   props: {
     items: {
-      type: Object,
-      default: null
+      type: Array,
+      default: () => []
     },
     linkBtn: {
       type: Boolean,
@@ -50,11 +50,6 @@ export default {
           sortable: false,
           text: '가게이름',
           value: 'Name'
-        },
-        {
-          sortable: false,
-          text: '리뷰',
-          value: 'Review'
         },
         {
           sortable: false,
