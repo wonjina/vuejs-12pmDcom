@@ -36,17 +36,6 @@ const request = (method, url, data) => {
     params: data,
     withCredentials: true
   }).then(result => {
-    console.log(method + url + ' axios result : ')
-    console.log(result)
-    console.log(typeof result)
-    console.log(result.data)
-    console.log(typeof result.data)
-    console.log(result.data.response)
-    console.log(typeof result.data.response)
-    console.log(result.data.response.content)
-    console.log(typeof result.data.response.content)
-    console.log(result.data.response.content[0])
-    console.log(typeof result.data.response.content[0])
     return result.data.response
   })
     .catch(result => {

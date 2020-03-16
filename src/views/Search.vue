@@ -21,7 +21,7 @@
             Loading...
           </div>
           <div v-if="status">
-            <Restaurant-list
+            <Res-list
               link-btn
               :items="restaurantList"
             />    <!-- Add restaurant table.vue  -->
@@ -39,30 +39,25 @@
 
 <script>
 import GoogleMap from '@/components/local/GoogleMap.vue'
-import RestaurantList from '@/components/local/list/RestaurantList.vue'
+import ResList from '@/components/local/list/RestaurantList.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
+
 export default {
   components: {
     'google-map': GoogleMap,
-    'Restaurant-list': RestaurantList
+    'Res-list': ResList
   },
   props: {
     keyword: {
       type: Array,
-      default: () => {}
+      default: null
     }
   },
   data () {
     return {
-      restaurantList: {
-        type: Array,
-        default: null
-      },
-      resListLinks: {
-        type: Array,
-        default: null
-      },
+      restaurantList: [],
+      resListLinks: [],
       loading: false,
       status: false
     }
@@ -81,6 +76,9 @@ export default {
       restful
         .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
         .then(data => {
+          console.log('res data ::!@#!@#')
+          console.log(data)
+          console.log(data.content)
           this.restaurantList = data.content
           this.resListLinks = data.links
         })

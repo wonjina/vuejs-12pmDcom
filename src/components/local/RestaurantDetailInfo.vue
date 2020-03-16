@@ -100,16 +100,10 @@ export default {
         type: Array,
         default: null
       },
-      reviews: {
-        type: Array,
-        default: null
-      },
+      reviews: [],
       loading: false,
       status: false,
-      reviewListLinks: {
-        type: Array,
-        default: []
-      }
+      reviewListLinks: []
     }
   },
   computed: {
@@ -163,6 +157,10 @@ export default {
       restful
         .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
         .then(data => {
+          console.log('reviews page:')
+          console.log(data)
+          console.log(data.content)
+          console.log(typeof data.content)
           this.reviews = data.content
           this.reviewListLinks = data.links
         })
