@@ -3,7 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="items"
-      :items-per-page="5"
+      hide-actions
     >
       <template
         slot="items"
