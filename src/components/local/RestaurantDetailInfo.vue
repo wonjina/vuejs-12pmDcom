@@ -168,6 +168,8 @@ export default {
           this.reviews = result.data.response.content
           this.reviewListLinks = result.data.response.links
         })
+        .catch(result => {
+        })
         .finally(() => {
           urls.reviews.data.restaurantId = null
           this.loading = false

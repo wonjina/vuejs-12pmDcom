@@ -135,9 +135,13 @@ export default {
       this.$router.push({ name: 'SearchRestaurant', query: { restaurantName: this.restaurantName } })
     },
     moveLoginPage () {
+      localStorage.setItem('isRequestedLogin', true)
+      console.log('click login-isRequestedLogin:')
+      console.log(localStorage.getItem('isRequestedLogin'))
       window.location.href = urls.hiworksLogin.path
     },
     logoutAction () {
+      localStorage.setItem('isRequestedLogin', false)
       this.$store.commit('LOGOUT')
     }
   }

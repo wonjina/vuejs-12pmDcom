@@ -77,6 +77,8 @@ export default {
           this.restaurantList = result.data.response.content
           this.resListLinks = result.data.response.links
         })
+        .catch(result => {
+        })
         .finally(() => {
           urls.restaurants.data.name = null
           this.loading = false

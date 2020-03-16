@@ -48,6 +48,7 @@ import { mapState,
   mapMutations } from 'vuex'
 import { restful } from '../../api'
 import { urls } from '../../api/requestUrl.js'
+import { exceptionHandler } from '../../api/exceptionHandler.js'
 import store from '@/store'
 import swal from 'sweetalert'
 
@@ -91,13 +92,16 @@ export default {
           })
             .then(() => {
               store.state.reviewModalFlage = false
+              this.$emit('updatedReview')
             })
+        })
+        .catch(result => {
+          exceptionHandler.catch(result)
         })
         .finally(() => {
           urls.reviews.data.restaurantId = null
           this.rating = 1
           this.reviewComment = null
-          this.$emit('updatedReview')
         })
     }
   }

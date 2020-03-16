@@ -64,6 +64,8 @@ export default {
           this.restaurant = result.data.response
           console.log(this.restaurant)
         })
+        .catch(result => {
+        })
         .finally(() => {
           this.loading = false
           console.log(this.loading)
