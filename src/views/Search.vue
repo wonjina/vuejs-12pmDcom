@@ -20,7 +20,7 @@
           >
             Loading...
           </div>
-          <div v-if="status">
+          <div v-else>
             <Res-list
               link-btn
               :items="restaurantList"
@@ -66,35 +66,26 @@ export default {
     if (this.$route.query.restaurantName !== '' && this.$route.query.restaurantName !== undefined) {
       urls.restaurants.data.name = this.$route.query.restaurantName
     }
-    this.loading = true
-    this.fetchData()
-    this.loading = false
-    this.status = true
+    this.restaurantFetchData(urls.DOMAIN + urls.restaurants.path, urls.restaurants.data)
   },
   methods: {
-    fetchData () {
-      restful
-        .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
-        .then(data => {
-          console.log('res data ::!@#!@#')
-          console.log(data)
-          console.log(data.content)
-          this.restaurantList = data.content
-          this.resListLinks = data.links
+    restaurantFetchData (url, data) {
+      this.loading = true
+      // .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
+      restful.getRequest(urls.restaurants.method, url, data)
+        .then(result => {
+          this.restaurantList = result.data.response.content
+          this.resListLinks = result.data.response.links
         })
         .finally(() => {
           urls.restaurants.data.name = null
+          this.loading = false
         })
     },
     updateData (link) {
       for (let i = 0; i < this.resListLinks.length; ++i) {
         if (this.resListLinks[i].rel === link) {
-          restful
-            .fetchWithoutData(urls.restaurants.method, this.resListLinks[i].href, '')
-            .then(data => {
-              this.restaurantList = data.content
-              this.resListLinks = data.links
-            })
+          this.restaurantFetchData(this.resListLinks[i].href)
           break
         }
       }

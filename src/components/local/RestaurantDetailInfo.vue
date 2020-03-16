@@ -5,7 +5,10 @@
   >
     <v-flex xs8>
       <v-layout class="text-xs-center">
-        <material-card class="v-card-profile">
+        <material-card
+          class="v-card-profile"
+          @update="updateData"
+        >
           <v-flex>
             <h2>{{ restaurantInfo.name }}</h2>
           </v-flex>
@@ -25,7 +28,7 @@
               color="white"
               round
               class="font-weight-light"
-              :disabled="isLogined"
+              :disabled="isLogined()"
               @click="reviewModalOpen()"
             >
               리뷰 쓰기
@@ -56,7 +59,7 @@
         >
           Loading...
         </div>
-        <div v-if="status">
+        <div v-else>
           <review-list
             :items="reviews"
           />        <!-- ADD review list -->
@@ -64,7 +67,10 @@
       </material-card>
     </v-flex>
     <v-flex xs8>
-      <review-modal :restaurant-id="restaurantInfo.restaurant_id" />       <!-- ADD review modal -->
+      <review-modal
+        :restaurant-id="restaurantInfo.restaurant_id"
+        @updatedReview="reviewsFetchData"
+      />       <!-- ADD review modal -->
     </v-flex>
     <v-flex xs8>
       <new-recruitment-modal />       <!-- ADD new recruitment modal -->
@@ -102,7 +108,6 @@ export default {
       },
       reviews: [],
       loading: false,
-      status: false,
       reviewListLinks: []
     }
   },
@@ -112,11 +117,8 @@ export default {
     ])
   },
   created () {
-    this.loading = true
-    this.fetchData()
+    this.reviewsFetchData()
     this.loginCheck()
-    this.loading = false
-    this.status = true
   },
   methods: {
     loginCheck () {
@@ -140,7 +142,11 @@ export default {
       else return false
     },
     isLogined () {
-      return (this.userInfo === null || this.userInfo === undefined)
+      if (this.userInfo === null || this.userInfo === undefined) {
+        return true
+      } else {
+        return false
+      }
     },
     reviewModalOpen () {
       if (this.userInfo !== null && this.userInfo !== undefined) {
@@ -153,34 +159,28 @@ export default {
         this.$store.commit('TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE', true)
       }
     },
-    fetchData () {
+    reviewsFetchData () {
+      this.loading = true
       urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
-      urls.reviews.data.page = 0
-      urls.reviews.data.size = 7
       restful
-        .fetch(urls.reviews.method, urls.reviews.path, urls.reviews.data)
-        .then(data => {
-          console.log('reviews page:')
-          console.log(data)
-          console.log(data.content)
-          console.log(typeof data.content)
-          this.reviews = data.content
-          this.reviewListLinks = data.links
+        .getRequest(urls.reviews.method, urls.DOMAIN + urls.reviews.path, urls.reviews.data)
+        .then(result => {
+          this.reviews = result.data.response.content
+          this.reviewListLinks = result.data.response.links
         })
         .finally(() => {
           urls.reviews.data.restaurantId = null
-          urls.reviews.data.page = 0
-          urls.reviews.data.size = 5
+          this.loading = false
         })
     },
     updateData (link) {
       for (let i = 0; i < this.reviewListLinks.length; ++i) {
         if (this.reviewListLinks[i].rel === link) {
           restful
-            .fetchWithoutData(urls.reviews.method, this.reviewListLinks[i].href, '')
-            .then(data => {
-              this.reviews = data.content
-              this.reviewListLinks = data.links
+            .getRequest(urls.reviews.method, this.reviewListLinks[i].href)
+            .then(result => {
+              this.reviews = result.data.response.content
+              this.reviewListLinks = result.data.response.links
             })
           break
         }

@@ -11,6 +11,7 @@
       >
         <td>{{ item.name }}</td>
         <td>{{ item.rating }}</td>
+        <td>{{ item.review_amount }}</td>
         <td
           v-if="linkBtn"
           class="text-xs-right"
@@ -55,6 +56,11 @@ export default {
           sortable: false,
           text: '평점',
           value: 'Star'
+        },
+        {
+          sortable: false,
+          text: '리뷰 갯수',
+          value: 'Review'
         }
       ]
     }

@@ -1,5 +1,6 @@
 
 export const urls = {
+  DOMAIN: 'http://api.12pm.com:9194',
   'restaurants': {
     path: '/api/restaurants',
     method: 'get',

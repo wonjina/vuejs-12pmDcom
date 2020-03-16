@@ -2,6 +2,7 @@
   <v-container fluid>
     <v-layout class="browser-height">
       <v-flex
+        v-if="!loading"
         sm6
         xs12
         md6
@@ -12,7 +13,10 @@
           :restaurant-info="restaurant"
         />  <!-- Add restaurant detail info vue -->
       </v-flex>
-      <div class="custom-width">
+      <div
+        v-if="!loading"
+        class="custom-width"
+      >
         <google-map
           :restaurant-info="[ restaurant ]"
         />          <!-- Add Naver-map vue -->
@@ -34,29 +38,36 @@ export default {
   },
   data () {
     return {
-      restaurant: {
-        type: Object,
-        default: []
-      }
+      restaurant: null,
+      loading: false
     }
   },
   created () {
+    console.log('res info page start:::')
     if (this.$route.params.restaurantInfo !== null && this.$route.params.restaurantInfo !== undefined) {
       this.restaurant = this.$route.params.restaurantInfo
+      console.log(this.restaurant)
     } else if (this.$route.params.id === undefined || this.$route.params.id === null) {
       this.$router.go(-1)
+      console.log('back page')
     } else {
       this.fetchData()
     }
   },
   methods: {
     fetchData () {
+      this.loading = true
       restful
-        .fetch(urls.restaurantInfo.method, urls.restaurantInfo.path + '/' + this.$route.params.id)
-        .then(data => {
-          this.restaurant = data
+        .getRequest(urls.restaurantInfo.method, urls.DOMAIN + urls.restaurantInfo.path + '/' + this.$route.params.id)
+        .then(result => {
+          console.log(result)
+          this.restaurant = result.data.response
+          console.log(this.restaurant)
         })
-        .finally(() => { })
+        .finally(() => {
+          this.loading = false
+          console.log(this.loading)
+        })
     }
   }
 }

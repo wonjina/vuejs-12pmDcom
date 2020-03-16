@@ -107,14 +107,8 @@ export default {
   },
   data () {
     return {
-      restaurants: {
-        type: Array,
-        default: []
-      },
-      recruitBoard: {
-        type: Array,
-        default: null
-      },
+      restaurants: [],
+      recruitBoard: [],
       loading: false,
       status: false
     }
@@ -134,25 +128,27 @@ export default {
   },
   methods: {
     restaurantFetchData () {
-      urls.restaurants.data.page = 0
-      urls.restaurants.data.size = 5
-      restful
-        .fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
-        .then(data => {
-          this.restaurants = data.content
+      this.setParamsData(0, 5)
+      // restful.fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
+      restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, urls.restaurants.data)
+        .then(result => {
+          this.restaurants = result.data.response.content
         })
         .finally(() => {
-          urls.restaurants.data.page = 0
-          urls.restaurants.data.size = 7
+          this.setParamsData(0, 7)
         })
+    },
+    setParamsData (page, size) {
+      urls.restaurants.data.page = page
+      urls.restaurants.data.size = size
     },
     recruitBoardFetchData () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.recruitBoard.data.localDateTime = localDateTime
       restful
-        .fetch(urls.recruitBoard.method, urls.recruitBoard.path, urls.recruitBoard.data)
-        .then(data => {
-          this.recruitBoard = data.content
+        .getRequest(urls.recruitBoard.method, urls.DOMAIN + urls.recruitBoard.path, urls.recruitBoard.data)
+        .then(result => {
+          this.recruitBoard = result.data.response.content
         })
         .finally(() => { })
     }

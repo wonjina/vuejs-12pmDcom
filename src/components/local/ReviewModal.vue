@@ -77,13 +77,14 @@ export default {
       'TOGGLE_REVIEW_MODAL_FLAGE'
     ]),
     newReview () {
+      console.log(this.userInfo)
       urls.newReviews.data.restaurantId = this.restaurantId
       urls.newReviews.data.comment = this.reviewComment
       urls.newReviews.data.rating = this.rating
       urls.newReviews.data.memberId = this.userInfo.user.member_id
 
       restful
-        .dataFetch(urls.newReviews.method, urls.newReviews.path, urls.newReviews.data)
+        .postRequest(urls.newReviews.method, urls.DOMAIN + urls.newReviews.path, urls.newReviews.data)
         .then(data => {
           swal({
             icon: 'success'
@@ -94,6 +95,9 @@ export default {
         })
         .finally(() => {
           urls.reviews.data.restaurantId = null
+          this.rating = 1
+          this.reviewComment = null
+          this.$emit('updatedReview')
         })
     }
   }
