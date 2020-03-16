@@ -38,6 +38,8 @@
         <material-card
           class="mx-5 mb-5"
           title="나의 참여 기록"
+          paging-btn
+          @update="updateData"
         >
           <div
             v-if="loading"
@@ -80,6 +82,10 @@ export default {
         type: Array,
         default: null
       },
+      resListLinks: {
+        type: Array,
+        default: null
+      },
       loading: false,
       status: false
     }
@@ -91,7 +97,7 @@ export default {
   },
   created () {
     this.loading = true
-    this.loginCheck()
+    // this.loginCheck()
     this.todayUserFetch()
     this.userFetch()
     this.loading = false
@@ -102,7 +108,7 @@ export default {
       return moment()
     },
     loginCheck () {
-      if (this.userInfo === null) {
+      if (this.userInfo === null || this.userInfo === undefined) {
         swal({
           title: '로그인 후 이용 가능합니다.',
           icon: 'error'
@@ -110,27 +116,46 @@ export default {
           .then(() => {
             history.back()
           })
+      } else {
+        this.todayUserFetch()
+        this.userFetch()
       }
     },
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      var memberId = this.userInfo.user.member_id
+      // var memberId = this.userInfo.user.member_id
+      var memberId = 727
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(data => {
-          this.userRecord = data
+          this.userRecord = data.content
         })
         .finally(() => { })
     },
     userFetch () {
-      var memberId = this.userInfo.user.member_id
+      // var memberId = this.userInfo.user.member_id
+      var memberId = 727
       restful
         .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment')
         .then(data => {
-          this.userRecordList = data
+          this.userRecordList = data.content
+          this.resListLinks = data.links
         })
         .finally(() => { })
+    },
+    updateData (link) {
+      for (let i = 0; i < this.resListLinks.length; ++i) {
+        if (this.resListLinks[i].rel === link) {
+          restful
+            .fetchWithoutData(urls.recruitBoard.method, this.resListLinks[i].href, '')
+            .then(data => {
+              this.recruitBoard = data.content
+              this.resListLinks = data.links
+            })
+          break
+        }
+      }
     }
   }
 }

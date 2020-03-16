@@ -89,19 +89,20 @@ export default {
   created () {
     this.boardId = this.$route.params.recruitBoardInfo
     this.loginCheck()
-    this.todayUserFetch()
-    this.detailBoardFetch()
   },
   methods: {
     loginCheck () {
-      if (this.userInfo === null) {
+      if (this.userInfo === null || this.userInfo === undefined) {
         swal({
-          title: '로그인 후 이용가능합니다.',
+          title: '로그인 후 이용 가능합니다.',
           icon: 'error'
         })
           .then(() => {
             history.back()
           })
+      } else {
+        this.todayUserFetch()
+        this.detailBoardFetch()
       }
     },
     todayUserFetch () {
