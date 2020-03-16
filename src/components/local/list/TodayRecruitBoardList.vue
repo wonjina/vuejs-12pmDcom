@@ -3,8 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="items"
-      :pagination.sync="pagination"
-      item-key="items.key"
+      hide-actions
     >
       <template
         slot="items"
@@ -59,11 +58,6 @@ export default {
   },
   data () {
     return {
-      pagination: {
-        sortBy: 'countMember',
-        ascending: true,
-        rowsPerPage: 5
-      },
       headers: [
         {
           sortable: false,

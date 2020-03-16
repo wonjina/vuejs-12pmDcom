@@ -113,14 +113,17 @@ export default {
   },
   created () {
     this.loading = true
-    if (this.userInfo !== null && this.userInfo !== undefined) {
-      this.todayUserFetch()
-    }
     this.fetchData()
+    this.loginCheck()
     this.loading = false
     this.status = true
   },
   methods: {
+    loginCheck () {
+      if (this.userInfo !== null && this.userInfo !== undefined) {
+        this.todayUserFetch()
+      }
+    },
     todayUserFetch () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
@@ -132,7 +135,7 @@ export default {
         .finally(() => { })
     },
     disableBtn (userData) {
-      if (this.userInfo === null) return true
+      if (this.userInfo === null || this.userInfo === undefined) return true
       else if (userData.length >= 1) return true
       else return false
     },

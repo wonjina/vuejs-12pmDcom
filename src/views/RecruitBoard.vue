@@ -14,6 +14,8 @@
         <material-card
           title="모집 게시판"
           class="mx-5 mb-5"
+          paging-btn
+          @update="updateData"
         >
           <div
             v-if="loading"
@@ -23,6 +25,7 @@
           </div>
           <div v-if="status">
             <recruit-board-list
+              link-btn
               :items="recruitBoard"
             />
           </div>
@@ -47,6 +50,10 @@ export default {
         type: Array,
         default: null
       },
+      resListLinks: {
+        type: Array,
+        default: null
+      },
       loading: false,
       status: false
     }
@@ -64,8 +71,25 @@ export default {
         .fetch(urls.recruitBoard.method, urls.recruitBoard.path)
         .then(data => {
           this.recruitBoard = data.content
+          this.resListLinks = data.links
         })
-        .finally(() => { })
+        .finally(() => {
+          urls.recruitBoard.page = 0
+          urls.recruitBoard.size = 5
+        })
+    },
+    updateData (link) {
+      for (let i = 0; i < this.resListLinks.length; ++i) {
+        if (this.resListLinks[i].rel === link) {
+          restful
+            .fetchWithoutData(urls.recruitBoard.method, this.resListLinks[i].href, '')
+            .then(data => {
+              this.recruitBoard = data.content
+              this.resListLinks = data.links
+            })
+          break
+        }
+      }
     }
   }
 }
