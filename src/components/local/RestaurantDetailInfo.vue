@@ -147,6 +147,8 @@ export default {
       else return false
     },
     isLogined () {
+      console.log(this.userInfo)
+      console.log(this.userInfo === null)
       if (this.userInfo === null || this.userInfo === undefined) {
         return true
       } else {

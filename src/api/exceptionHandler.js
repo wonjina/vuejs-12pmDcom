@@ -17,6 +17,7 @@ const onUnauthrorized = () => {
       store.state.newRecruitmentModalFlage = false
     })
   localStorage.setItem('isRequestedLogin', false)
+  sessionStorage.setItem('userInfo', null)
   store.state.userInfo = null
 }
 const onRedirect = (redirectUri) => {

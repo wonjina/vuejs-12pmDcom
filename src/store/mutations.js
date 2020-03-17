@@ -15,6 +15,7 @@ export default {
       .getRequest(urls.logout.method, urls.DOMAIN + urls.logout.path)
       .then(data => {
         state.userInfo = null
+        history.go(0)
       })
       .finally(() => { })
   }

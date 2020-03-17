@@ -46,9 +46,11 @@ new Vue({
   router,
   store,
   beforeCreate () {
+    console.log(localStorage.getItem('isRequestedLogin'))
     if (localStorage.getItem('isRequestedLogin')) {
       this.$store.dispatch('GET_USER_INFO')
       localStorage.setItem('isRequestedLogin', false)
+      console.log(localStorage.getItem('isRequestedLogin'))
     }
   },
   render: h => h(App)
