@@ -13,8 +13,8 @@
         <td>{{ item.boardSubject }}</td>
         <td>
           <v-chip
-            v-for="joinMember in item.joinMembers"
-            :key="joinMember"
+            v-for="(joinMember , idx) in item.joinMembers"
+            :key="idx"
             dark
             outline
           >
@@ -32,7 +32,7 @@
             round
             class="font-weight-light"
             type="submit"
-            @click="deleteMember(item.boardId, item.restaurantName)"
+            @click="deleteMember(item.boardId)"
           >
             취소하기
           </v-btn>
@@ -47,13 +47,14 @@
 
 <script>
 import { restful } from '../../api'
+import { urls } from '../../api/requestUrl.js'
 import swal from 'sweetalert'
 import { mapState } from 'vuex'
 
 export default {
   props: {
     items: {
-      type: Object,
+      type: Array,
       default: null
     },
     linkBtn: {
@@ -88,20 +89,20 @@ export default {
     ])
   },
   methods: {
-    deleteMember (boardId, restaurantName) {
+    deleteMember (boardId) {
       var memberId = this.userInfo.user.member_id
-      restful
-        .fetch('delete', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
-        .then(data => {
+      restful.getRequest(urls.leaveRecruitment.method, urls.DOMAIN + urls.leaveRecruitment.path + '/' + boardId + '/members/' + memberId)
+        .then(result => {
           swal({
             title: '취소되었습니다.',
             icon: 'success'
           })
             .then(() => {
-              location.href = '/userRecord'
+              location.href = '/recruitBoard'
             })
         })
-        .finally(() => { })
+        .finally(() => {
+        })
     }
   }
 }

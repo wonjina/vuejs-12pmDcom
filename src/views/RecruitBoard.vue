@@ -23,7 +23,7 @@
           >
             Loading...
           </div>
-          <div v-if="status">
+          <div v-else>
             <recruit-board-list
               link-btn
               :items="recruitBoard"
@@ -46,50 +46,39 @@ export default {
   },
   data () {
     return {
-      recruitBoard: {
-        type: Array,
-        default: null
-      },
-      resListLinks: {
-        type: Array,
-        default: null
-      },
+      recruitBoard: [],
+      resListLinks: [],
       loading: false,
       status: false
     }
   },
-
   created () {
-    this.loading = true
-    this.fetchData()
-    this.loading = false
-    this.status = true
+    this.recruitBoardFetchData(urls.DOMAIN + urls.recruitBoard.path, urls.recruitBoard.data)
   },
   methods: {
-    fetchData () {
-      restful
-        .fetch(urls.recruitBoard.method, urls.recruitBoard.path)
-        .then(data => {
-          this.recruitBoard = data.content
-          this.resListLinks = data.links
+    recruitBoardFetchData (url, data) {
+      this.setParamsData(0, 6, null)
+      restful.getRequest(urls.recruitBoard.method, url, data)
+        .then(result => {
+          this.recruitBoard = result.data.response.content
+          this.resListLinks = result.data.response.links
         })
         .finally(() => {
-          urls.recruitBoard.page = 0
-          urls.recruitBoard.size = 5
+          this.loading = false
         })
     },
     updateData (link) {
       for (let i = 0; i < this.resListLinks.length; ++i) {
         if (this.resListLinks[i].rel === link) {
-          restful
-            .fetchWithoutData(urls.recruitBoard.method, this.resListLinks[i].href, '')
-            .then(data => {
-              this.recruitBoard = data.content
-              this.resListLinks = data.links
-            })
+          this.recruitBoardFetchData(this.resListLinks[i].href)
           break
         }
       }
+    },
+    setParamsData (page, size, localDateTime) {
+      urls.recruitBoard.data.page = page
+      urls.recruitBoard.data.size = size
+      urls.recruitBoard.data.localDateTime = localDateTime
     }
   }
 }

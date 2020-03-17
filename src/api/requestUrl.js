@@ -40,7 +40,9 @@ export const urls = {
   'userRecord': {
     method: 'get',
     data: {
-      localDateTime: null
+      localDateTime: null,
+      page: 0,
+      size: 5
     },
     description: 'Get user record List'
   },
@@ -48,14 +50,32 @@ export const urls = {
     path: '/api/boards/recruitment',
     method: 'get',
     data: {
-      localDateTime: null
+      localDateTime: null,
+      page: 0,
+      size: 5
     },
     description: 'Get recruitment List'
   },
   'newRecruitment': {
     path: '/api/boards/recruitment',
     method: 'post',
+    data: {
+      memberId: null,
+      restaurantId: null,
+      subject: null,
+      maxNumber: null
+    },
     description: 'Post new recruitment'
+  },
+  'joinRecruitment': {
+    path: '/api/boards/recruitment',
+    method: 'post',
+    description: 'Join new recruitment'
+  },
+  'leaveRecruitment': {
+    path: '/api/boards/recruitment',
+    method: 'delete',
+    description: 'Join new recruitment'
   },
   'hiworksLogin': {
     path: 'https://api.hiworks.com/open/auth/authform?client_id=ymyevwpjp6xuza6cptlamb17w6u3j0f15e327689372af8.44470726.open.apps&access_type=offline',
