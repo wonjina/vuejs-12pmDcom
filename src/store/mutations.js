@@ -12,7 +12,7 @@ export default {
   },
   LOGOUT (state) {
     return restful
-      .fetch(urls.logout.method, urls.logout.path)
+      .getRequest(urls.logout.method, urls.DOMAIN + urls.logout.path)
       .then(data => {
         state.userInfo = null
       })
