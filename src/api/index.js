@@ -3,9 +3,6 @@ import axios from 'axios'
 /** 수정후 */
 /** Get Request */
 const getRequest = (method, url, data) => {
-  console.log('axios->')
-  console.log(url)
-  console.log(data)
   return axios({
     method,
     url: url,

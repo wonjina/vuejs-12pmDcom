@@ -134,8 +134,6 @@ export default {
       // restful.fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
       restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, this.paramsRes)
         .then(result => {
-          console.log('restuls->')
-          console.log(result)
           this.topRatingRestaurants = result.data.response.content
         })
         .finally(() => {
@@ -146,8 +144,6 @@ export default {
       urls.restaurants.data.sortField = 'review'
       restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, urls.restaurants.data)
         .then(result => {
-          console.log('restuls->')
-          console.log(result)
           this.topReviewRestaurants = result.data.response.content
         })
         .finally(() => {
