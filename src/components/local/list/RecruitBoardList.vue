@@ -59,7 +59,7 @@ export default {
     return {
       headers: [
         {
-          sortable: true,
+          sortable: false,
           text: '날짜',
           value: 'boardDate'
         },

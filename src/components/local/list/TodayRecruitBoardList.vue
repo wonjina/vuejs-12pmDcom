@@ -70,7 +70,7 @@ export default {
           value: 'boardSubject'
         },
         {
-          sortable: true,
+          sortable: false,
           text: '인원',
           value: 'countMember'
         }
