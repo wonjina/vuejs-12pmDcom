@@ -39,6 +39,15 @@ export const urls = {
     },
     description: 'Get review List'
   },
+  'todayRecord': {
+    method: 'get',
+    data: {
+      localDateTime: null,
+      page: 0,
+      size: 1
+    },
+    description: ''
+  },
   'userRecord': {
     method: 'get',
     data: {

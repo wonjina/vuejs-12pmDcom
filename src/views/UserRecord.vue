@@ -76,10 +76,7 @@ export default {
     return {
       userRecord: [],
       userRecordList: [],
-      resListLinks: {
-        type: Array,
-        default: null
-      },
+      resListLinks: [],
       loading: false,
       status: false
     }
@@ -107,47 +104,47 @@ export default {
           })
       } else {
         this.todayUserFetchData()
-        this.userFetchData()
+        this.userFetchData(urls.DOMAIN + '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
       }
     },
     todayUserFetchData () {
       this.loading = true
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
-      urls.userRecord.data.localDateTime = localDateTime
+      urls.todayRecord.data.localDateTime = localDateTime
       var memberId = this.userInfo.user.member_id
-      restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
+      restful.getRequest(urls.todayRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.todayRecord.data)
         .then(result => {
           this.userRecord = result.data.response.content
-          this.resListLinks = result.data.response.links
         })
         .finally(() => {
           this.loading = false
         })
     },
-    userFetchData () {
+    userFetchData (url, data) {
       this.loading = true
-      var memberId = this.userInfo.user.member_id
-      restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment')
+      this.setParamsData(0, 4, null)
+      restful.getRequest(urls.userRecord.method, url, data)
         .then(result => {
           this.userRecordList = result.data.response.content
           this.resListLinks = result.data.response.links
         })
         .finally(() => {
+          this.setParamsData(0, 0, null)
           this.loading = false
         })
     },
     updateData (link) {
       for (let i = 0; i < this.resListLinks.length; ++i) {
         if (this.resListLinks[i].rel === link) {
-          restful
-            .fetchWithoutData(urls.recruitBoard.method, this.resListLinks[i].href, '')
-            .then(data => {
-              this.recruitBoard = data.content
-              this.resListLinks = data.links
-            })
+          this.userFetchData(this.resListLinks[i].href)
           break
         }
       }
+    },
+    setParamsData (page, size, localDateTime) {
+      urls.userRecord.data.page = page
+      urls.userRecord.data.size = size
+      urls.userRecord.data.localDateTime = localDateTime
     }
   }
 }
