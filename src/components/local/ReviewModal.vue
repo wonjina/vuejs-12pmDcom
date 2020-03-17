@@ -87,6 +87,7 @@ export default {
         .postRequest(urls.newReviews.method, urls.DOMAIN + urls.newReviews.path, urls.newReviews.data)
         .then(data => {
           swal({
+            title: '등록되었습니다.',
             icon: 'success'
           })
             .then(() => {

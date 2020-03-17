@@ -26,7 +26,7 @@ export default [
     view: 'RecruitBoard'
   },
   {
-    path: '/recruitBoardInfo',
+    path: '/recruitBoardInfo/:id',
     name: 'RecruitBoardInfo',
     view: 'RecruitBoardInfo'
   },

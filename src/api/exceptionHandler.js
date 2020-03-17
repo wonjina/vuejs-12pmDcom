@@ -14,6 +14,7 @@ const onUnauthrorized = () => {
   })
     .then(() => {
       store.state.reviewModalFlage = false
+      store.state.newRecruitmentModalFlage = false
     })
   localStorage.setItem('isRequestedLogin', false)
   store.state.userInfo = null
