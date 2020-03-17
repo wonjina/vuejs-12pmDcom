@@ -13,7 +13,7 @@
       >
         <material-card
           title="모집글"
-          class="mx-5 mb-5"
+          class="mx-5 mb-3"
         >
           <div
             v-if="loading"
@@ -21,41 +21,54 @@
           >
             Loading...
           </div>
-          <h5>제목: {{ recruitBoard.boardSubject }}</h5>
-          <p>음식점: {{ recruitBoard.restaurantName }}</p>
-          <p>
-            참여인원:
-            <v-chip
-              :color="getColor(recruitBoard.countMember, recruitBoard.maxNumber)"
-              dark
+          <div v-else>
+            <h5>제목: {{ recruitBoard.boardSubject }}</h5>
+            <p>음식점: {{ recruitBoard.restaurantName }}</p>
+            <p>
+              참여인원:
+              <v-chip
+                :color="getColor(recruitBoard.countMember, recruitBoard.maxNumber)"
+                dark
+              >
+                {{ recruitBoard.countMember }}/{{ recruitBoard.maxNumber }}
+              </v-chip>
+            </p>
+            <p>
+              <v-chip
+                v-for="(joinMember , idx) in recruitBoard.joinMembers"
+                :key="idx"
+                dark
+              >
+                <v-avatar left>
+                  <v-icon>mdi-account-circle</v-icon>
+                </v-avatar>
+                {{ joinMember.name }}
+              </v-chip>
+            </p>
+            <v-btn
+              outlined
+              color="success"
+              round
+              class="font-weight-light"
+              type="submit"
+              :disabled="disableBtn(recruitBoard, userData)"
+              @click="addMember()"
             >
-              {{ recruitBoard.countMember }}/{{ recruitBoard.maxNumber }}
-            </v-chip>
-          </p>
-          <p>
-            <v-chip
-              v-for="joinMember in recruitBoard.joinMembers"
-              :key="joinMember"
-              dark
-            >
-              <v-avatar left>
-                <v-icon>mdi-account-circle</v-icon>
-              </v-avatar>
-              {{ joinMember.name }}
-            </v-chip>
-          </p>
-          <v-btn
-            outlined
-            color="success"
-            round
-            class="font-weight-light"
-            type="submit"
-            :disabled="disableBtn(recruitBoard, userData)"
-            @click="addMember()"
-          >
-            참여하기
-          </v-btn>
+              참여하기
+            </v-btn>
+          </div>
         </material-card>
+        <GmapMap
+          :options="mapOptions"
+          :center="{lat:37.394955, lng:127.111196}"
+          :zoom="15"
+          map-type-id="roadmap"
+          class="custom-width2"
+        >
+          <GmapMarker
+            :position="{lat: recruitBoard.locationX, lng: recruitBoard.locationY}"
+          />
+        </GmapMap>
       </v-flex>
     </v-layout>
   </v-container>
@@ -71,14 +84,21 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      recruitBoard: {
-        type: Object,
-        default: null
-      },
+      recruitBoard: [],
       userData: {
         type: Array,
         default: null
-      }
+      },
+      mapOptions: {
+        zoomControl: true,
+        mapTypeControl: true,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: true,
+        disableDefaultUi: false
+      },
+      loading: false
     }
   },
   computed: {
@@ -87,7 +107,7 @@ export default {
     ])
   },
   created () {
-    this.boardId = this.$route.params.recruitBoardInfo
+    this.boardId = this.$route.params.id
     this.loginCheck()
   },
   methods: {
@@ -101,46 +121,60 @@ export default {
             history.back()
           })
       } else {
-        this.todayUserFetch()
-        this.detailBoardFetch()
+        this.todayUserFetchData()
+        this.detailBoardFetchData()
       }
     },
-    todayUserFetch () {
+    todayUserFetchData () {
+      this.loading = true
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
       var memberId = this.userInfo.user.member_id
-      restful
-        .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
-        .then(data => {
-          this.userData = data
+      restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
+        .then(result => {
+          this.userData = result.data.response.content
+          this.resListLinks = result.data.response.links
         })
-        .finally(() => { })
+        .finally(() => {
+          this.loading = false
+        })
     },
-    detailBoardFetch () {
-      restful
-        .fetch(urls.recruitBoard.method, urls.recruitBoard.path + '/' + this.boardId)
-        .then(data => {
-          this.recruitBoard = data
+    detailBoardFetchData () {
+      this.loading = true
+      restful.getRequest(urls.recruitBoard.method, urls.DOMAIN + urls.recruitBoard.path + '/' + this.boardId)
+        .then(result => {
+          this.recruitBoard = result.data.response
         })
-        .finally(() => { })
+        .finally(() => {
+          this.loading = false
+        })
     },
     disableBtn (recruitBoard, userData) {
       var today = moment().format('YYYY-MM-DDT00:00:01')
-      if (today > recruitBoard.boardDate) return swal('참여 불가', '지난 모집글은 참여가 불가능합니다.', 'error')
-      else if (userData.length >= 1) return swal('현재 참여중인 모집글이 존재합니다.', '사용자 페이지를 확인하세요.', 'warning')
-      else if (recruitBoard.maxNumber - recruitBoard.countMember === 0) return true
+      if (today > recruitBoard.boardDate) {
+        swal('참여 불가', '지난 모집글은 참여가 불가능합니다.', 'error')
+        return true
+      } else if (userData.length >= 1) {
+        swal('현재 참여중인 모집글이 존재합니다.', '사용자 페이지를 확인하세요.', 'warning')
+        return true
+      } else if (recruitBoard.maxNumber - recruitBoard.countMember === 0) return true
       else return false
     },
     addMember () {
       var boardId = this.recruitBoard.boardId
       var memberId = this.userInfo.user.member_id
-      restful
-        .fetch('post', ('/api/boards/recruitment/' + boardId + '/members/' + memberId))
-        .then(data => {
-          swal('참여되었습니다.', this.recruitBoard.restaurantName, 'success')
-          history.back()
+      restful.getRequest(urls.joinRecruitment.method, urls.DOMAIN + urls.joinRecruitment.path + '/' + boardId + '/members/' + memberId)
+        .then(result => {
+          swal({
+            title: '참여되었습니다.',
+            icon: 'success'
+          })
+            .then(() => {
+              history.go(-1)
+            })
         })
-        .finally(() => { })
+        .finally(() => {
+        })
     },
     getColor (countMember, maxNumber) {
       if (maxNumber - countMember === 0) return 'red'
@@ -150,3 +184,33 @@ export default {
   }
 }
 </script>
+
+<style>
+.mapouter {
+  text-align:right;
+  height:50%;
+  width:100%;
+  position: absolute;
+}
+.gmap_canvas {
+  overflow:hidden;
+  background:none!important;
+  height:50%;
+  width:100%;
+}
+.browser-height {
+  height: 90vh;
+}
+.scroll {
+  overflow:scroll;
+}
+.text-center {
+  text-align: center!important;
+}
+.custom-width2 {
+    margin-left:50px;
+    margin-right:50px;
+    height: 50%;
+    width: 93%;
+}
+</style>

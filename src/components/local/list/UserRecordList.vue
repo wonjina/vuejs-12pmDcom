@@ -14,8 +14,8 @@
         <td>{{ item.boardSubject }}</td>
         <td>
           <v-chip
-            v-for="joinMember in item.joinMembers"
-            :key="joinMember"
+            v-for="(joinMember , idx) in item.joinMembers"
+            :key="idx"
             dark
             outline
           >

@@ -53,7 +53,7 @@ export default {
     },
     linkBtn: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data () {
@@ -85,7 +85,7 @@ export default {
       else return 'green'
     },
     moveRecruitBoardInfo (recruitBoard) {
-      this.$router.push({ name: 'RecruitBoardInfo', params: { recruitBoardInfo: recruitBoard.boardId } })
+      this.$router.push({ name: 'RecruitBoardInfo', params: { id: recruitBoard.boardId, recruitBoardInfo: recruitBoard } })
     }
   }
 }

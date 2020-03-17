@@ -38,7 +38,7 @@
               round
               class="font-weight-light"
               :disabled="disableBtn(userData)"
-              @click="newRecruitmentModalOpen(restaurantInfo)"
+              @click="newRecruitmentModalOpen()"
             >
               모집글 쓰기
             </v-btn>
@@ -73,7 +73,9 @@
       />       <!-- ADD review modal -->
     </v-flex>
     <v-flex xs8>
-      <new-recruitment-modal />       <!-- ADD new recruitment modal -->
+      <new-recruitment-modal
+        :restaurant-id="restaurantInfo.restaurant_id"
+      />       <!-- ADD new recruitment modal -->
     </v-flex>
   </v-layout>
 </template>
@@ -123,18 +125,21 @@ export default {
   methods: {
     loginCheck () {
       if (this.userInfo !== null && this.userInfo !== undefined) {
-        this.todayUserFetch()
+        this.todayUserFetchData()
       }
     },
-    todayUserFetch () {
+    todayUserFetchData () {
+      this.loading = true
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      restful
-        .fetch(urls.userRecord.method, '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
-        .then(data => {
-          this.userData = data
+      var memberId = this.userInfo.user.member_id
+      restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
+        .then(result => {
+          this.userData = result.data.response.content
         })
-        .finally(() => { })
+        .finally(() => {
+          this.loading = false
+        })
     },
     disableBtn (userData) {
       if (this.userInfo === null || this.userInfo === undefined) return true
@@ -153,9 +158,8 @@ export default {
         this.$store.commit('TOGGLE_REVIEW_MODAL_FLAGE', true)
       }
     },
-    newRecruitmentModalOpen (restaurantInfo) {
+    newRecruitmentModalOpen () {
       if (this.userInfo !== null && this.userInfo !== undefined) {
-        this.$router.push({ name: 'RestaurantInfo', params: { RestaurantInfo: restaurantInfo } })
         this.$store.commit('TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE', true)
       }
     },

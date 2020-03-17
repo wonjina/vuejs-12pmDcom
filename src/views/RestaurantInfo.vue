@@ -19,7 +19,7 @@
       >
         <google-map
           :restaurant-info="[ restaurant ]"
-        />          <!-- Add Naver-map vue -->
+        />          <!-- Add Google-map vue -->
       </div>
     </v-layout>
   </v-container>

@@ -47,7 +47,7 @@
           >
             Loading...
           </div>
-          <div v-if="status">
+          <div v-else>
             <user-record-list
               :items="userRecordList"
             />
@@ -74,14 +74,8 @@ export default {
   },
   data () {
     return {
-      userRecord: {
-        type: Array,
-        default: null
-      },
-      userRecordList: {
-        type: Array,
-        default: null
-      },
+      userRecord: [],
+      userRecordList: [],
       resListLinks: {
         type: Array,
         default: null
@@ -96,12 +90,7 @@ export default {
     ])
   },
   created () {
-    this.loading = true
-    // this.loginCheck()
-    this.todayUserFetch()
-    this.userFetch()
-    this.loading = false
-    this.status = true
+    this.loginCheck()
   },
   methods: {
     moment: function () {
@@ -117,32 +106,35 @@ export default {
             history.back()
           })
       } else {
-        this.todayUserFetch()
-        this.userFetch()
+        this.todayUserFetchData()
+        this.userFetchData()
       }
     },
-    todayUserFetch () {
+    todayUserFetchData () {
+      this.loading = true
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       urls.userRecord.data.localDateTime = localDateTime
-      // var memberId = this.userInfo.user.member_id
-      var memberId = 727
-      restful
-        .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
-        .then(data => {
-          this.userRecord = data.content
+      var memberId = this.userInfo.user.member_id
+      restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
+        .then(result => {
+          this.userRecord = result.data.response.content
+          this.resListLinks = result.data.response.links
         })
-        .finally(() => { })
+        .finally(() => {
+          this.loading = false
+        })
     },
-    userFetch () {
-      // var memberId = this.userInfo.user.member_id
-      var memberId = 727
-      restful
-        .fetch(urls.userRecord.method, '/api/member/' + memberId + '/recruitment')
-        .then(data => {
-          this.userRecordList = data.content
-          this.resListLinks = data.links
+    userFetchData () {
+      this.loading = true
+      var memberId = this.userInfo.user.member_id
+      restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment')
+        .then(result => {
+          this.userRecordList = result.data.response.content
+          this.resListLinks = result.data.response.links
         })
-        .finally(() => { })
+        .finally(() => {
+          this.loading = false
+        })
     },
     updateData (link) {
       for (let i = 0; i < this.resListLinks.length; ++i) {
