@@ -25,14 +25,6 @@
           v-else
           class="horizon-arr"
         >
-          <button
-            v-if="refresh"
-            @click="clickRefresh"
-          >
-            <v-icon color="white">
-              mdi-autorenew
-            </v-icon>
-          </button>
           <h4
             class="title font-weight-light mb-2"
             v-text="title"
@@ -139,10 +131,6 @@ export default {
       type: String,
       default: undefined
     },
-    refresh: {
-      type: Boolean,
-      default: false
-    },
     sliceBtn: {
       type: Boolean,
       default: false
@@ -177,9 +165,6 @@ export default {
     }
   },
   methods: {
-    clickRefresh () {
-      this.$emit('fetchData')
-    },
     prevSearchList () {
       this.$emit('update', 'prev')
     },

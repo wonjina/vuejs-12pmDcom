@@ -12,9 +12,7 @@
           :active-class="color"
           flat
           full-width
-          refresh
           title="Top Review 5"
-          @fetchData1="restaurantFetchData"
         >
           <div
             v-if="loading"
@@ -25,7 +23,7 @@
           <div v-if="status">
             <restaurant-list
               link-btn
-              :items="restaurants"
+              :items="topReviewRestaurants"
             />    <!-- Add restaurant table.vue -->
           </div>
         </material-card>
@@ -41,9 +39,7 @@
           :active-class="color"
           flat
           full-width
-          refresh
-          title="Top Review 5"
-          @fetchData1="restaurantFetchData"
+          title="Top Rating 5"
         >
           <div
             v-if="loading"
@@ -54,7 +50,7 @@
           <div v-if="status">
             <restaurant-list
               link-btn
-              :items="restaurants"
+              :items="topRatingRestaurants"
             />    <!-- Add restaurant table.vue -->
           </div>
         </material-card>
@@ -70,7 +66,6 @@
           :active-class="color"
           flat
           full-width
-          refresh
           title="Today 모집글"
           @fetchData="recruitBoardFetchData"
         >
@@ -107,10 +102,16 @@ export default {
   },
   data () {
     return {
-      restaurants: [],
+      topRatingRestaurants: [],
+      topReviewRestaurants: [],
       recruitBoard: [],
       loading: false,
-      status: false
+      status: false,
+      paramsRes: {
+        page: 0,
+        size: 5,
+        sortField: null
+      }
     }
   },
   computed: {
@@ -121,26 +122,37 @@ export default {
   },
   created () {
     this.loading = true
-    this.restaurantFetchData()
+    this.topRatingRestaurantFetchData()
+    this.topReviewRestaurantFetchData()
     this.recruitBoardFetchData()
     this.loading = false
     this.status = true
   },
   methods: {
-    restaurantFetchData () {
-      this.setParamsData(0, 5)
+    topRatingRestaurantFetchData () {
+      this.paramsRes.sortField = 'rating'
       // restful.fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
-      restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, urls.restaurants.data)
+      restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, this.paramsRes)
         .then(result => {
-          this.restaurants = result.data.response.content
+          console.log('restuls->')
+          console.log(result)
+          this.topRatingRestaurants = result.data.response.content
         })
         .finally(() => {
-          this.setParamsData(0, 7)
+          this.paramsRes.sortField = null
         })
     },
-    setParamsData (page, size) {
-      urls.restaurants.data.page = page
-      urls.restaurants.data.size = size
+    topReviewRestaurantFetchData () {
+      urls.restaurants.data.sortField = 'review'
+      restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, urls.restaurants.data)
+        .then(result => {
+          console.log('restuls->')
+          console.log(result)
+          this.topReviewRestaurants = result.data.response.content
+        })
+        .finally(() => {
+          this.paramsRes.sortField = null
+        })
     },
     recruitBoardFetchData () {
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')

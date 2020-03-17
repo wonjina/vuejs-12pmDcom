@@ -35,8 +35,8 @@ const onBadRequest = () => {
 
 export const exceptionHandler = {
   catch (result) {
-    const status = result.response.data.code
-    console.log(result)
+    const status = result.response.status
+
     if (status === UNAUTHORIZED) {
       return onUnauthrorized()
     } else if (status === FOUND) {

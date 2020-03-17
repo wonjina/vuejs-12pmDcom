@@ -11,8 +11,12 @@
       >
         <td>{{ item.comment }}</td>
         <td>{{ item.rating }}</td>
-        <td>{{ item.date }}</td>
-        <td>{{ item.writer }}</td>
+        <td class="customFontSize">
+          {{ item.date }}
+        </td>
+        <td class="customFontSize">
+          {{ item.writer }}
+        </td>
       </template>
     </v-data-table>
   </div>
@@ -57,3 +61,8 @@ export default {
   }
 }
 </script>
+<style>
+.customFontSize {
+  font-size: 1em!important;
+}
+</style>

@@ -24,4 +24,7 @@
   padding-bottom: 65px;
   height: 90%;;
 }
+td {
+  font-size:1.3em!important;
+}
 </style>

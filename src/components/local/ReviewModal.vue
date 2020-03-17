@@ -78,7 +78,6 @@ export default {
       'TOGGLE_REVIEW_MODAL_FLAGE'
     ]),
     newReview () {
-      console.log(this.userInfo)
       urls.newReviews.data.restaurantId = this.restaurantId
       urls.newReviews.data.comment = this.reviewComment
       urls.newReviews.data.rating = this.rating

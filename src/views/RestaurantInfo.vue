@@ -43,13 +43,10 @@ export default {
     }
   },
   created () {
-    console.log('res info page start:::')
     if (this.$route.params.restaurantInfo !== null && this.$route.params.restaurantInfo !== undefined) {
       this.restaurant = this.$route.params.restaurantInfo
-      console.log(this.restaurant)
     } else if (this.$route.params.id === undefined || this.$route.params.id === null) {
       this.$router.go(-1)
-      console.log('back page')
     } else {
       this.fetchData()
     }
@@ -60,15 +57,12 @@ export default {
       restful
         .getRequest(urls.restaurantInfo.method, urls.DOMAIN + urls.restaurantInfo.path + '/' + this.$route.params.id)
         .then(result => {
-          console.log(result)
           this.restaurant = result.data.response
-          console.log(this.restaurant)
         })
         .catch(result => {
         })
         .finally(() => {
           this.loading = false
-          console.log(this.loading)
         })
     }
   }

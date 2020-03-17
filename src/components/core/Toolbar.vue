@@ -136,8 +136,6 @@ export default {
     },
     moveLoginPage () {
       localStorage.setItem('isRequestedLogin', true)
-      console.log('click login-isRequestedLogin:')
-      console.log(localStorage.getItem('isRequestedLogin'))
       window.location.href = urls.hiworksLogin.path
     },
     logoutAction () {

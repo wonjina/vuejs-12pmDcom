@@ -5,9 +5,6 @@ import { urls } from '../api/requestUrl.js'
 
 export default {
   GET_USER_INFO ({ state }) {
-    console.log('get userinfo : ')
-    console.log(localStorage.getItem('isRequestedLogin'))
-    console.log('get userinfo : get!!')
     return restful.getRequest(urls.hiworksUser.method, urls.DOMAIN + urls.hiworksUser.path)
       .then(result => {
         state.userInfo = result.data.response

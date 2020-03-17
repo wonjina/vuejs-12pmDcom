@@ -7,7 +7,9 @@ export const urls = {
     data: {
       name: null,
       page: 0,
-      size: 7
+      size: 5,
+      sortField: null,
+      sortBy: null
     },
     description: ''
   },
