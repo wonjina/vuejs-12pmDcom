@@ -63,7 +63,7 @@ export default {
       resListLinks: [],
       loading: false,
       status: false,
-      infoWindowIndex: -1
+      infoWindowIndex: null
     }
   },
   created () {
