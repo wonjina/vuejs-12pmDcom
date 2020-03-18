@@ -24,12 +24,15 @@
             <Res-list
               link-btn
               :items="restaurantList"
+              @enableShowInfoWindow="enableShowInfoWindow"
+              @disableShowInfoWindow="disableShowInfoWindow"
             />    <!-- Add restaurant table.vue  -->
           </div>
         </material-card>
       </v-flex>
       <div class="custom-width">
         <google-map
+          :info-window-index="infoWindowIndex"
           :restaurant-info="restaurantList"
         />  <!-- Add Map.vue -->
       </div>
@@ -59,7 +62,8 @@ export default {
       restaurantList: [],
       resListLinks: [],
       loading: false,
-      status: false
+      status: false,
+      infoWindowIndex: -1
     }
   },
   created () {
@@ -91,6 +95,12 @@ export default {
           break
         }
       }
+    },
+    enableShowInfoWindow (restaurant) {
+      this.infoWindowIndex = restaurant
+    },
+    disableShowInfoWindow (restaurant) {
+      this.infoWindowIndex = restaurant
     }
   }
 }

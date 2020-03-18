@@ -44,6 +44,10 @@ export default {
     restaurantInfo: {
       type: Array,
       default: null
+    },
+    infoWindowIndex: {
+      type: Object,
+      default: null
     }
   },
   data () {
@@ -77,12 +81,23 @@ export default {
   },
   computed: {
   },
+  watch: {
+    infoWindowIndex: function (val) {
+      if (val === null || val === undefined) {
+        this.infoWinOpen = !this.infoWinOpen
+      } else {
+        this.toggleInfoWindow(val, val.restaurant_id)
+      }
+    }
+  },
   created () {
   },
   methods: {
     toggleInfoWindow: function (marker, idx) {
       this.infoWindowPos.lat = marker.location_x
       this.infoWindowPos.lng = marker.location_y
+      this.center.lat = marker.location_x
+      this.center.lng = marker.location_y
       this.infoContent = marker
       if (this.currentMidx === idx) {
         this.infoWinOpen = !this.infoWinOpen

@@ -9,25 +9,30 @@
         slot="items"
         slot-scope="{ item }"
       >
-        <td>{{ item.name }}</td>
-        <td>{{ item.rating }}</td>
-        <td>{{ item.review_amount }}</td>
-        <td
-          v-if="linkBtn"
-          class="text-xs-right"
+        <tr
+          @mouseover="enableShowInfoWindow(item)"
+          @mouseout="disableShowInfoWindow()"
         >
-          <v-btn
-            slot="activator"
-            class="v-btn--simple"
-            color="success"
-            icon
-            @click="moveRestaurantInfo(item)"
+          <td>{{ item.name }}</td>
+          <td>{{ item.rating }}</td>
+          <td>{{ item.review_amount }}</td>
+          <td
+            v-if="linkBtn"
+            class="text-xs-right"
           >
-            <v-icon color="primary">
-              mdi-arrow-right-bold
-            </v-icon>
-          </v-btn>
-        </td>
+            <v-btn
+              slot="activator"
+              class="v-btn--simple"
+              color="success"
+              icon
+              @click="moveRestaurantInfo(item)"
+            >
+              <v-icon color="primary">
+                mdi-arrow-right-bold
+              </v-icon>
+            </v-btn>
+          </td>
+        </tr>
       </template>
     </v-data-table>
   </div>
@@ -70,6 +75,12 @@ export default {
   methods: {
     moveRestaurantInfo (restaurant) {
       this.$router.push({ name: 'RestaurantInfo', params: { id: restaurant.restaurant_id, restaurantInfo: restaurant } })
+    },
+    enableShowInfoWindow (restaurant) {
+      this.$emit('enableShowInfoWindow', restaurant)
+    },
+    disableShowInfoWindow () {
+      this.$emit('disableShowInfoWindow', null)
     }
   }
 }
