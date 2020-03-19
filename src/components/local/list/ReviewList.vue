@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="items"
+      :items="dateFormat"
       hide-actions
     >
       <template
@@ -38,25 +38,29 @@ export default {
       headers: [
         {
           sortable: false,
-          text: '커맨트',
-          value: 'Comment'
+          text: '커맨트'
         },
         {
           sortable: false,
-          text: '평점',
-          value: 'rating'
+          text: '평점'
         },
         {
           sortable: false,
-          text: '작성일',
-          value: 'date'
+          text: '작성일'
         },
         {
           sortable: false,
-          text: '작성자',
-          value: 'writer'
+          text: '작성자'
         }
       ]
+    }
+  },
+  computed: {
+    dateFormat () {
+      return this.items.map((item) => {
+        item.date = this.$moment(item.date).format('YYYY-MM-DD')
+        return item
+      })
     }
   }
 }

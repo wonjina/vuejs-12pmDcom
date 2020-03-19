@@ -23,7 +23,7 @@
     >
       <material-card class="v-card-profile">
         <v-flex>
-          <h2>{{ infoContent.name }}</h2>
+          <h4>{{ infoContent.name }}</h4>
         </v-flex>
         <v-card-text>
           <h4 class="card-title font-weight-light">
@@ -79,8 +79,6 @@ export default {
       }
     }
   },
-  computed: {
-  },
   watch: {
     infoWindowIndex: function (val) {
       if (val === null || val === undefined) {
@@ -93,12 +91,12 @@ export default {
   created () {
   },
   methods: {
-    toggleInfoWindow: function (marker, idx) {
-      this.infoWindowPos.lat = marker.location_x
-      this.infoWindowPos.lng = marker.location_y
-      this.center.lat = marker.location_x
-      this.center.lng = marker.location_y
-      this.infoContent = marker
+    toggleInfoWindow: function (restaurantMarker, idx) {
+      this.infoWindowPos.lat = restaurantMarker.location_x
+      this.infoWindowPos.lng = restaurantMarker.location_y
+      this.center.lat = restaurantMarker.location_x
+      this.center.lng = restaurantMarker.location_y
+      this.infoContent = restaurantMarker
       if (this.currentMidx === idx) {
         this.infoWinOpen = !this.infoWinOpen
       } else {

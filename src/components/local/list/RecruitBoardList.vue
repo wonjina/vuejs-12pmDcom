@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="items"
+      :items="dateFormat"
       hide-actions
     >
       <template
@@ -80,22 +80,37 @@ export default {
           text: '인원',
           value: 'countMember'
         }
-      ]
+      ],
+      today: null
     }
   },
   computed: {
     ...mapState([
       'userInfo'
-    ])
+    ]),
+    dateFormat () {
+      return this.items.map((board) => {
+        board.boardDate = this.$moment(board.boardDate).format('YYYY-MM-DD')
+        return board
+      })
+    }
   },
-  created () { },
+  created () {
+    this.today = moment().format('YYYY-MM-DD')
+  },
   methods: {
     getColor (item) {
-      var today = moment().format('YYYY-MM-DDT00:00:01')
-      if (today > item.boardDate) return 'gray'
-      else if (item.maxNumber - item.countMember === 0) return 'red'
-      else if (item.maxNumber - item.countMember === 1) return 'orange'
-      else return 'green'
+      console.log(item.boardDate)
+      console.log(this.today)
+      if (this.today > item.boardDate) {
+        return 'gray'
+      } else if (item.maxNumber - item.countMember === 0) {
+        return 'red'
+      } else if (item.maxNumber - item.countMember === 1) {
+        return 'orange'
+      } else {
+        return 'green'
+      }
     },
     moveRecruitBoardInfo (recruitBoard) {
       if (this.userInfo !== null && this.userInfo !== undefined) {
@@ -105,7 +120,6 @@ export default {
           title: '로그인 후 이용 가능합니다.',
           icon: 'error'
         })
-          .then(() => {})
       }
     }
   }

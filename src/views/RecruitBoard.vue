@@ -57,9 +57,9 @@ export default {
   },
   methods: {
     recruitBoardFetchData (url, data) {
-      this.setParamsData(0, 6, null)
       restful.getRequest(urls.recruitBoard.method, url, data)
         .then(result => {
+          console.log(result)
           this.recruitBoard = result.data.response.content
           this.resListLinks = result.data.response.links
         })
@@ -74,11 +74,6 @@ export default {
           break
         }
       }
-    },
-    setParamsData (page, size, localDateTime) {
-      urls.recruitBoard.data.page = page
-      urls.recruitBoard.data.size = size
-      urls.recruitBoard.data.localDateTime = localDateTime
     }
   }
 }

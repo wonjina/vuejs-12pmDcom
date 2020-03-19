@@ -80,6 +80,7 @@ import { urls } from '../api/requestUrl.js'
 import swal from 'sweetalert'
 import moment from 'moment'
 import { mapState } from 'vuex'
+import { exceptionHandler } from '../api/exceptionHandler.js'
 
 export default {
   data () {
@@ -95,7 +96,8 @@ export default {
         fullscreenControl: true,
         disableDefaultUi: false
       },
-      loading: false
+      loading: true,
+      boardId: null
     }
   },
   computed: {
@@ -104,6 +106,13 @@ export default {
     ])
   },
   created () {
+    if (this.userInfo === null || this.userInfo === undefined) {
+      swal({
+        title: '로그인이 필요합니다.',
+        icon: 'error'
+      })
+      this.$router.push({ name: 'main' })
+    }
     this.boardId = this.$route.params.id
     this.detailBoardFetchData()
     this.todayUserFetchData()
@@ -116,17 +125,19 @@ export default {
       var memberId = this.userInfo.user.member_id
       restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(result => {
+          console.log('result')
+          console.log(result)
           this.userData = result.data.response.content
-          this.resListLinks = result.data.response.links
         })
         .finally(() => {
-          this.loading = false
+          urls.userRecord.data.localDateTime = null
         })
     },
     detailBoardFetchData () {
       this.loading = true
       restful.getRequest(urls.recruitBoard.method, urls.DOMAIN + urls.recruitBoard.path + '/' + this.boardId)
         .then(result => {
+          console.log(result)
           this.recruitBoard = result.data.response
         })
         .finally(() => {
@@ -141,8 +152,11 @@ export default {
       } else if (userData.length >= 1) {
         swal('현재 참여중인 모집글이 존재합니다.', '사용자 페이지를 확인하세요.', 'warning')
         return true
-      } else if (recruitBoard.maxNumber - recruitBoard.countMember === 0) return true
-      else return false
+      } else if (recruitBoard.maxNumber - recruitBoard.countMember === 0) {
+        return true
+      } else {
+        return false
+      }
     },
     addMember () {
       var boardId = this.recruitBoard.boardId
@@ -156,6 +170,9 @@ export default {
             .then(() => {
               location.href = '/RecruitBoard'
             })
+        })
+        .catch(result => {
+          exceptionHandler.catch(result)
         })
         .finally(() => {
         })

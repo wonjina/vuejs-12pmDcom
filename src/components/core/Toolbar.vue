@@ -89,13 +89,7 @@ export default {
   data: () => ({
     title: null,
     responsive: false,
-    restaurantName: '',
-    items: [
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me 2' }
-    ]
+    restaurantName: ''
   }),
   computed: {
     ...mapState([
@@ -120,9 +114,6 @@ export default {
     ...mapMutations('app', ['setDrawer', 'toggleDrawer']),
     onClickBtn () {
       this.setDrawer(!this.$store.state.app.drawer)
-    },
-    onClick () {
-      //
     },
     onResponsiveInverted () {
       if (window.innerWidth < 991) {

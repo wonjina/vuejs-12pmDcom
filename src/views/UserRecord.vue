@@ -65,6 +65,7 @@ import UserTodayRecord from '@/components/local/UserTodayRecord.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
 import moment from 'moment'
+import swal from 'sweetalert'
 
 export default {
   components: {
@@ -75,7 +76,7 @@ export default {
     return {
       userRecord: [],
       userRecordList: [],
-      resListLinks: [],
+      boardListLinks: [],
       loading: false,
       status: false
     }
@@ -86,10 +87,15 @@ export default {
     ])
   },
   created () {
-    if (this.userInfo !== null && this.userInfo !== undefined) {
-      this.todayUserFetchData()
-      this.userFetchData(urls.DOMAIN + '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
+    if (this.userInfo === null || this.userInfo === undefined) {
+      swal({
+        title: '로그인이 필요합니다.',
+        icon: 'error'
+      })
+      this.$router.push({ name: 'main' })
     }
+    this.todayUserFetchData()
+    this.userFetchData(urls.DOMAIN + '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
   },
   methods: {
     moment: function () {
@@ -97,8 +103,7 @@ export default {
     },
     todayUserFetchData () {
       this.loading = true
-      var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
-      urls.todayRecord.data.localDateTime = localDateTime
+      urls.todayRecord.data.localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       var memberId = this.userInfo.user.member_id
       restful.getRequest(urls.todayRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.todayRecord.data)
         .then(result => {
@@ -106,6 +111,7 @@ export default {
         })
         .finally(() => {
           this.loading = false
+          urls.todayRecord.data.localDateTime = null
         })
     },
     userFetchData (url, data) {
@@ -114,17 +120,17 @@ export default {
       restful.getRequest(urls.userRecord.method, url, data)
         .then(result => {
           this.userRecordList = result.data.response.content
-          this.resListLinks = result.data.response.links
+          this.boardListLinks = result.data.response.links
         })
         .finally(() => {
-          this.setParamsData(0, 0, null)
+          this.setParamsData(0, 5, null)
           this.loading = false
         })
     },
     updateData (link) {
-      for (let i = 0; i < this.resListLinks.length; ++i) {
-        if (this.resListLinks[i].rel === link) {
-          this.userFetchData(this.resListLinks[i].href)
+      for (let i = 0; i < this.boardListLinks.length; ++i) {
+        if (this.boardListLinks[i].rel === link) {
+          this.userFetchData(this.boardListLinks[i].href)
           break
         }
       }

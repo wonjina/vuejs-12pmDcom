@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="items"
+      :items="dateFormat"
       hide-actions
     >
       <template
@@ -65,8 +65,13 @@ export default {
       ]
     }
   },
-  created () { },
-  methods: {
+  computed: {
+    dateFormat () {
+      return this.items.map((item) => {
+        item.boardDate = this.$moment(item.boardDate).format('YYYY-MM-DD')
+        return item
+      })
+    }
   }
 }
 </script>

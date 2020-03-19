@@ -139,6 +139,23 @@ export default {
         })
         .finally(() => {
           this.loading = false
+          urls.userRecord.data.localDateTime = null
+        })
+    },
+    reviewsFetchData () {
+      this.loading = true
+      urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
+      restful
+        .getRequest(urls.reviews.method, urls.DOMAIN + urls.reviews.path, urls.reviews.data)
+        .then(result => {
+          this.reviews = result.data.response.content
+          this.reviewListLinks = result.data.response.links
+        })
+        .catch(result => {
+        })
+        .finally(() => {
+          urls.reviews.data.restaurantId = null
+          this.loading = false
         })
     },
     disableBtn (userData) {
@@ -164,22 +181,6 @@ export default {
       if (this.userInfo !== null && this.userInfo !== undefined) {
         this.$store.commit('TOGGLE_NEW_RECRUITMENT_MODAL_FLAGE', true)
       }
-    },
-    reviewsFetchData () {
-      this.loading = true
-      urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
-      restful
-        .getRequest(urls.reviews.method, urls.DOMAIN + urls.reviews.path, urls.reviews.data)
-        .then(result => {
-          this.reviews = result.data.response.content
-          this.reviewListLinks = result.data.response.links
-        })
-        .catch(result => {
-        })
-        .finally(() => {
-          urls.reviews.data.restaurantId = null
-          this.loading = false
-        })
     },
     updateData (link) {
       for (let i = 0; i < this.reviewListLinks.length; ++i) {

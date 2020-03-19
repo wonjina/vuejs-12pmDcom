@@ -14,6 +14,7 @@ export default {
     return restful
       .getRequest(urls.logout.method, urls.DOMAIN + urls.logout.path)
       .then(data => {
+        sessionStorage.removeItem('userInfo')
         state.userInfo = null
         history.go(0)
       })

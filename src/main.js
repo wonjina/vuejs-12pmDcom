@@ -28,6 +28,8 @@ import router from '@/router'
 import store from '@/store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueCookies from 'vue-cookies'
+import moment from 'moment'
+import VueMomentJS from 'vue-momentjs'
 
 // Sync store with router
 sync(store, router)
@@ -40,17 +42,21 @@ Vue.use(VueGoogleMaps, {
   }
 })
 Vue.use(VueCookies)
-
+Vue.use(VueMomentJS, moment)
 /* eslint-disable no-new */
 new Vue({
   router,
   store,
   beforeCreate () {
     console.log(localStorage.getItem('isRequestedLogin'))
-    if (localStorage.getItem('isRequestedLogin')) {
+    if (localStorage.getItem('isRequestedLogin') === 'true') {
+      console.log('Request User Info !!!')
       this.$store.dispatch('GET_USER_INFO')
       localStorage.setItem('isRequestedLogin', false)
-      console.log(localStorage.getItem('isRequestedLogin'))
+    } else if ((this.$store.state.userInfo === null || this.$store.state.userInfo === undefined) &&
+                    sessionStorage.getItem('userInfo')) {
+      console.log('Not Request User Info Because There is Session.')
+      this.$store.state.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
     }
   },
   render: h => h(App)

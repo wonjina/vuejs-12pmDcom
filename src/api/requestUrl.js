@@ -19,11 +19,12 @@ export const urls = {
     description: ''
   },
   'restaurantImgs': {
-    path: '/api/img/restaurant',
+    path: '/api/images',
     method: 'get',
     data: {
       page: 0,
-      size: 7
+      size: 5,
+      restaurantId: null
     },
     description: ''
   },
@@ -72,7 +73,7 @@ export const urls = {
     data: {
       localDateTime: null,
       page: 0,
-      size: 5
+      size: 6
     },
     description: 'Get recruitment List'
   },

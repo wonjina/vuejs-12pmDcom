@@ -1,17 +1,38 @@
 <template>
-  <v-carousel
-    hide-delimiters
-    height="300px"
-    class="custom-size"
-  >
-    <v-carousel-item
-      v-for="(item,i) in items"
-      :key="i"
-      :src="item.restaurantImgUrl"
+  <div class="card-carousel-wrapper">
+    <div
+      :disabled="atHeadOfList"
+      class="card-carousel--nav__left"
+      @click="moveCarousel(-1)"
     />
-  </v-carousel>
+    <div class="card-carousel">
+      <div class="card-carousel--overflow-container">
+        <div
+          :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}"
+          class="card-carousel-cards"
+        >
+          <div
+            v-for="(item, index) in items"
+            :key="index"
+            class="card-carousel--card"
+          >
+            <img
+              class="fullSizeImg"
+              :src="item.restaurantImgUrl"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      :disabled="atEndOfList"
+      class="card-carousel--nav__right"
+      @click="moveCarousel(1)"
+    />
+  </div>
 </template>
 <script>
+import '@/styles/local/slide.scss'
 import { restful } from '../../api'
 import { urls } from '../../api/requestUrl.js'
 
@@ -19,36 +40,51 @@ export default {
   name: 'Carousel',
   data () {
     return {
-      items: [],
-      resListLinks: []
+      currentOffset: 0,
+      windowSize: 1,
+      paginationFactor: 220,
+      items: []
+    }
+  },
+  computed: {
+    atEndOfList () {
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.items.length - this.windowSize)
+    },
+    atHeadOfList () {
+      return this.currentOffset === 0
     }
   },
   created () {
-    this.restaurantId = this.$route.params.id
-    this.restaurantImgFetchData()
+    this.getResImgFetchData()
   },
   methods: {
-    restaurantImgFetchData () {
-      this.setParamsData(0, 10)
-      console.log(this.items.url)
-      restful.getRequest(urls.restaurantImgs.method, urls.DOMAIN + urls.restaurantImgs.path + '/' + this.restaurantId, urls.restaurantImgs.data)
+    moveCarousel (direction) {
+      // Find a more elegant way to express the :style. consider using props to make it truly generic
+      if (direction === 1 && !this.atEndOfList) {
+        this.currentOffset -= this.paginationFactor
+      } else if (direction === -1 && !this.atHeadOfList) {
+        this.currentOffset += this.paginationFactor
+      }
+    },
+    getResImgFetchData () {
+      urls.restaurantImgs.data.restaurantId = this.$route.params.id
+      console.log(urls.restaurantImgs)
+      restful.getRequest(urls.restaurantImgs.method, urls.DOMAIN + urls.restaurantImgs.path, urls.restaurantImgs.data)
         .then(result => {
           this.items = result.data.response.content
         })
         .finally(() => {
-          this.loading = false
+          urls.restaurantImgs.data.restaurantId = null
         })
-    },
-    setParamsData (page, size) {
-      urls.restaurantImgs.data.page = page
-      urls.restaurantImgs.data.size = size
     }
   }
 }
 </script>
-
 <style>
-.custom-size {
-    margin-top:20px;
+.fullSizeImg {
+  width: 100%;
+  height: auto;
+  width: 200px;
+  height: 150px;
 }
 </style>

@@ -15,12 +15,12 @@
           title="Top Review 5"
         >
           <div
-            v-if="loading"
+            v-if="topReviewResListloading"
             class="loading"
           >
             Loading...
           </div>
-          <div v-if="status">
+          <div v-else>
             <restaurant-list
               link-btn
               :items="topReviewRestaurants"
@@ -42,12 +42,12 @@
           title="Top Rating 5"
         >
           <div
-            v-if="loading"
+            v-if="topRatingResListloading"
             class="loading"
           >
             Loading...
           </div>
-          <div v-if="status">
+          <div v-else>
             <restaurant-list
               link-btn
               :items="topRatingRestaurants"
@@ -75,7 +75,7 @@
           >
             Loading...
           </div>
-          <div v-if="status">
+          <div v-else>
             <recruit-board-list
               link-btn
               :items="recruitBoard"
@@ -105,8 +105,9 @@ export default {
       topRatingRestaurants: [],
       topReviewRestaurants: [],
       recruitBoard: [],
-      loading: false,
-      status: false,
+      topReviewResListloading: true,
+      topRatingResListloading: true,
+      loading: true,
       paramsRes: {
         page: 0,
         size: 5,
@@ -121,26 +122,25 @@ export default {
     }
   },
   created () {
-    this.loading = true
     this.topRatingRestaurantFetchData()
     this.topReviewRestaurantFetchData()
     this.recruitBoardFetchData()
-    this.loading = false
-    this.status = true
   },
   methods: {
     topRatingRestaurantFetchData () {
+      this.topRatingResListloading = true
       this.paramsRes.sortField = 'rating'
-      // restful.fetch(urls.restaurants.method, urls.restaurants.path, urls.restaurants.data)
       restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, this.paramsRes)
         .then(result => {
           this.topRatingRestaurants = result.data.response.content
         })
         .finally(() => {
           this.paramsRes.sortField = null
+          this.topRatingResListloading = false
         })
     },
     topReviewRestaurantFetchData () {
+      this.topReviewResListloading = true
       urls.restaurants.data.sortField = 'review'
       restful.getRequest(urls.restaurants.method, urls.DOMAIN + urls.restaurants.path, urls.restaurants.data)
         .then(result => {
@@ -148,17 +148,21 @@ export default {
         })
         .finally(() => {
           this.paramsRes.sortField = null
+          this.topReviewResListloading = false
         })
     },
     recruitBoardFetchData () {
-      var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
-      urls.recruitBoard.data.localDateTime = localDateTime
+      this.loading = true
+      urls.recruitBoard.data.localDateTime = moment().format('YYYY-MM-DDT00:00:01')
       restful
         .getRequest(urls.recruitBoard.method, urls.DOMAIN + urls.recruitBoard.path, urls.recruitBoard.data)
         .then(result => {
           this.recruitBoard = result.data.response.content
         })
-        .finally(() => { })
+        .finally(() => {
+          urls.recruitBoard.data.localDateTime = null
+          this.loading = false
+        })
     }
   }
 }
