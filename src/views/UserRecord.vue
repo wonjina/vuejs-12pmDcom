@@ -59,13 +59,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import UserRecordList from '@/components/local/list/UserRecordList.vue'
 import UserTodayRecord from '@/components/local/UserTodayRecord.vue'
 import { restful } from '../api'
 import { urls } from '../api/requestUrl.js'
-import { mapState } from 'vuex'
 import moment from 'moment'
-import swal from 'sweetalert'
 
 export default {
   components: {
@@ -87,25 +86,14 @@ export default {
     ])
   },
   created () {
-    this.loginCheck()
+    if (this.userInfo !== null && this.userInfo !== undefined) {
+      this.todayUserFetchData()
+      this.userFetchData(urls.DOMAIN + '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
+    }
   },
   methods: {
     moment: function () {
       return moment()
-    },
-    loginCheck () {
-      if (this.userInfo === null || this.userInfo === undefined) {
-        swal({
-          title: '로그인 후 이용 가능합니다.',
-          icon: 'error'
-        })
-          .then(() => {
-            history.back()
-          })
-      } else {
-        this.todayUserFetchData()
-        this.userFetchData(urls.DOMAIN + '/api/member/' + this.userInfo.user.member_id + '/recruitment', urls.userRecord.data)
-      }
     },
     todayUserFetchData () {
       this.loading = true

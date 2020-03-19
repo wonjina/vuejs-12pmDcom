@@ -60,7 +60,7 @@
         </material-card>
         <GmapMap
           :options="mapOptions"
-          :center="{lat:37.394955, lng:127.111196}"
+          :center="{lat: recruitBoard.locationX, lng: recruitBoard.locationY}"
           :zoom="15"
           map-type-id="roadmap"
           class="custom-width2"
@@ -85,10 +85,7 @@ export default {
   data () {
     return {
       recruitBoard: [],
-      userData: {
-        type: Array,
-        default: null
-      },
+      userData: [],
       mapOptions: {
         zoomControl: true,
         mapTypeControl: true,
@@ -108,23 +105,10 @@ export default {
   },
   created () {
     this.boardId = this.$route.params.id
-    this.loginCheck()
+    this.detailBoardFetchData()
+    this.todayUserFetchData()
   },
   methods: {
-    loginCheck () {
-      if (this.userInfo === null || this.userInfo === undefined) {
-        swal({
-          title: '로그인 후 이용 가능합니다.',
-          icon: 'error'
-        })
-          .then(() => {
-            history.back()
-          })
-      } else {
-        this.todayUserFetchData()
-        this.detailBoardFetchData()
-      }
-    },
     todayUserFetchData () {
       this.loading = true
       var localDateTime = moment().format('YYYY-MM-DDT00:00:01')
@@ -170,7 +154,7 @@ export default {
             icon: 'success'
           })
             .then(() => {
-              history.go(-1)
+              location.href = '/RecruitBoard'
             })
         })
         .finally(() => {

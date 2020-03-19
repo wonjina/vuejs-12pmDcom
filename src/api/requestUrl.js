@@ -18,6 +18,15 @@ export const urls = {
     method: 'get',
     description: ''
   },
+  'restaurantImgs': {
+    path: '/api/img/restaurant',
+    method: 'get',
+    data: {
+      page: 0,
+      size: 7
+    },
+    description: ''
+  },
   'reviews': {
     path: '/api/reviews/restaurant',
     method: 'get',

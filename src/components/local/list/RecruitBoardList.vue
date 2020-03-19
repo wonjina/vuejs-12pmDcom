@@ -43,6 +43,8 @@
 
 <script>
 import moment from 'moment'
+import swal from 'sweetalert'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -81,6 +83,11 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState([
+      'userInfo'
+    ])
+  },
   created () { },
   methods: {
     getColor (item) {
@@ -91,7 +98,15 @@ export default {
       else return 'green'
     },
     moveRecruitBoardInfo (recruitBoard) {
-      this.$router.push({ name: 'RecruitBoardInfo', params: { id: recruitBoard.boardId, recruitBoardInfo: recruitBoard } })
+      if (this.userInfo !== null && this.userInfo !== undefined) {
+        this.$router.push({ name: 'RecruitBoardInfo', params: { id: recruitBoard.boardId, recruitBoardInfo: recruitBoard } })
+      } else {
+        swal({
+          title: '로그인 후 이용 가능합니다.',
+          icon: 'error'
+        })
+          .then(() => {})
+      }
     }
   }
 }

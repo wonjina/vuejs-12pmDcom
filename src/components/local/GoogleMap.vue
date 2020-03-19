@@ -2,7 +2,7 @@
   <GmapMap
     :options="mapOptions"
     :center="center"
-    :zoom="15"
+    :zoom="17"
     map-type-id="roadmap"
     class="custom-width"
   >
