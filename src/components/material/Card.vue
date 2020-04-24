@@ -138,6 +138,14 @@ export default {
     pagingBtn: {
       type: Boolean,
       default: false
+    },
+    prevBtn: {
+      type: Boolean,
+      default: false
+    },
+    nextBtn: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

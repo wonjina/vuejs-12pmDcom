@@ -59,7 +59,6 @@ export default {
     recruitBoardFetchData (url, data) {
       restful.getRequest(urls.recruitBoard.method, url, data)
         .then(result => {
-          console.log(result)
           this.recruitBoard = result.data.response.content
           this.resListLinks = result.data.response.links
         })

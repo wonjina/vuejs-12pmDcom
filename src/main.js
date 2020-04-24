@@ -48,14 +48,11 @@ new Vue({
   router,
   store,
   beforeCreate () {
-    console.log(localStorage.getItem('isRequestedLogin'))
     if (localStorage.getItem('isRequestedLogin') === 'true') {
-      console.log('Request User Info !!!')
       this.$store.dispatch('GET_USER_INFO')
       localStorage.setItem('isRequestedLogin', false)
     } else if ((this.$store.state.userInfo === null || this.$store.state.userInfo === undefined) &&
                     sessionStorage.getItem('userInfo')) {
-      console.log('Not Request User Info Because There is Session.')
       this.$store.state.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
     }
   },

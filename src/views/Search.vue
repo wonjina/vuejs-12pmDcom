@@ -5,13 +5,15 @@
         sm6
         xs12
         md6
-        lg5
+        lg8
         class="scroll"
       >
         <material-card
           flat
           full-width
           paging-btn
+          :prev-btn="prevBtn"
+          :next-btn="nextBtn"
           @update="updateData"
         >
           <div
@@ -63,7 +65,22 @@ export default {
       resListLinks: [],
       loading: false,
       status: false,
-      infoWindowIndex: null
+      infoWindowIndex: null,
+      prevBtn: false,
+      nextBtn: false
+    }
+  },
+  watch: {
+    resListLinks (val) {
+      this.prevBtn = false
+      this.nextBtn = false
+      for (let i = 0; i < this.resListLinks.length; ++i) {
+        if (this.resListLinks[i].rel === 'prev') {
+          this.prevBtn = true
+        } else if (this.resListLinks[i].rel === 'next') {
+          this.nextBtn = true
+        }
+      }
     }
   },
   created () {

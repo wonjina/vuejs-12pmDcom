@@ -125,8 +125,6 @@ export default {
       var memberId = this.userInfo.user.member_id
       restful.getRequest(urls.userRecord.method, urls.DOMAIN + '/api/member/' + memberId + '/recruitment', urls.userRecord.data)
         .then(result => {
-          console.log('result')
-          console.log(result)
           this.userData = result.data.response.content
         })
         .finally(() => {
@@ -137,7 +135,6 @@ export default {
       this.loading = true
       restful.getRequest(urls.recruitBoard.method, urls.DOMAIN + urls.recruitBoard.path + '/' + this.boardId)
         .then(result => {
-          console.log(result)
           this.recruitBoard = result.data.response
         })
         .finally(() => {

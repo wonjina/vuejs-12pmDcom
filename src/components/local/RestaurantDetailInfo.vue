@@ -51,6 +51,8 @@
       <material-card
         title="리뷰"
         paging-btn
+        :prev-btn="prevBtn"
+        :next-btn="nextBtn"
         @update="updateData"
       >
         <div
@@ -110,13 +112,28 @@ export default {
       },
       reviews: [],
       loading: false,
-      reviewListLinks: []
+      reviewListLinks: [],
+      prevBtn: false,
+      nextBtn: false
     }
   },
   computed: {
     ...mapState([
       'userInfo'
     ])
+  },
+  watch: {
+    resListLinks (val) {
+      this.prevBtn = false
+      this.nextBtn = false
+      for (let i = 0; i < this.reviewListLinks.length; ++i) {
+        if (this.reviewListLinks[i].rel === 'prev') {
+          this.prevBtn = true
+        } else if (this.reviewListLinks[i].rel === 'next') {
+          this.nextBtn = true
+        }
+      }
+    }
   },
   created () {
     this.reviewsFetchData()
@@ -145,9 +162,12 @@ export default {
     reviewsFetchData () {
       this.loading = true
       urls.reviews.data.restaurantId = this.restaurantInfo.restaurant_id
+      console.log(urls.reviews.data)
       restful
         .getRequest(urls.reviews.method, urls.DOMAIN + urls.reviews.path, urls.reviews.data)
         .then(result => {
+          console.log('review')
+          console.log(result)
           this.reviews = result.data.response.content
           this.reviewListLinks = result.data.response.links
         })
@@ -186,7 +206,7 @@ export default {
       for (let i = 0; i < this.reviewListLinks.length; ++i) {
         if (this.reviewListLinks[i].rel === link) {
           restful
-            .getRequest(urls.reviews.method, this.reviewListLinks[i].href)
+            .getRequest(urls.reviews.method, this.reviewListLinks[i].href + '&restaurantId=' + this.$route.params.id)
             .then(result => {
               this.reviews = result.data.response.content
               this.reviewListLinks = result.data.response.links

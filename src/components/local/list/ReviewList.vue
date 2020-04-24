@@ -9,8 +9,12 @@
         slot="items"
         slot-scope="{ item }"
       >
-        <td>{{ item.comment }}</td>
-        <td>{{ item.rating }}</td>
+        <td v-if="true">
+          {{ item.comment }}
+        </td>
+        <td v-else>
+          {{ item.rating }}
+        </td>
         <td class="customFontSize">
           {{ item.date }}
         </td>

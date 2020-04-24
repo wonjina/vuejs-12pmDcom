@@ -68,7 +68,6 @@ export default {
     },
     getResImgFetchData () {
       urls.restaurantImgs.data.restaurantId = this.$route.params.id
-      console.log(urls.restaurantImgs)
       restful.getRequest(urls.restaurantImgs.method, urls.DOMAIN + urls.restaurantImgs.path, urls.restaurantImgs.data)
         .then(result => {
           this.items = result.data.response.content

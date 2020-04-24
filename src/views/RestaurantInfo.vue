@@ -6,7 +6,7 @@
         sm6
         xs12
         md6
-        lg5
+        lg10
         class="scroll"
       >
         <restaurant-detail-info

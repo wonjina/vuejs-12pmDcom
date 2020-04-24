@@ -29,9 +29,7 @@
           <h4 class="card-title font-weight-light">
             {{ infoContent.load_address }}
           </h4>
-          <p class="card-description font-weight-light">
-            <span>평점 : {{ infoContent.rating }}</span>
-          </p>
+          <h6>평점 : {{ infoContent.rating }}</h6>
         </v-card-text>
       </material-card>
     </GmapInfoWindow>

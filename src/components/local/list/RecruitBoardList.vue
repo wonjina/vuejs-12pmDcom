@@ -100,8 +100,6 @@ export default {
   },
   methods: {
     getColor (item) {
-      console.log(item.boardDate)
-      console.log(this.today)
       if (this.today > item.boardDate) {
         return 'gray'
       } else if (item.maxNumber - item.countMember === 0) {
